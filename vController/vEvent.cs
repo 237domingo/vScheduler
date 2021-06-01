@@ -43,12 +43,15 @@ namespace vMixControler
         {
             if (EventStart != other.EventStart) return false;
             if (EventPath != other.EventPath) return false;
+            if (Overlay != other.Overlay) return false;
             return true;
         }
         public string EventPath;
         public int SlideshowInterval;
         public vmTransitionType SlideshowTransition;
         public int SlideshowTransitionTime;
+        public bool EventMuted;
+        public string Overlay;
        
         public string EventTypeString()
         {
@@ -187,6 +190,8 @@ namespace vMixControler
                 else
                     SlideshowTransitionTime = 0;
             }
+            Overlay = node.Attributes.GetNamedItem("Overlay").Value;
+            EventMuted = bool.Parse(node.Attributes.GetNamedItem("EventMuted").Value);
         }
     }
 }
