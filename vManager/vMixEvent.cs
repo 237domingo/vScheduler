@@ -15,6 +15,7 @@ namespace vMixManager
         public vmEventType EventType;
         public DateTime EventStart;
         public bool EventLooping;
+        public bool EventMuted;
         public vmTransitionType EventTransition;
         public int EventTransitionTime;
         public TimeSpan EventInPoint; 
@@ -23,7 +24,7 @@ namespace vMixManager
         public DateTime EventEnd {
             get
             {
-                return EventStart + EventInPoint + EventDuration; 
+                return EventStart + EventDuration; 
             }
             set
             {
@@ -37,6 +38,7 @@ namespace vMixManager
         public int SlideshowInterval;
         public vmTransitionType SlideshowTransition;
         public int SlideshowTransitionTime;
+        public string Overlay = "0";
 
         public string EventTypeString()
         {
@@ -151,10 +153,12 @@ namespace vMixManager
             EventTransition = e.EventTransition;
             EventTransitionTime = e.EventTransitionTime;
             EventLooping = e.EventLooping;
+            EventMuted = e.EventMuted;
             SlideshowInterval = e.SlideshowInterval;
             SlideshowTransition = e.SlideshowTransition;
             SlideshowTransitionTime = e.SlideshowTransitionTime;
             EventInfoText = e.EventInfoText;
+            Overlay = e.Overlay;
         }
 
         public vMixEvent(string title, string path, vmEventType type, DateTime start, TimeSpan inpoint, TimeSpan media_duration, TimeSpan event_duration, bool keep_duration, vmTransitionType transition, int transition_time, bool looping)
@@ -170,6 +174,10 @@ namespace vMixManager
             EventTransition = transition;
             EventTransitionTime = transition_time;
             EventLooping = looping;
+            if (type == vmEventType.audio || type == vmEventType.video)
+                EventMuted = false; 
+            else 
+                EventMuted = true;
             SlideshowInterval = 10; 
             SlideshowTransition = vmTransitionType.fade;
             SlideshowTransitionTime = 500;
@@ -204,6 +212,7 @@ namespace vMixManager
             EventTransition = vmTransitionType.fade;
             EventTransitionTime = 1000;
             EventLooping = true;
+            EventMuted = true;
             SlideshowInterval = 10; 
             SlideshowTransition = vmTransitionType.fade;
             SlideshowTransitionTime = 500;
@@ -247,6 +256,7 @@ namespace vMixManager
                 else
                     SlideshowTransitionTime = 0;
             }
+            Overlay = node.Attributes.GetNamedItem("Overlay").Value;
         }
 
         public XmlNode ToXMLNode(XmlDocument document)
@@ -321,6 +331,14 @@ namespace vMixManager
                     event_node.Attributes.Append(a);
                 }
             }
+
+            a = document.CreateAttribute("Overlay");
+            a.InnerText = Overlay;
+            event_node.Attributes.Append(a);
+
+            a = document.CreateAttribute("EventMuted");
+            a.InnerText = EventMuted.ToString();
+            event_node.Attributes.Append(a);
 
             return event_node;
         }

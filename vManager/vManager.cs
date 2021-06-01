@@ -9,21 +9,45 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Globalization;
 using MediaInfoLib;
+using vManager;
 
 namespace vMixManager
 {
     public partial class vMixManager : Form
     {
         List<vMixEvent> vMixEvents;
+        List<vMixEvent> vMixEvents0 = new List<vMixEvent>();
+        List<vMixEvent> vMixEvents1 = new List<vMixEvent>();
+        List<vMixEvent> vMixEvents2 = new List<vMixEvent>();
+        List<vMixEvent> vMixEvents3 = new List<vMixEvent>();
+        List<vMixEvent> vMixEvents4 = new List<vMixEvent>();
+        List<vMixEvent>[] ListOfvMixEvents = new List<vMixEvent>[5];
+        ListView[] ListOfEventList = new ListView[5];
         vMixEvent ActiveEvent;
         MediaInfo FileInfo;
         bool donotredraw = false;
+        ListView EventList;
+        String ActiveOverlay;
+        List<vMixEvent> copybuffer = new List<vMixEvent>();
+        public delegate void SelectedOverlay(bool[] Overlay);
 
         public vMixManager()
         {
             InitializeComponent();
-            vMixEvents = new List<vMixEvent>();
             FileInfo = new MediaInfo();
+            ListOfvMixEvents[0] = vMixEvents0;
+            ListOfvMixEvents[1] = vMixEvents1;
+            ListOfvMixEvents[2] = vMixEvents2;
+            ListOfvMixEvents[3] = vMixEvents3;
+            ListOfvMixEvents[4] = vMixEvents4;
+            ListOfEventList[0] = EventList0;
+            ListOfEventList[1] = EventList1;
+            ListOfEventList[2] = EventList2;
+            ListOfEventList[3] = EventList3;
+            ListOfEventList[4] = EventList4;
+            vMixEvents = vMixEvents0;
+            EventList = EventList0;
+            ActiveOverlay = "0";
         }
 
         private void vMixManager_Load(object sender, EventArgs e)
@@ -31,12 +55,23 @@ namespace vMixManager
             dtp_timetable.Value = DateTime.Today + new TimeSpan(1, 0, 0, 0, 0);
             lb_transition.Text = "Fade";
             lb_slideshow_transition.Text = "Fade";
+            lb_overlay.Text = "0";
         }
 
         private void EventList_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
-            if (e.ItemIndex < vMixEvents.Count)
-                e.Item = EventListItem(vMixEvents[e.ItemIndex]);
+            ListView name = new ListView();
+
+            for (int i = 0; i < 5; i++)
+            {
+                name = ListOfEventList[i];
+                if (sender.Equals(name))
+                {
+                    if (e.ItemIndex < ListOfvMixEvents[i].Count)
+                        e.Item = EventListItem(ListOfvMixEvents[i][e.ItemIndex]);
+                    return;
+                }
+            }
         }
         
         public ListViewItem EventListItem(vMixEvent vmixevent)
@@ -67,6 +102,7 @@ namespace vMixManager
                 dtp_duration.Text = ActiveEvent.EventDuration.ToString("c");
                 dtp_inpoint.Text = ActiveEvent.EventInPoint.ToString("c");
                 dtp_end.Value = ActiveEvent.EventEnd;
+                cb_audio.Checked = !ActiveEvent.EventMuted;
                 if (ActiveEvent.EventLooping)
                     rb_looping.Checked = true;
                 else
@@ -105,6 +141,13 @@ namespace vMixManager
                 }
                 else
                     pnl_slideshow.Visible = false;
+
+                if (ActiveEvent.EventType == vmEventType.video)
+                {
+                    cb_audio.Enabled = true;
+                }
+                else
+                    cb_audio.Enabled = false;
             }
             else 
             {
@@ -120,6 +163,7 @@ namespace vMixManager
                 ud_transition_time.Value = 1000;
                 rtb_fileinfo.Text = "";
                 pnl_slideshow.Visible = false;
+                cb_audio.Checked = false; 
                 EventDetails.Enabled = false;
             }
             donotredraw = false;
@@ -128,7 +172,8 @@ namespace vMixManager
         private void EventList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ActiveEvent = null;
-            if (EventList.SelectedIndices.Count > 0)
+            if (EventList.SelectedIndices.Count == 0) return;
+            if (EventList.SelectedIndices.Count == 1)
             {
                 ActiveEvent = vMixEvents[EventList.SelectedIndices[0]];
                 bn_move_up.Enabled = (EventList.SelectedIndices[0] > 0);
@@ -137,6 +182,10 @@ namespace vMixManager
             }
             else
             {
+                int lastindex = EventList.SelectedIndices[0];
+                int previousindex = EventList.SelectedIndices[1];
+                if (lastindex < previousindex) ActiveEvent = vMixEvents[lastindex];
+                else ActiveEvent = vMixEvents[previousindex];
                 bn_move_up.Enabled = false;
                 bn_move_down.Enabled = false;
                 bn_remove.Enabled = true;
@@ -174,6 +223,13 @@ namespace vMixManager
             if (donotredraw) return;
             if (ActiveEvent != null)
                 ActiveEvent.EventLooping = rb_looping.Checked;
+        }
+
+        private void cb_audio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (donotredraw) return;
+            if (ActiveEvent != null)
+                ActiveEvent.EventMuted = !cb_audio.Checked;
         }
 
         private void ud_transition_time_ValueChanged(object sender, EventArgs e)
@@ -224,7 +280,28 @@ namespace vMixManager
                     e.EventStart = nextstart;
                 nextstart += e.EventDuration;
             }
-            EventList.RedrawItems(0, vMixEvents .Count -1, false);
+            EventList.RedrawItems(0, vMixEvents.Count -1, false);
+        }
+
+        private void SpliceEvent()
+        {
+            //vMixEvent v = vMixEvents.Find(delegate(vMixEvent e) { return e.EventEnd > timetofind;});
+            if (ActiveEvent == null) return;
+            int position = vMixEvents.IndexOf(ActiveEvent) + 1;
+            donotredraw = true;
+            vMixEvent copy = new vMixEvent(ActiveEvent);
+            ActiveEvent.EventDuration -= new TimeSpan(ActiveEvent.EventDuration.Ticks/2);
+            copy.EventDuration = ActiveEvent.EventDuration;
+            copy.EventInPoint += ActiveEvent.EventDuration;
+            vMixEvents.Insert(position, copy);
+            ActiveEvent = copy;
+            EventList.VirtualListSize = vMixEvents.Count;
+            EventList.SelectedIndices.Clear();
+            EventList.SelectedIndices.Add(position);
+            RebuildTimetable();
+            donotredraw = false;
+            UpdateDisplay();
+
         }
 
         private void dtp_timetable_ValueChanged(object sender, EventArgs e)
@@ -339,12 +416,14 @@ namespace vMixManager
         {
             if (ActiveEvent == null) return;
             int position = vMixEvents.IndexOf(ActiveEvent);
+            List<vMixEvent> toremove = new List<vMixEvent>();
             donotredraw = true;
-            vMixEvents.Remove(ActiveEvent);
+            foreach (int l in EventList.SelectedIndices) toremove.Add(vMixEvents[l]);
+            foreach (vMixEvent remove in toremove) vMixEvents.Remove(remove);
             ActiveEvent = null;
             EventList.VirtualListSize = vMixEvents.Count;
             EventList.SelectedIndices.Clear();
-            if (position >= vMixEvents.Count) position--;
+            if (position >= vMixEvents.Count) position = vMixEvents.Count-1 ;
             if (position >= 0)
                 EventList.SelectedIndices.Add(position);
             RebuildTimetable();
@@ -364,22 +443,53 @@ namespace vMixManager
                 d.AppendChild(root);
                 XmlNode events = d.CreateElement("Events");
                 root.AppendChild(events);
-                foreach (vMixEvent vme in vMixEvents)
-                    events.AppendChild(vme.ToXMLNode (d));
+                int eventcount = 0;
+                foreach (List<vMixEvent> lvme in ListOfvMixEvents)
+                {
+                    foreach (vMixEvent vme in lvme)
+                        events.AppendChild(vme.ToXMLNode(d));
+                    eventcount = eventcount + lvme.Count;
+                }
                 d.Save(sfd.FileName);
-                MessageBox.Show(vMixEvents.Count.ToString() + " events saved to xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(eventcount.ToString() + " events saved to xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void bn_clear_Click(object sender, EventArgs e)
         {
-            EventList.SelectedIndices.Clear();
-            donotredraw = true;
-            ActiveEvent = null;
-            vMixEvents.Clear();
-            EventList.VirtualListSize = 0;
-            UpdateDisplay();
-            donotredraw = false;
+            vOverlaySelection vOver = new vOverlaySelection(ActiveOverlay, "Wich layers\r\nto clear", true, true);
+            vOver.SelectedOverlayValue = new SelectedOverlay(ClearPlaylist);
+            vOver.ShowDialog();
+        }
+
+        private void ClearPlaylist(bool[] Overlay) 
+        {
+            List<vMixEvent> tempvMixEvents;
+            ListView tempEventList;
+            tempEventList = EventList; //backup active list box of event
+            tempvMixEvents = vMixEvents; //backup active list of event
+
+            for (int i = 0; i < Overlay.Length; i++)
+            {
+                if (Overlay[i]) 
+                {
+                    EventList = ListOfEventList[i] ;
+                    vMixEvents = ListOfvMixEvents[i] ;
+                    EventList.SelectedIndices.Clear();
+                    donotredraw = true;
+                    vMixEvents.Clear();
+                    if (ActiveOverlay == Convert.ToString(i)) 
+                    {
+                        ActiveEvent = null;
+                        UpdateDisplay();
+                    }
+                    EventList.VirtualListSize = 0;
+                    donotredraw = false;
+                }
+            }
+            EventList = tempEventList; //restore
+            vMixEvents = tempvMixEvents; //restore
+            
         }
 
         private void bn_load_Click(object sender, EventArgs e)
@@ -389,24 +499,56 @@ namespace vMixManager
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 List<vMixEvent > vmes = new List<vMixEvent> ();
+                List<vMixEvent>[] ListOfvmes = new List<vMixEvent>[5];
                 XmlDocument d = new XmlDocument();
                 d.Load(ofd.FileName);
-                foreach(XmlNode n in d.SelectNodes ("//vMixManager//Events//Event"))
-                    vmes.Add(new vMixEvent(n));
-                if (vmes.Count > 0)
+
+                bool[] a= {true,true,true,true,true};
+                ClearPlaylist(a);
+                int eventcount = 0;
+                foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
                 {
-                    vmes.Sort(delegate(vMixEvent e1, vMixEvent e2) {return e1.EventStart.CompareTo(e2.EventStart);});
-                    donotredraw = true;
-                    EventList.SelectedIndices.Clear();
-                    ActiveEvent = null;
-                    vMixEvents = vmes;
-                    EventList.VirtualListSize = vmes.Count;
-                    dtp_timetable.Value = vmes[0].EventStart;
-                    RebuildTimetable();
-                    UpdateDisplay();
-                    donotredraw = false;
-                    MessageBox.Show(vMixEvents.Count.ToString() + " events loaded from xml.", "Success!",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    try
+                    {
+                        ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)].Add(new vMixEvent(n));
+                        eventcount++;
+                    }
+                    catch 
+                    {
+                        ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)] = new List<vMixEvent>();
+                        ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)].Add(new vMixEvent(n));
+                        eventcount++;
+                    }
                 }
+
+                donotredraw = true;
+                ListView tempEventList = EventList;
+                List<vMixEvent> tempvMixEvents = vMixEvents;
+                string tempActiveOverlay = ActiveOverlay;
+                for (int i = 0; i < 5; i++)
+                {
+                    int count = ListOfvMixEvents[i].Count;
+
+                    if (count > 0)
+                    {
+                        ActiveEvent = null;
+                        ListOfvMixEvents[i].Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
+                        vMixEvents = ListOfvMixEvents[i];
+                        ActiveOverlay = Convert.ToString(i);
+                        EventList = ListOfEventList[i];
+                        EventList.SelectedIndices.Clear();
+                        EventList.VirtualListSize = count;
+                        dtp_timetable.Value = ListOfvMixEvents[i][0].EventStart;
+                        RebuildTimetable();
+                        //UpdateDisplay();
+                     }
+                    
+                }
+                donotredraw = false;
+                EventList = tempEventList;
+                vMixEvents = tempvMixEvents;
+                ActiveOverlay = tempActiveOverlay;
+                MessageBox.Show(eventcount.ToString() + " events loaded from xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         private void bn_append_Click(object sender, EventArgs e)
@@ -441,6 +583,7 @@ namespace vMixManager
             {
                 new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
                 new_event.EventTransitionTime = (int)ud_transition_time.Value;
+                new_event.Overlay = ActiveOverlay;
                 int position;
                 if (ActiveEvent != null)
                     position = vMixEvents.IndexOf(ActiveEvent) + 1;
@@ -464,6 +607,7 @@ namespace vMixManager
             {
                 new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
                 new_event.EventTransitionTime = (int)ud_transition_time.Value;
+                new_event.Overlay = ActiveOverlay;
                 int position;
                 if (ActiveEvent != null)
                     position = vMixEvents.IndexOf(ActiveEvent) + 1;
@@ -486,6 +630,7 @@ namespace vMixManager
             {
                 new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
                 new_event.EventTransitionTime = (int)ud_transition_time.Value;
+                new_event.Overlay = ActiveOverlay;
                 int position;
                 if (ActiveEvent != null)
                     position = vMixEvents.IndexOf(ActiveEvent) + 1;
@@ -514,6 +659,8 @@ namespace vMixManager
                     {
                         new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
                         new_event.EventTransitionTime = (int)ud_transition_time.Value;
+                        new_event.Overlay = ActiveOverlay;
+                        if (ActiveOverlay != "0") new_event.EventMuted = true;
                         int position;
                         if (ActiveEvent != null)
                             position = vMixEvents.IndexOf(ActiveEvent) + 1;
@@ -589,6 +736,7 @@ namespace vMixManager
                     {
                         new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
                         new_event.EventTransitionTime = (int)ud_transition_time.Value;
+                        new_event.Overlay = ActiveOverlay;
                         int position;
                         if (ActiveEvent != null)
                             position = vMixEvents.IndexOf(ActiveEvent) + 1;
@@ -652,6 +800,7 @@ namespace vMixManager
                     {
                         new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
                         new_event.EventTransitionTime = (int)ud_transition_time.Value;
+                        new_event.Overlay = ActiveOverlay;
                         int position;
                         if (ActiveEvent != null)
                             position = vMixEvents.IndexOf(ActiveEvent) + 1;
@@ -739,6 +888,7 @@ namespace vMixManager
                     new_event.SlideshowTransition = new_event.TransitionTypeFromString(lb_slideshow_transition.Text);
                     new_event.SlideshowTransitionTime = (int)ud_slideshow_transition.Value;
                     new_event.EventInfoText = "slideshow";
+                    new_event.Overlay = ActiveOverlay;
 
                     int position;
                     if (ActiveEvent != null)
@@ -758,54 +908,93 @@ namespace vMixManager
 
         private void bn_schedule_Click(object sender, EventArgs e)
         {
-            if (vMixEvents.Count == 0)
-                return;
+            vOverlaySelection vOver = new vOverlaySelection(ActiveOverlay, "Wich layers\nto Schedule", true, true);
+            vOver.SelectedOverlayValue = new SelectedOverlay(SchedulePlaylist);
+            vOver.ShowDialog();
+        }
 
-            DateTime start = vMixEvents[0].EventStart;
-            DateTime end = vMixEvents[vMixEvents.Count-1].EventEnd;
+        private void SchedulePlaylist(bool[] Overlay)
+        {
+            List<vMixEvent> tempvMixEvents;
+            ListView tempEventList;
+            tempEventList = EventList; //backup active list box of event
+            tempvMixEvents = vMixEvents; //backup active list of event
 
-            string datafolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)+"\\vMixScheduler";
-            if (!System.IO.Directory.Exists(datafolder))
-                System.IO.Directory.CreateDirectory(datafolder);
-
-            string schedulename = datafolder + "\\vMixSchedule.xml";
-
-            List<vMixEvent> vmes = new List<vMixEvent>();
-            XmlDocument d = new XmlDocument();
-
-            if (System.IO.File.Exists(schedulename))
+            for (int i = 0; i < Overlay.Length; i++)
             {
-                d.Load(schedulename);
-                foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
+                if (ListOfvMixEvents[i].Equals(null)) 
+                    continue;
+                if (Overlay[i])
                 {
-                    vMixEvent vme = new vMixEvent(n);
-                    if (vme.EventStart > DateTime.Now && (vme.EventStart < start || vme.EventStart > end))
-                        vmes.Add(vme);
+                    EventList = ListOfEventList[i];
+                    vMixEvents = ListOfvMixEvents[i];
+
+                    if (vMixEvents.Count == 0)
+                        continue;
+
+                    DateTime start = vMixEvents[0].EventStart;
+                    DateTime end = vMixEvents[vMixEvents.Count - 1].EventEnd;
+
+                    string datafolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vMixScheduler";
+                    if (!System.IO.Directory.Exists(datafolder))
+                        System.IO.Directory.CreateDirectory(datafolder);
+
+                    string schedulename = datafolder + "\\vMixSchedule"+ Convert.ToString(i) +".xml";
+
+                    List<vMixEvent> vmes = new List<vMixEvent>();
+                    XmlDocument d = new XmlDocument();
+
+                    if (System.IO.File.Exists(schedulename))
+                    {
+                        d.Load(schedulename);
+                        foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
+                        {
+                            vMixEvent vme = new vMixEvent(n);
+                            if (vme.EventStart > DateTime.Now && (vme.EventStart < start || vme.EventStart > end))
+                                vmes.Add(vme);
+                        }
+                        d = new XmlDocument();
+                    }
+                    vmes.AddRange(vMixEvents);
+                    vmes.Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
+
+                    XmlNode root = d.CreateElement("vMixManager");
+                    d.AppendChild(root);
+                    XmlNode events = d.CreateElement("Events");
+                    root.AppendChild(events);
+                    foreach (vMixEvent vme in vmes)
+                        events.AppendChild(vme.ToXMLNode(d));
+                    d.Save(schedulename);
+
                 }
-                d = new XmlDocument();
             }
-            vmes.AddRange(vMixEvents);
-            vmes.Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
-                        
-            XmlNode root = d.CreateElement("vMixManager");
-            d.AppendChild(root);
-            XmlNode events = d.CreateElement("Events");
-            root.AppendChild(events);
-            foreach (vMixEvent vme in vmes)
-                events.AppendChild(vme.ToXMLNode(d));
-            d.Save(schedulename);
+            EventList = tempEventList; //restore
+            vMixEvents = tempvMixEvents; //restore
             MessageBox.Show("Events scheduled.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         private void bn_erase_schedule_Click(object sender, EventArgs e)
         {
+            vOverlaySelection vOver = new vOverlaySelection(ActiveOverlay, "Wich layers\nto erase?", true, true);
+            vOver.SelectedOverlayValue = new SelectedOverlay(Erase_SchedulePlaylist);
+            vOver.ShowDialog();
+        }
+
+        private void Erase_SchedulePlaylist(bool[] Overlay) 
+        {
             string datafolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vMixScheduler";
-            string schedulename = datafolder + "\\vMixSchedule.xml";
             if (MessageBox.Show("This will erase ALL currently scheduled Events,\r\nincluding the ones scheduled earlier;\r\nrunning events will be terminated.\r\n\r\nAre you sure?", "Beware!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.OK)
             {
-                if (System.IO.File.Exists(schedulename))
-                    System.IO.File.Delete(schedulename);
-                MessageBox.Show("Schedule erased.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                for (int i = 0; i < Overlay.Length; i++)
+                {
+                    if (Overlay[i])
+                    {
+                        string schedulename = datafolder + "\\vMixSchedule" + Convert.ToString(i) + ".xml";
+                        if (System.IO.File.Exists(schedulename))
+                            System.IO.File.Delete(schedulename);
+                    }
+                }
             }
         }
 
@@ -947,5 +1136,142 @@ namespace vMixManager
                 FixInPointAndDuration();
             }
         }
+
+        private void lb_overlay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (donotredraw) return;
+            string ovrl = lb_overlay.Text;
+            ovrl = Convert.ToString(tabControl1.SelectedIndex);
+            if (ActiveOverlay == ovrl)
+                return;
+            else
+            {
+                //EventList0.Visible = (ovrl == "0");
+                //EventList1.Visible = (ovrl == "1");
+                //EventList2.Visible = (ovrl == "2");
+                //EventList3.Visible = (ovrl == "3");
+                //EventList4.Visible = (ovrl == "4");
+                ActiveOverlay = ovrl;
+                switch (ovrl) 
+                {
+                    case "0":
+                        EventList = EventList0;
+                        vMixEvents = vMixEvents0;
+                        break;
+                    case "1":
+                        EventList = EventList1;
+                        vMixEvents = vMixEvents1;
+                        break;
+                    case "2":
+                        EventList = EventList2;
+                        vMixEvents = vMixEvents2;
+                        break;
+                    case "3":
+                        EventList = EventList3;
+                        vMixEvents = vMixEvents3;
+                        break;
+                    case "4":
+                        EventList = EventList4;
+                        vMixEvents = vMixEvents4;
+                        break;
+                }
+            }
+            //EventList_SelectedIndexChanged(sender,e);
+        }
+
+        private void bn_sync_Click(object sender, EventArgs e)
+        {
+            vOverlaySelection vOver = new vOverlaySelection(ActiveOverlay, "Wich layers\rto synchrone:");
+            vOver.SelectedOverlayValue = new SelectedOverlay(this.SyncOverlay);
+            vOver.ShowDialog();
+        }
+
+        private void SyncOverlay(bool[] Overlay) 
+        {
+            List<vMixEvent> tempvMixEvents;
+            System.Windows.Forms.ListView tempEventList;
+            tempEventList = EventList; //backup active list box of event
+            tempvMixEvents = vMixEvents; //backup active list of event
+            for (int i = 0; i < 5; i++)
+            {
+                if (Overlay[i] && ActiveOverlay != Convert.ToString(i))
+                {
+                    EventList = ListOfEventList[i];
+                    vMixEvents = ListOfvMixEvents[i];
+                    RebuildTimetable();
+                }
+            }
+            EventList = tempEventList;
+            vMixEvents = tempvMixEvents;
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool[] a = { true, true, true, true, true };
+            ClearPlaylist(a);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void spliceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SpliceEvent();
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            copyToolStripMenuItem_Click(sender, e);
+            bn_remove_Click(sender,e);
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            donotredraw = true;
+            if (copybuffer.Count > 0) copybuffer.Clear();
+            copybuffer.Capacity = EventList.SelectedIndices.Count;
+            int i = 0;
+            foreach (int l in EventList.SelectedIndices) 
+            {
+                copybuffer.Insert(i,vMixEvents[l]);
+
+                i++;
+            }
+            donotredraw = false;
+            pasteToolStripMenuItem.Enabled = true;
+            pasteToolStripMenuItem1.Enabled = true;
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ActiveEvent == null) return;
+            int position = vMixEvents.IndexOf(ActiveEvent);
+            donotredraw = true;
+            if (copybuffer.Count == 0) return;
+
+            EventList.SelectedIndices.Clear();
+            EventList.VirtualListSize = vMixEvents.Count + copybuffer.Count;
+            foreach (vMixEvent v in copybuffer)
+            {
+                vMixEvents.Insert(position, v);
+            }
+            for (int i = position; i < position + copybuffer.Count; i++) EventList.SelectedIndices.Add(i);
+            RebuildTimetable();
+            donotredraw = false;
+            UpdateDisplay();
+        }
+
+        private void findToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
