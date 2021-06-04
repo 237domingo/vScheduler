@@ -45,12 +45,11 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\vMixScheduler\vManager\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin\Release\vManager.XML</DocumentationFile>
     <LangVersion>5</LangVersion>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <UseVSHostingProcess>false</UseVSHostingProcess>
@@ -93,6 +92,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MediaInfoDLL.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="vMixEvent.cs" />
     <Compile Include="vManager.cs">
@@ -117,14 +121,9 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="vManager.resx">
       <DependentUpon>vManager.cs</DependentUpon>
     </EmbeddedResource>
@@ -150,6 +149,123 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="pencil.ico" />
+    <None Include="Resources\Refresh_256x256.png" />
+    <None Include="Resources\Text_Document_48x48.png" />
+    <None Include="Resources\Text_Document_32x32.png" />
+    <None Include="Resources\Text_Document_24x24.png" />
+    <None Include="Resources\Text_Document_16x16.png" />
+    <None Include="Resources\New_48x48.png" />
+    <None Include="Resources\New_32x32.png" />
+    <None Include="Resources\New_24x24.png" />
+    <None Include="Resources\New_16x16.png" />
+    <None Include="Resources\Open_48x48.png" />
+    <None Include="Resources\Open_32x32.png" />
+    <None Include="Resources\Open_24x24.png" />
+    <None Include="Resources\Open_16x16.png" />
+    <None Include="Resources\Save_48x48.png" />
+    <None Include="Resources\Save_32x32.png" />
+    <None Include="Resources\Save_24x24.png" />
+    <None Include="Resources\Save_16x16.png" />
+    <None Include="Resources\Log_Out_48x48.png" />
+    <None Include="Resources\Log_Out_32x32.png" />
+    <None Include="Resources\Log_Out_24x24.png" />
+    <None Include="Resources\Log_Out_16x16.png" />
+    <None Include="Resources\Globe_48x481.png" />
+    <None Include="Resources\Globe_32x321.png" />
+    <None Include="Resources\Globe_24x241.png" />
+    <None Include="Resources\Globe_16x161.png" />
+    <None Include="Resources\Stock_Index_Down_48x48.png" />
+    <None Include="Resources\Stock_Index_Down_32x32.png" />
+    <None Include="Resources\Stock_Index_Down_24x24.png" />
+    <None Include="Resources\Stock_Index_Down_16x16.png" />
+    <None Include="Resources\Refresh_48x48.png" />
+    <None Include="Resources\Refresh_32x32.png" />
+    <None Include="Resources\Refresh_24x24.png" />
+    <None Include="Resources\Refresh_16x16.png" />
+    <None Include="Resources\Remove_48x48.png" />
+    <None Include="Resources\Remove_32x32.png" />
+    <None Include="Resources\Remove_24x24.png" />
+    <None Include="Resources\Remove_16x16.png" />
+    <None Include="Resources\Stock_Index_Up_48x48.png" />
+    <None Include="Resources\Stock_Index_Up_32x32.png" />
+    <None Include="Resources\Stock_Index_Up_24x24.png" />
+    <None Include="Resources\Stock_Index_Up_16x16.png" />
+    <None Include="Resources\Copy_v2_48x48.png" />
+    <None Include="Resources\Copy_v2_32x32.png" />
+    <None Include="Resources\Copy_v2_24x24.png" />
+    <None Include="Resources\Copy_v2_16x16.png" />
+    <None Include="Resources\Copy v2_48x48.png" />
+    <None Include="Resources\Copy v2_32x32.png" />
+    <None Include="Resources\Copy v2_24x24.png" />
+    <None Include="Resources\Copy v2_16x16.png" />
+    <None Include="Resources\Upload_48x48.png" />
+    <None Include="Resources\Upload_32x32.png" />
+    <None Include="Resources\Upload_24x24.png" />
+    <None Include="Resources\Upload_16x16.png" />
+    <None Include="Resources\Next_48x48.png" />
+    <None Include="Resources\Next_32x32.png" />
+    <None Include="Resources\Next_24x24.png" />
+    <None Include="Resources\Next_16x16.png" />
+    <None Include="Resources\Information_48x48.png" />
+    <None Include="Resources\Information_32x32.png" />
+    <None Include="Resources\Information_24x24.png" />
+    <None Include="Resources\Information_16x16.png" />
+    <None Include="Resources\Help_48x48.png" />
+    <None Include="Resources\Help_32x32.png" />
+    <None Include="Resources\Help_24x24.png" />
+    <None Include="Resources\Help_16x16.png" />
+    <None Include="Resources\Hard Disk_48x48.png" />
+    <None Include="Resources\Hard Disk_32x32.png" />
+    <None Include="Resources\Hard Disk_24x24.png" />
+    <None Include="Resources\Hard Disk_16x16.png" />
+    <None Include="Resources\Globe_48x48.png" />
+    <None Include="Resources\Globe_32x32.png" />
+    <None Include="Resources\Globe_24x24.png" />
+    <None Include="Resources\Globe_16x16.png" />
+    <None Include="Resources\Forward_48x48.png" />
+    <None Include="Resources\Forward_32x32.png" />
+    <None Include="Resources\Forward_24x24.png" />
+    <None Include="Resources\Forward_16x16.png" />
+    <None Include="Resources\Folder_48x48.png" />
+    <None Include="Resources\Folder_32x32.png" />
+    <None Include="Resources\Folder_24x24.png" />
+    <None Include="Resources\Folder_16x16.png" />
+    <None Include="Resources\Find_48x48.png" />
+    <None Include="Resources\Find_32x32.png" />
+    <None Include="Resources\Find_24x24.png" />
+    <None Include="Resources\Find_16x16.png" />
+    <None Include="Resources\Favorites_48x48.png" />
+    <None Include="Resources\Favorites_32x32.png" />
+    <None Include="Resources\Favorites_24x24.png" />
+    <None Include="Resources\Favorites_16x16.png" />
+    <None Include="Resources\Edit_48x48.png" />
+    <None Include="Resources\Edit_32x32.png" />
+    <None Include="Resources\Edit_24x24.png" />
+    <None Include="Resources\Edit_16x16.png" />
+    <None Include="Resources\Delete_48x48.png" />
+    <None Include="Resources\Delete_32x32.png" />
+    <None Include="Resources\Delete_24x24.png" />
+    <None Include="Resources\Delete_16x16.png" />
+    <None Include="Resources\Cut_48x48.png" />
+    <None Include="Resources\Cut_32x32.png" />
+    <None Include="Resources\Cut_24x24.png" />
+    <None Include="Resources\Cut_16x16.png" />
+    <None Include="Resources\Copy_48x48.png" />
+    <None Include="Resources\Copy_32x32.png" />
+    <None Include="Resources\Copy_24x24.png" />
+    <None Include="Resources\Copy_16x16.png" />
+    <None Include="Resources\Add_48x48.png" />
+    <None Include="Resources\Add_32x32.png" />
+    <None Include="Resources\Add_24x24.png" />
+    <None Include="Resources\Add_16x16.png" />
+    <None Include="Resources\Stock Index Down_48x48.png" />
+    <None Include="Resources\Stock Index Down_24x24.png" />
+    <None Include="Resources\Stock Index Down_16x16.png" />
+    <None Include="Resources\Stock Index Up_48x48.png" />
+    <None Include="Resources\Stock Index Up_32x32.png" />
+    <None Include="Resources\Stock Index Up_24x24.png" />
+    <None Include="Resources\Stock Index Up_16x16.png" />
+    <None Include="Resources\Stock Index Down_32x32.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

@@ -31,47 +31,20 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(vMixManager));
             this.Management = new System.Windows.Forms.Panel();
-            this.bn_sync = new System.Windows.Forms.Button();
+            this.dtp_endtime = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.lb_overlay = new System.Windows.Forms.ComboBox();
-            this.bn_add_input = new System.Windows.Forms.Button();
-            this.bn_add_photos = new System.Windows.Forms.Button();
-            this.bn_add_audio = new System.Windows.Forms.Button();
-            this.bn_add_image = new System.Windows.Forms.Button();
-            this.bn_add_manual = new System.Windows.Forms.Button();
-            this.bn_add_black = new System.Windows.Forms.Button();
-            this.bn_add_video = new System.Windows.Forms.Button();
-            this.bn_settime_0 = new System.Windows.Forms.Button();
-            this.bn_now = new System.Windows.Forms.Button();
-            this.bn_view_text = new System.Windows.Forms.Button();
-            this.bn_erase_schedule = new System.Windows.Forms.Button();
-            this.bn_schedule = new System.Windows.Forms.Button();
-            this.bn_clear = new System.Windows.Forms.Button();
-            this.bn_append = new System.Windows.Forms.Button();
+            this.lb_event = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.EventDetails = new System.Windows.Forms.GroupBox();
-            this.cb_audio = new System.Windows.Forms.CheckBox();
             this.pnl_slideshow = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.ud_slideshow_interval = new System.Windows.Forms.NumericUpDown();
             this.lb_slideshow_transition = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.ud_slideshow_transition = new System.Windows.Forms.NumericUpDown();
-            this.bn_dr_100 = new System.Windows.Forms.Button();
-            this.bn_dr_50 = new System.Windows.Forms.Button();
-            this.bn_dr_33 = new System.Windows.Forms.Button();
-            this.bn_dr_25 = new System.Windows.Forms.Button();
-            this.bn_ip_25 = new System.Windows.Forms.Button();
-            this.bn_ip_33 = new System.Windows.Forms.Button();
-            this.bn_ip_50 = new System.Windows.Forms.Button();
-            this.bn_ip_zero = new System.Windows.Forms.Button();
             this.dtp_inpoint = new System.Windows.Forms.DateTimePicker();
             this.label9 = new System.Windows.Forms.Label();
-            this.bn_clone = new System.Windows.Forms.Button();
             this.cb_keep_duration = new System.Windows.Forms.CheckBox();
-            this.bn_move_up = new System.Windows.Forms.Button();
             this.rb_toblack = new System.Windows.Forms.RadioButton();
             this.tb_title = new System.Windows.Forms.TextBox();
             this.rb_looping = new System.Windows.Forms.RadioButton();
@@ -83,15 +56,19 @@
             this.dtp_duration = new System.Windows.Forms.DateTimePicker();
             this.dtp_start = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.ud_transition_time = new System.Windows.Forms.NumericUpDown();
             this.rtb_fileinfo = new System.Windows.Forms.RichTextBox();
-            this.bn_remove = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.bn_move_down = new System.Windows.Forms.Button();
+            this.bn_pull = new System.Windows.Forms.Button();
+            this.bn_erase_schedule = new System.Windows.Forms.Button();
+            this.bn_schedule = new System.Windows.Forms.Button();
+            this.bn_clear = new System.Windows.Forms.Button();
+            this.bn_append = new System.Windows.Forms.Button();
             this.bn_save = new System.Windows.Forms.Button();
             this.bn_load = new System.Windows.Forms.Button();
             this.dtp_timetable = new System.Windows.Forms.DateTimePicker();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.event_title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.event_start = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -144,14 +121,6 @@
             this.Overlay3 = new System.Windows.Forms.TabPage();
             this.Overlay4 = new System.Windows.Forms.TabPage();
             this.mainmenu = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.appendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addeventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.videotoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -162,9 +131,6 @@
             this.colortoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.InputtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spliceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -183,6 +149,38 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.cb_audio = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.pnl_preview = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.bn_add_replace = new System.Windows.Forms.Button();
+            this.bn_add = new System.Windows.Forms.Button();
+            this.bn_move_up = new System.Windows.Forms.Button();
+            this.bn_move_down = new System.Windows.Forms.Button();
+            this.bn_clone = new System.Windows.Forms.Button();
+            this.bn_splice = new System.Windows.Forms.Button();
+            this.bn_shuffle = new System.Windows.Forms.Button();
+            this.bn_remove = new System.Windows.Forms.Button();
+            this.bn_sync = new System.Windows.Forms.Button();
+            this.bn_now = new System.Windows.Forms.Button();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.appendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label8 = new System.Windows.Forms.Label();
             this.Management.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.EventDetails.SuspendLayout();
@@ -198,255 +196,92 @@
             this.Overlay3.SuspendLayout();
             this.Overlay4.SuspendLayout();
             this.mainmenu.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.pnl_preview.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // Management
             // 
-            this.Management.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Management.Controls.Add(this.bn_sync);
+            this.Management.BackColor = System.Drawing.SystemColors.Control;
+            this.Management.Controls.Add(this.pnl_preview);
             this.Management.Controls.Add(this.groupBox1);
-            this.Management.Controls.Add(this.bn_settime_0);
-            this.Management.Controls.Add(this.bn_now);
-            this.Management.Controls.Add(this.bn_view_text);
-            this.Management.Controls.Add(this.bn_erase_schedule);
-            this.Management.Controls.Add(this.bn_schedule);
-            this.Management.Controls.Add(this.bn_clear);
-            this.Management.Controls.Add(this.bn_append);
-            this.Management.Controls.Add(this.EventDetails);
-            this.Management.Controls.Add(this.bn_save);
-            this.Management.Controls.Add(this.bn_load);
-            this.Management.Controls.Add(this.dtp_timetable);
-            this.Management.Controls.Add(this.label7);
+            this.Management.Controls.Add(this.panel1);
             this.Management.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Management.Location = new System.Drawing.Point(641, 24);
+            this.Management.Location = new System.Drawing.Point(753, 24);
             this.Management.Name = "Management";
-            this.Management.Size = new System.Drawing.Size(358, 527);
+            this.Management.Size = new System.Drawing.Size(246, 537);
             this.Management.TabIndex = 0;
             // 
-            // bn_sync
+            // dtp_endtime
             // 
-            this.bn_sync.Location = new System.Drawing.Point(310, 39);
-            this.bn_sync.Name = "bn_sync";
-            this.bn_sync.Size = new System.Drawing.Size(19, 23);
-            this.bn_sync.TabIndex = 33;
-            this.bn_sync.Text = "sync";
-            this.bn_sync.UseVisualStyleBackColor = true;
-            this.bn_sync.Click += new System.EventHandler(this.bn_sync_Click);
+            this.dtp_endtime.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.dtp_endtime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtp_endtime.Location = new System.Drawing.Point(61, 70);
+            this.dtp_endtime.Multiline = true;
+            this.dtp_endtime.Name = "dtp_endtime";
+            this.dtp_endtime.ReadOnly = true;
+            this.dtp_endtime.Size = new System.Drawing.Size(124, 22);
+            this.dtp_endtime.TabIndex = 34;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Controls.Add(this.lb_overlay);
-            this.groupBox1.Controls.Add(this.bn_add_input);
-            this.groupBox1.Controls.Add(this.bn_add_photos);
-            this.groupBox1.Controls.Add(this.bn_add_audio);
-            this.groupBox1.Controls.Add(this.bn_add_image);
-            this.groupBox1.Controls.Add(this.bn_add_manual);
-            this.groupBox1.Controls.Add(this.bn_add_black);
-            this.groupBox1.Controls.Add(this.bn_add_video);
-            this.groupBox1.Location = new System.Drawing.Point(13, 170);
+            this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.Controls.Add(this.bn_add_replace);
+            this.groupBox1.Controls.Add(this.bn_add);
+            this.groupBox1.Controls.Add(this.lb_event);
+            this.groupBox1.Controls.Add(this.label15);
+            this.groupBox1.Controls.Add(this.EventDetails);
+            this.groupBox1.Controls.Add(this.bn_move_up);
+            this.groupBox1.Controls.Add(this.bn_move_down);
+            this.groupBox1.Controls.Add(this.bn_clone);
+            this.groupBox1.Controls.Add(this.bn_splice);
+            this.groupBox1.Controls.Add(this.bn_shuffle);
+            this.groupBox1.Controls.Add(this.bn_remove);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(0, 169);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(320, 83);
+            this.groupBox1.Size = new System.Drawing.Size(246, 313);
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Add Event:";
+            this.groupBox1.Text = "EVENTS TOOLBOX";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
-            // label13
+            // lb_event
             // 
-            this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.label13.Enabled = false;
-            this.label13.Location = new System.Drawing.Point(246, 48);
-            this.label13.MinimumSize = new System.Drawing.Size(35, 21);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(35, 21);
-            this.label13.TabIndex = 22;
-            this.label13.Text = "Layer";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label13.Visible = false;
+            this.lb_event.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_event.FormattingEnabled = true;
+            this.lb_event.Items.AddRange(new object[] {
+            "Video",
+            "Audio",
+            "Image",
+            "Slideshow",
+            "Color",
+            "Input",
+            "Operator"});
+            this.lb_event.Location = new System.Drawing.Point(51, 13);
+            this.lb_event.Name = "lb_event";
+            this.lb_event.Size = new System.Drawing.Size(95, 24);
+            this.lb_event.TabIndex = 21;
             // 
-            // lb_overlay
+            // label15
             // 
-            this.lb_overlay.BackColor = System.Drawing.SystemColors.Window;
-            this.lb_overlay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.lb_overlay.Enabled = false;
-            this.lb_overlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lb_overlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_overlay.FormattingEnabled = true;
-            this.lb_overlay.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4"});
-            this.lb_overlay.Location = new System.Drawing.Point(285, 48);
-            this.lb_overlay.Name = "lb_overlay";
-            this.lb_overlay.Size = new System.Drawing.Size(31, 21);
-            this.lb_overlay.TabIndex = 21;
-            this.lb_overlay.Visible = false;
-            this.lb_overlay.SelectedIndexChanged += new System.EventHandler(this.lb_overlay_SelectedIndexChanged);
-            // 
-            // bn_add_input
-            // 
-            this.bn_add_input.Location = new System.Drawing.Point(163, 48);
-            this.bn_add_input.Name = "bn_add_input";
-            this.bn_add_input.Size = new System.Drawing.Size(74, 23);
-            this.bn_add_input.TabIndex = 19;
-            this.bn_add_input.Text = "Input";
-            this.bn_add_input.UseVisualStyleBackColor = true;
-            this.bn_add_input.Click += new System.EventHandler(this.bn_add_input_Click);
-            // 
-            // bn_add_photos
-            // 
-            this.bn_add_photos.Location = new System.Drawing.Point(242, 19);
-            this.bn_add_photos.Name = "bn_add_photos";
-            this.bn_add_photos.Size = new System.Drawing.Size(74, 23);
-            this.bn_add_photos.TabIndex = 18;
-            this.bn_add_photos.Text = "Photo";
-            this.bn_add_photos.UseVisualStyleBackColor = true;
-            this.bn_add_photos.Click += new System.EventHandler(this.bn_add_photos_Click);
-            // 
-            // bn_add_audio
-            // 
-            this.bn_add_audio.Location = new System.Drawing.Point(84, 19);
-            this.bn_add_audio.Name = "bn_add_audio";
-            this.bn_add_audio.Size = new System.Drawing.Size(74, 23);
-            this.bn_add_audio.TabIndex = 17;
-            this.bn_add_audio.Text = "Audioclip";
-            this.bn_add_audio.UseVisualStyleBackColor = true;
-            this.bn_add_audio.Click += new System.EventHandler(this.bn_add_audio_Click);
-            // 
-            // bn_add_image
-            // 
-            this.bn_add_image.Location = new System.Drawing.Point(163, 19);
-            this.bn_add_image.Name = "bn_add_image";
-            this.bn_add_image.Size = new System.Drawing.Size(74, 23);
-            this.bn_add_image.TabIndex = 16;
-            this.bn_add_image.Text = "Image";
-            this.bn_add_image.UseVisualStyleBackColor = true;
-            this.bn_add_image.Click += new System.EventHandler(this.bn_add_image_Click);
-            // 
-            // bn_add_manual
-            // 
-            this.bn_add_manual.Location = new System.Drawing.Point(5, 48);
-            this.bn_add_manual.Name = "bn_add_manual";
-            this.bn_add_manual.Size = new System.Drawing.Size(74, 23);
-            this.bn_add_manual.TabIndex = 15;
-            this.bn_add_manual.Text = "Operator";
-            this.bn_add_manual.UseVisualStyleBackColor = true;
-            this.bn_add_manual.Click += new System.EventHandler(this.bn_add_manual_Click);
-            // 
-            // bn_add_black
-            // 
-            this.bn_add_black.Location = new System.Drawing.Point(84, 48);
-            this.bn_add_black.Name = "bn_add_black";
-            this.bn_add_black.Size = new System.Drawing.Size(74, 23);
-            this.bn_add_black.TabIndex = 14;
-            this.bn_add_black.Text = "Blackness";
-            this.bn_add_black.UseVisualStyleBackColor = true;
-            this.bn_add_black.Click += new System.EventHandler(this.bn_add_black_Click);
-            // 
-            // bn_add_video
-            // 
-            this.bn_add_video.Location = new System.Drawing.Point(5, 19);
-            this.bn_add_video.Name = "bn_add_video";
-            this.bn_add_video.Size = new System.Drawing.Size(74, 23);
-            this.bn_add_video.TabIndex = 2;
-            this.bn_add_video.Text = "Videoclip";
-            this.bn_add_video.UseVisualStyleBackColor = true;
-            this.bn_add_video.Click += new System.EventHandler(this.bn_add_video_Click);
-            // 
-            // bn_settime_0
-            // 
-            this.bn_settime_0.BackColor = System.Drawing.Color.Transparent;
-            this.bn_settime_0.ForeColor = System.Drawing.Color.Blue;
-            this.bn_settime_0.Location = new System.Drawing.Point(18, 65);
-            this.bn_settime_0.Name = "bn_settime_0";
-            this.bn_settime_0.Size = new System.Drawing.Size(49, 23);
-            this.bn_settime_0.TabIndex = 27;
-            this.bn_settime_0.Text = "00:00";
-            this.bn_settime_0.UseVisualStyleBackColor = false;
-            this.bn_settime_0.Click += new System.EventHandler(this.bn_settime_0_Click);
-            // 
-            // bn_now
-            // 
-            this.bn_now.Location = new System.Drawing.Point(270, 39);
-            this.bn_now.Name = "bn_now";
-            this.bn_now.Size = new System.Drawing.Size(39, 23);
-            this.bn_now.TabIndex = 26;
-            this.bn_now.Text = "Now";
-            this.bn_now.UseVisualStyleBackColor = true;
-            this.bn_now.Click += new System.EventHandler(this.bn_now_Click);
-            // 
-            // bn_view_text
-            // 
-            this.bn_view_text.Location = new System.Drawing.Point(18, 93);
-            this.bn_view_text.Name = "bn_view_text";
-            this.bn_view_text.Size = new System.Drawing.Size(102, 23);
-            this.bn_view_text.TabIndex = 23;
-            this.bn_view_text.Text = "View Text";
-            this.bn_view_text.UseVisualStyleBackColor = true;
-            this.bn_view_text.Click += new System.EventHandler(this.bn_view_text_Click);
-            // 
-            // bn_erase_schedule
-            // 
-            this.bn_erase_schedule.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.bn_erase_schedule.Location = new System.Drawing.Point(176, 119);
-            this.bn_erase_schedule.Name = "bn_erase_schedule";
-            this.bn_erase_schedule.Size = new System.Drawing.Size(153, 23);
-            this.bn_erase_schedule.TabIndex = 22;
-            this.bn_erase_schedule.Text = "Erase Schedule";
-            this.bn_erase_schedule.UseVisualStyleBackColor = false;
-            this.bn_erase_schedule.Click += new System.EventHandler(this.bn_erase_schedule_Click);
-            // 
-            // bn_schedule
-            // 
-            this.bn_schedule.BackColor = System.Drawing.Color.Yellow;
-            this.bn_schedule.Location = new System.Drawing.Point(18, 119);
-            this.bn_schedule.Name = "bn_schedule";
-            this.bn_schedule.Size = new System.Drawing.Size(153, 23);
-            this.bn_schedule.TabIndex = 20;
-            this.bn_schedule.Text = "Push to Schedule";
-            this.bn_schedule.UseVisualStyleBackColor = false;
-            this.bn_schedule.Click += new System.EventHandler(this.bn_schedule_Click);
-            // 
-            // bn_clear
-            // 
-            this.bn_clear.Location = new System.Drawing.Point(18, 12);
-            this.bn_clear.Name = "bn_clear";
-            this.bn_clear.Size = new System.Drawing.Size(74, 23);
-            this.bn_clear.TabIndex = 13;
-            this.bn_clear.Text = "Clear";
-            this.bn_clear.UseVisualStyleBackColor = true;
-            this.bn_clear.Click += new System.EventHandler(this.bn_clear_Click);
-            // 
-            // bn_append
-            // 
-            this.bn_append.Location = new System.Drawing.Point(176, 12);
-            this.bn_append.Name = "bn_append";
-            this.bn_append.Size = new System.Drawing.Size(74, 23);
-            this.bn_append.TabIndex = 12;
-            this.bn_append.Text = "Append";
-            this.bn_append.UseVisualStyleBackColor = true;
-            this.bn_append.Click += new System.EventHandler(this.bn_append_Click);
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(10, 23);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(33, 13);
+            this.label15.TabIndex = 20;
+            this.label15.Text = "Add:";
             // 
             // EventDetails
             // 
             this.EventDetails.Controls.Add(this.cb_audio);
             this.EventDetails.Controls.Add(this.pnl_slideshow);
-            this.EventDetails.Controls.Add(this.bn_dr_100);
-            this.EventDetails.Controls.Add(this.bn_dr_50);
-            this.EventDetails.Controls.Add(this.bn_dr_33);
-            this.EventDetails.Controls.Add(this.bn_dr_25);
-            this.EventDetails.Controls.Add(this.bn_ip_25);
-            this.EventDetails.Controls.Add(this.bn_ip_33);
-            this.EventDetails.Controls.Add(this.bn_ip_50);
-            this.EventDetails.Controls.Add(this.bn_ip_zero);
             this.EventDetails.Controls.Add(this.dtp_inpoint);
             this.EventDetails.Controls.Add(this.label9);
-            this.EventDetails.Controls.Add(this.bn_clone);
             this.EventDetails.Controls.Add(this.cb_keep_duration);
-            this.EventDetails.Controls.Add(this.bn_move_up);
             this.EventDetails.Controls.Add(this.rb_toblack);
             this.EventDetails.Controls.Add(this.tb_title);
             this.EventDetails.Controls.Add(this.rb_looping);
@@ -458,44 +293,27 @@
             this.EventDetails.Controls.Add(this.dtp_duration);
             this.EventDetails.Controls.Add(this.dtp_start);
             this.EventDetails.Controls.Add(this.label5);
-            this.EventDetails.Controls.Add(this.label3);
             this.EventDetails.Controls.Add(this.ud_transition_time);
             this.EventDetails.Controls.Add(this.rtb_fileinfo);
-            this.EventDetails.Controls.Add(this.bn_remove);
             this.EventDetails.Controls.Add(this.label6);
-            this.EventDetails.Controls.Add(this.bn_move_down);
             this.EventDetails.Enabled = false;
-            this.EventDetails.Location = new System.Drawing.Point(11, 259);
+            this.EventDetails.Location = new System.Drawing.Point(6, 84);
             this.EventDetails.Name = "EventDetails";
-            this.EventDetails.Size = new System.Drawing.Size(322, 281);
+            this.EventDetails.Size = new System.Drawing.Size(237, 226);
             this.EventDetails.TabIndex = 11;
             this.EventDetails.TabStop = false;
-            this.EventDetails.Text = "Event Details:";
-            // 
-            // cb_audio
-            // 
-            this.cb_audio.AutoSize = true;
-            this.cb_audio.Enabled = false;
-            this.cb_audio.Location = new System.Drawing.Point(251, 100);
-            this.cb_audio.Name = "cb_audio";
-            this.cb_audio.Size = new System.Drawing.Size(53, 17);
-            this.cb_audio.TabIndex = 39;
-            this.cb_audio.Text = "Audio";
-            this.cb_audio.UseVisualStyleBackColor = true;
-            this.cb_audio.CheckedChanged += new System.EventHandler(this.cb_audio_CheckedChanged);
+            this.EventDetails.Text = "Event Parameters";
             // 
             // pnl_slideshow
             // 
             this.pnl_slideshow.Controls.Add(this.label12);
             this.pnl_slideshow.Controls.Add(this.label11);
-            this.pnl_slideshow.Controls.Add(this.label10);
             this.pnl_slideshow.Controls.Add(this.ud_slideshow_interval);
             this.pnl_slideshow.Controls.Add(this.lb_slideshow_transition);
-            this.pnl_slideshow.Controls.Add(this.label8);
             this.pnl_slideshow.Controls.Add(this.ud_slideshow_transition);
-            this.pnl_slideshow.Location = new System.Drawing.Point(157, 120);
+            this.pnl_slideshow.Location = new System.Drawing.Point(123, 85);
             this.pnl_slideshow.Name = "pnl_slideshow";
-            this.pnl_slideshow.Size = new System.Drawing.Size(157, 70);
+            this.pnl_slideshow.Size = new System.Drawing.Size(101, 70);
             this.pnl_slideshow.TabIndex = 27;
             this.pnl_slideshow.Visible = false;
             // 
@@ -505,9 +323,9 @@
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(-1, 25);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(67, 13);
+            this.label12.Size = new System.Drawing.Size(50, 13);
             this.label12.TabIndex = 26;
-            this.label12.Text = "Transition:";
+            this.label12.Text = "Transit:";
             // 
             // label11
             // 
@@ -515,23 +333,14 @@
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.Location = new System.Drawing.Point(1, 3);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(54, 13);
+            this.label11.Size = new System.Drawing.Size(41, 13);
             this.label11.TabIndex = 25;
-            this.label11.Text = "Interval:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(137, 6);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(12, 13);
-            this.label10.TabIndex = 24;
-            this.label10.Text = "s";
+            this.label11.Text = "Inter.:";
             // 
             // ud_slideshow_interval
             // 
             this.ud_slideshow_interval.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ud_slideshow_interval.Location = new System.Drawing.Point(76, 2);
+            this.ud_slideshow_interval.Location = new System.Drawing.Point(46, -1);
             this.ud_slideshow_interval.Margin = new System.Windows.Forms.Padding(0);
             this.ud_slideshow_interval.Maximum = new decimal(new int[] {
             99,
@@ -539,9 +348,10 @@
             0,
             0});
             this.ud_slideshow_interval.Name = "ud_slideshow_interval";
-            this.ud_slideshow_interval.Size = new System.Drawing.Size(59, 21);
+            this.ud_slideshow_interval.Size = new System.Drawing.Size(55, 21);
             this.ud_slideshow_interval.TabIndex = 23;
             this.ud_slideshow_interval.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolTip1.SetToolTip(this.ud_slideshow_interval, "Duration in S between images");
             this.ud_slideshow_interval.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
             this.ud_slideshow_interval.Value = new decimal(new int[] {
             5,
@@ -567,18 +377,10 @@
             "CubeZoom"});
             this.lb_slideshow_transition.Location = new System.Drawing.Point(0, 45);
             this.lb_slideshow_transition.Name = "lb_slideshow_transition";
-            this.lb_slideshow_transition.Size = new System.Drawing.Size(73, 21);
+            this.lb_slideshow_transition.Size = new System.Drawing.Size(102, 21);
             this.lb_slideshow_transition.TabIndex = 21;
+            this.toolTip1.SetToolTip(this.lb_slideshow_transition, "Choose transition for slide");
             this.lb_slideshow_transition.SelectedIndexChanged += new System.EventHandler(this.lb_slideshow_transition_SelectedIndexChanged);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(137, 49);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(20, 13);
-            this.label8.TabIndex = 18;
-            this.label8.Text = "ms";
             // 
             // ud_slideshow_transition
             // 
@@ -588,7 +390,7 @@
             0,
             0,
             0});
-            this.ud_slideshow_transition.Location = new System.Drawing.Point(76, 45);
+            this.ud_slideshow_transition.Location = new System.Drawing.Point(46, 22);
             this.ud_slideshow_transition.Margin = new System.Windows.Forms.Padding(0);
             this.ud_slideshow_transition.Maximum = new decimal(new int[] {
             99999,
@@ -596,9 +398,10 @@
             0,
             0});
             this.ud_slideshow_transition.Name = "ud_slideshow_transition";
-            this.ud_slideshow_transition.Size = new System.Drawing.Size(58, 21);
+            this.ud_slideshow_transition.Size = new System.Drawing.Size(55, 21);
             this.ud_slideshow_transition.TabIndex = 19;
             this.ud_slideshow_transition.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolTip1.SetToolTip(this.ud_slideshow_transition, "Duration in ms of transition");
             this.ud_slideshow_transition.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
             this.ud_slideshow_transition.Value = new decimal(new int[] {
             500,
@@ -607,157 +410,50 @@
             0});
             this.ud_slideshow_transition.ValueChanged += new System.EventHandler(this.ud_slideshow_transition_ValueChanged);
             // 
-            // bn_dr_100
-            // 
-            this.bn_dr_100.Enabled = false;
-            this.bn_dr_100.Location = new System.Drawing.Point(276, 142);
-            this.bn_dr_100.Name = "bn_dr_100";
-            this.bn_dr_100.Size = new System.Drawing.Size(39, 23);
-            this.bn_dr_100.TabIndex = 38;
-            this.bn_dr_100.Text = "1/1";
-            this.bn_dr_100.UseVisualStyleBackColor = true;
-            this.bn_dr_100.Click += new System.EventHandler(this.bn_dr_100_Click);
-            // 
-            // bn_dr_50
-            // 
-            this.bn_dr_50.Enabled = false;
-            this.bn_dr_50.Location = new System.Drawing.Point(237, 142);
-            this.bn_dr_50.Name = "bn_dr_50";
-            this.bn_dr_50.Size = new System.Drawing.Size(39, 23);
-            this.bn_dr_50.TabIndex = 37;
-            this.bn_dr_50.Text = "1/2";
-            this.bn_dr_50.UseVisualStyleBackColor = true;
-            this.bn_dr_50.Click += new System.EventHandler(this.bn_dr_50_Click);
-            // 
-            // bn_dr_33
-            // 
-            this.bn_dr_33.Enabled = false;
-            this.bn_dr_33.Location = new System.Drawing.Point(197, 142);
-            this.bn_dr_33.Name = "bn_dr_33";
-            this.bn_dr_33.Size = new System.Drawing.Size(39, 23);
-            this.bn_dr_33.TabIndex = 36;
-            this.bn_dr_33.Text = "1/3";
-            this.bn_dr_33.UseVisualStyleBackColor = true;
-            this.bn_dr_33.Click += new System.EventHandler(this.bn_dr_33_Click);
-            // 
-            // bn_dr_25
-            // 
-            this.bn_dr_25.Enabled = false;
-            this.bn_dr_25.Location = new System.Drawing.Point(157, 142);
-            this.bn_dr_25.Name = "bn_dr_25";
-            this.bn_dr_25.Size = new System.Drawing.Size(39, 23);
-            this.bn_dr_25.TabIndex = 35;
-            this.bn_dr_25.Text = "1/4";
-            this.bn_dr_25.UseVisualStyleBackColor = true;
-            this.bn_dr_25.Click += new System.EventHandler(this.bn_dr_25_Click);
-            // 
-            // bn_ip_25
-            // 
-            this.bn_ip_25.Enabled = false;
-            this.bn_ip_25.Location = new System.Drawing.Point(272, 120);
-            this.bn_ip_25.Name = "bn_ip_25";
-            this.bn_ip_25.Size = new System.Drawing.Size(43, 23);
-            this.bn_ip_25.TabIndex = 34;
-            this.bn_ip_25.Text = "+1/4";
-            this.bn_ip_25.UseVisualStyleBackColor = true;
-            this.bn_ip_25.Click += new System.EventHandler(this.bn_ip_25_Click);
-            // 
-            // bn_ip_33
-            // 
-            this.bn_ip_33.Enabled = false;
-            this.bn_ip_33.Location = new System.Drawing.Point(228, 120);
-            this.bn_ip_33.Name = "bn_ip_33";
-            this.bn_ip_33.Size = new System.Drawing.Size(43, 23);
-            this.bn_ip_33.TabIndex = 33;
-            this.bn_ip_33.Text = "+1/3";
-            this.bn_ip_33.UseVisualStyleBackColor = true;
-            this.bn_ip_33.Click += new System.EventHandler(this.bn_ip_33_Click);
-            // 
-            // bn_ip_50
-            // 
-            this.bn_ip_50.Enabled = false;
-            this.bn_ip_50.Location = new System.Drawing.Point(183, 120);
-            this.bn_ip_50.Name = "bn_ip_50";
-            this.bn_ip_50.Size = new System.Drawing.Size(43, 23);
-            this.bn_ip_50.TabIndex = 32;
-            this.bn_ip_50.Text = "+1/2";
-            this.bn_ip_50.UseVisualStyleBackColor = true;
-            this.bn_ip_50.Click += new System.EventHandler(this.bn_ip_50_Click);
-            // 
-            // bn_ip_zero
-            // 
-            this.bn_ip_zero.Enabled = false;
-            this.bn_ip_zero.Location = new System.Drawing.Point(157, 120);
-            this.bn_ip_zero.Name = "bn_ip_zero";
-            this.bn_ip_zero.Size = new System.Drawing.Size(25, 23);
-            this.bn_ip_zero.TabIndex = 31;
-            this.bn_ip_zero.Text = "0";
-            this.bn_ip_zero.UseVisualStyleBackColor = true;
-            this.bn_ip_zero.Click += new System.EventHandler(this.bn_ip_zero_Click);
-            // 
             // dtp_inpoint
             // 
             this.dtp_inpoint.CustomFormat = "HH:mm:ss";
             this.dtp_inpoint.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
             this.dtp_inpoint.Enabled = false;
             this.dtp_inpoint.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp_inpoint.Location = new System.Drawing.Point(77, 120);
+            this.dtp_inpoint.Location = new System.Drawing.Point(48, 85);
             this.dtp_inpoint.Name = "dtp_inpoint";
             this.dtp_inpoint.ShowUpDown = true;
-            this.dtp_inpoint.Size = new System.Drawing.Size(75, 20);
+            this.dtp_inpoint.Size = new System.Drawing.Size(67, 20);
             this.dtp_inpoint.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.dtp_inpoint, "Forward the media to this point before playback");
             this.dtp_inpoint.ValueChanged += new System.EventHandler(this.dtp_inpoint_ValueChanged);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(4, 123);
+            this.label9.Location = new System.Drawing.Point(4, 91);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(55, 13);
+            this.label9.Size = new System.Drawing.Size(38, 13);
             this.label9.TabIndex = 29;
-            this.label9.Text = "In-Point:";
-            // 
-            // bn_clone
-            // 
-            this.bn_clone.Location = new System.Drawing.Point(165, 19);
-            this.bn_clone.Name = "bn_clone";
-            this.bn_clone.Size = new System.Drawing.Size(74, 23);
-            this.bn_clone.TabIndex = 28;
-            this.bn_clone.Text = "Clone";
-            this.bn_clone.UseVisualStyleBackColor = true;
-            this.bn_clone.Click += new System.EventHandler(this.bn_clone_Click);
+            this.label9.Text = "In-Pt:";
             // 
             // cb_keep_duration
             // 
             this.cb_keep_duration.AutoSize = true;
             this.cb_keep_duration.Checked = true;
             this.cb_keep_duration.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_keep_duration.Location = new System.Drawing.Point(79, 100);
+            this.cb_keep_duration.Location = new System.Drawing.Point(48, 69);
             this.cb_keep_duration.Name = "cb_keep_duration";
-            this.cb_keep_duration.Size = new System.Drawing.Size(176, 17);
+            this.cb_keep_duration.Size = new System.Drawing.Size(92, 17);
             this.cb_keep_duration.TabIndex = 26;
-            this.cb_keep_duration.Text = "Fixed duration (play start to end)";
+            this.cb_keep_duration.Text = "Fixed duration";
+            this.toolTip1.SetToolTip(this.cb_keep_duration, "Play from start to end");
             this.cb_keep_duration.UseVisualStyleBackColor = true;
             this.cb_keep_duration.CheckedChanged += new System.EventHandler(this.cb_keep_duration_CheckedChanged);
-            // 
-            // bn_move_up
-            // 
-            this.bn_move_up.Enabled = false;
-            this.bn_move_up.Location = new System.Drawing.Point(7, 19);
-            this.bn_move_up.Name = "bn_move_up";
-            this.bn_move_up.Size = new System.Drawing.Size(74, 23);
-            this.bn_move_up.TabIndex = 13;
-            this.bn_move_up.Text = "UP";
-            this.bn_move_up.UseVisualStyleBackColor = true;
-            this.bn_move_up.Click += new System.EventHandler(this.bn_move_up_Click);
             // 
             // rb_toblack
             // 
             this.rb_toblack.AutoSize = true;
             this.rb_toblack.Checked = true;
             this.rb_toblack.Enabled = false;
-            this.rb_toblack.Location = new System.Drawing.Point(234, 166);
+            this.rb_toblack.Location = new System.Drawing.Point(165, 157);
             this.rb_toblack.Name = "rb_toblack";
             this.rb_toblack.Size = new System.Drawing.Size(66, 17);
             this.rb_toblack.TabIndex = 25;
@@ -767,28 +463,29 @@
             // 
             // tb_title
             // 
-            this.tb_title.Location = new System.Drawing.Point(77, 48);
+            this.tb_title.Location = new System.Drawing.Point(48, 19);
             this.tb_title.Name = "tb_title";
-            this.tb_title.Size = new System.Drawing.Size(238, 20);
+            this.tb_title.Size = new System.Drawing.Size(179, 20);
             this.tb_title.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.tb_title, "Title of the Input in vMix");
             this.tb_title.TextChanged += new System.EventHandler(this.tb_title_TextChanged);
             // 
             // rb_looping
             // 
             this.rb_looping.AutoSize = true;
             this.rb_looping.Enabled = false;
-            this.rb_looping.Location = new System.Drawing.Point(158, 166);
+            this.rb_looping.Location = new System.Drawing.Point(122, 157);
             this.rb_looping.Name = "rb_looping";
-            this.rb_looping.Size = new System.Drawing.Size(73, 17);
+            this.rb_looping.Size = new System.Drawing.Size(45, 17);
             this.rb_looping.TabIndex = 24;
-            this.rb_looping.Text = "play again";
+            this.rb_looping.Text = "loop";
             this.rb_looping.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(4, 51);
+            this.label1.Location = new System.Drawing.Point(4, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 13);
             this.label1.TabIndex = 1;
@@ -799,11 +496,12 @@
             this.dtp_end.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
             this.dtp_end.Enabled = false;
             this.dtp_end.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp_end.Location = new System.Drawing.Point(77, 165);
+            this.dtp_end.Location = new System.Drawing.Point(48, 130);
             this.dtp_end.Name = "dtp_end";
             this.dtp_end.ShowUpDown = true;
-            this.dtp_end.Size = new System.Drawing.Size(75, 20);
+            this.dtp_end.Size = new System.Drawing.Size(67, 20);
             this.dtp_end.TabIndex = 22;
+            this.toolTip1.SetToolTip(this.dtp_end, "End time of the playback");
             // 
             // lb_transition
             // 
@@ -820,9 +518,9 @@
             "FlyRotate",
             "Cube",
             "CubeZoom"});
-            this.lb_transition.Location = new System.Drawing.Point(158, 74);
+            this.lb_transition.Location = new System.Drawing.Point(117, 44);
             this.lb_transition.Name = "lb_transition";
-            this.lb_transition.Size = new System.Drawing.Size(73, 21);
+            this.lb_transition.Size = new System.Drawing.Size(55, 21);
             this.lb_transition.TabIndex = 3;
             this.lb_transition.SelectedIndexChanged += new System.EventHandler(this.lb_transition_SelectedIndexChanged);
             // 
@@ -830,7 +528,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(4, 168);
+            this.label4.Location = new System.Drawing.Point(4, 136);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(33, 13);
             this.label4.TabIndex = 21;
@@ -840,7 +538,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(4, 77);
+            this.label2.Location = new System.Drawing.Point(4, 50);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 4;
@@ -852,11 +550,12 @@
             this.dtp_duration.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
             this.dtp_duration.Enabled = false;
             this.dtp_duration.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp_duration.Location = new System.Drawing.Point(77, 142);
+            this.dtp_duration.Location = new System.Drawing.Point(48, 107);
             this.dtp_duration.Name = "dtp_duration";
             this.dtp_duration.ShowUpDown = true;
-            this.dtp_duration.Size = new System.Drawing.Size(75, 20);
+            this.dtp_duration.Size = new System.Drawing.Size(67, 20);
             this.dtp_duration.TabIndex = 20;
+            this.toolTip1.SetToolTip(this.dtp_duration, "Exact duration of the playback");
             this.dtp_duration.ValueChanged += new System.EventHandler(this.dtp_duration_ValueChanged);
             // 
             // dtp_start
@@ -864,30 +563,22 @@
             this.dtp_start.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
             this.dtp_start.Enabled = false;
             this.dtp_start.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp_start.Location = new System.Drawing.Point(77, 74);
+            this.dtp_start.Location = new System.Drawing.Point(48, 45);
             this.dtp_start.Name = "dtp_start";
             this.dtp_start.ShowUpDown = true;
-            this.dtp_start.Size = new System.Drawing.Size(75, 20);
+            this.dtp_start.Size = new System.Drawing.Size(67, 20);
             this.dtp_start.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.dtp_start, "Start time of the day");
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(4, 145);
+            this.label5.Location = new System.Drawing.Point(4, 113);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 13);
+            this.label5.Size = new System.Drawing.Size(35, 13);
             this.label5.TabIndex = 19;
-            this.label5.Text = "Duration:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(296, 78);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(20, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "ms";
+            this.label5.Text = "Dur.:";
             // 
             // ud_transition_time
             // 
@@ -897,7 +588,7 @@
             0,
             0,
             0});
-            this.ud_transition_time.Location = new System.Drawing.Point(234, 74);
+            this.ud_transition_time.Location = new System.Drawing.Point(175, 45);
             this.ud_transition_time.Margin = new System.Windows.Forms.Padding(0);
             this.ud_transition_time.Maximum = new decimal(new int[] {
             10000,
@@ -905,9 +596,10 @@
             0,
             0});
             this.ud_transition_time.Name = "ud_transition_time";
-            this.ud_transition_time.Size = new System.Drawing.Size(58, 21);
+            this.ud_transition_time.Size = new System.Drawing.Size(52, 21);
             this.ud_transition_time.TabIndex = 17;
             this.ud_transition_time.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolTip1.SetToolTip(this.ud_transition_time, "in ms");
             this.ud_transition_time.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
             this.ud_transition_time.Value = new decimal(new int[] {
             1000,
@@ -923,50 +615,80 @@
             this.rtb_fileinfo.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtb_fileinfo.DetectUrls = false;
             this.rtb_fileinfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtb_fileinfo.Location = new System.Drawing.Point(7, 208);
+            this.rtb_fileinfo.Location = new System.Drawing.Point(7, 175);
             this.rtb_fileinfo.Name = "rtb_fileinfo";
             this.rtb_fileinfo.ReadOnly = true;
-            this.rtb_fileinfo.Size = new System.Drawing.Size(309, 67);
+            this.rtb_fileinfo.Size = new System.Drawing.Size(224, 52);
             this.rtb_fileinfo.TabIndex = 11;
             this.rtb_fileinfo.Text = "";
-            // 
-            // bn_remove
-            // 
-            this.bn_remove.Enabled = false;
-            this.bn_remove.Location = new System.Drawing.Point(244, 19);
-            this.bn_remove.Name = "bn_remove";
-            this.bn_remove.Size = new System.Drawing.Size(73, 23);
-            this.bn_remove.TabIndex = 15;
-            this.bn_remove.Text = "Remove";
-            this.bn_remove.UseVisualStyleBackColor = true;
-            this.bn_remove.Click += new System.EventHandler(this.bn_remove_Click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(4, 190);
+            this.label6.Location = new System.Drawing.Point(4, 158);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(52, 13);
             this.label6.TabIndex = 12;
             this.label6.Text = "Fileinfo:";
             // 
-            // bn_move_down
+            // bn_pull
             // 
-            this.bn_move_down.Enabled = false;
-            this.bn_move_down.Location = new System.Drawing.Point(86, 19);
-            this.bn_move_down.Name = "bn_move_down";
-            this.bn_move_down.Size = new System.Drawing.Size(74, 23);
-            this.bn_move_down.TabIndex = 14;
-            this.bn_move_down.Text = "DOWN";
-            this.bn_move_down.UseVisualStyleBackColor = true;
-            this.bn_move_down.Click += new System.EventHandler(this.bn_move_down_Click);
+            this.bn_pull.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.bn_pull.Location = new System.Drawing.Point(118, 94);
+            this.bn_pull.Name = "bn_pull";
+            this.bn_pull.Size = new System.Drawing.Size(54, 23);
+            this.bn_pull.TabIndex = 22;
+            this.bn_pull.Text = "Pull";
+            this.bn_pull.UseVisualStyleBackColor = false;
+            // 
+            // bn_erase_schedule
+            // 
+            this.bn_erase_schedule.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.bn_erase_schedule.Location = new System.Drawing.Point(178, 94);
+            this.bn_erase_schedule.Name = "bn_erase_schedule";
+            this.bn_erase_schedule.Size = new System.Drawing.Size(54, 23);
+            this.bn_erase_schedule.TabIndex = 22;
+            this.bn_erase_schedule.Text = "Erase";
+            this.bn_erase_schedule.UseVisualStyleBackColor = false;
+            this.bn_erase_schedule.Click += new System.EventHandler(this.bn_erase_schedule_Click);
+            // 
+            // bn_schedule
+            // 
+            this.bn_schedule.BackColor = System.Drawing.Color.Yellow;
+            this.bn_schedule.Location = new System.Drawing.Point(60, 94);
+            this.bn_schedule.Name = "bn_schedule";
+            this.bn_schedule.Size = new System.Drawing.Size(54, 23);
+            this.bn_schedule.TabIndex = 20;
+            this.bn_schedule.Text = "Push";
+            this.bn_schedule.UseVisualStyleBackColor = false;
+            this.bn_schedule.Click += new System.EventHandler(this.bn_schedule_Click);
+            // 
+            // bn_clear
+            // 
+            this.bn_clear.Location = new System.Drawing.Point(12, 16);
+            this.bn_clear.Name = "bn_clear";
+            this.bn_clear.Size = new System.Drawing.Size(54, 23);
+            this.bn_clear.TabIndex = 13;
+            this.bn_clear.Text = "Clear";
+            this.bn_clear.UseVisualStyleBackColor = true;
+            this.bn_clear.Click += new System.EventHandler(this.bn_clear_Click);
+            // 
+            // bn_append
+            // 
+            this.bn_append.Location = new System.Drawing.Point(122, 16);
+            this.bn_append.Name = "bn_append";
+            this.bn_append.Size = new System.Drawing.Size(54, 23);
+            this.bn_append.TabIndex = 12;
+            this.bn_append.Text = "Append";
+            this.bn_append.UseVisualStyleBackColor = true;
+            this.bn_append.Click += new System.EventHandler(this.bn_append_Click);
             // 
             // bn_save
             // 
-            this.bn_save.Location = new System.Drawing.Point(255, 12);
+            this.bn_save.Location = new System.Drawing.Point(177, 16);
             this.bn_save.Name = "bn_save";
-            this.bn_save.Size = new System.Drawing.Size(74, 23);
+            this.bn_save.Size = new System.Drawing.Size(54, 23);
             this.bn_save.TabIndex = 10;
             this.bn_save.Text = "Save";
             this.bn_save.UseVisualStyleBackColor = true;
@@ -974,9 +696,9 @@
             // 
             // bn_load
             // 
-            this.bn_load.Location = new System.Drawing.Point(97, 12);
+            this.bn_load.Location = new System.Drawing.Point(67, 16);
             this.bn_load.Name = "bn_load";
-            this.bn_load.Size = new System.Drawing.Size(74, 23);
+            this.bn_load.Size = new System.Drawing.Size(54, 23);
             this.bn_load.TabIndex = 9;
             this.bn_load.Text = "Load";
             this.bn_load.UseVisualStyleBackColor = true;
@@ -985,23 +707,46 @@
             // dtp_timetable
             // 
             this.dtp_timetable.CustomFormat = "  yyyy/MM/dd HH:mm:ss";
-            this.dtp_timetable.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtp_timetable.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtp_timetable.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp_timetable.Location = new System.Drawing.Point(122, 41);
+            this.dtp_timetable.Location = new System.Drawing.Point(61, 46);
+            this.dtp_timetable.Margin = new System.Windows.Forms.Padding(1);
             this.dtp_timetable.Name = "dtp_timetable";
-            this.dtp_timetable.Size = new System.Drawing.Size(145, 19);
+            this.dtp_timetable.Size = new System.Drawing.Size(171, 22);
             this.dtp_timetable.TabIndex = 8;
             this.dtp_timetable.ValueChanged += new System.EventHandler(this.dtp_timetable_ValueChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(10, 99);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(47, 13);
+            this.label14.TabIndex = 6;
+            this.label14.Text = "Sched:";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(10, 75);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(48, 13);
+            this.label13.TabIndex = 6;
+            this.label13.Text = "End at:";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(15, 44);
+            this.label7.Location = new System.Drawing.Point(9, 51);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(110, 13);
+            this.label7.Size = new System.Drawing.Size(53, 13);
             this.label7.TabIndex = 6;
-            this.label7.Text = "Start Schedule at:";
+            this.label7.Text = "Start at:";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // event_title
             // 
@@ -1048,6 +793,8 @@
             // 
             // EventList0
             // 
+            this.EventList0.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.EventList0.CheckBoxes = true;
             this.EventList0.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader4,
             this.columnHeader5,
@@ -1061,9 +808,9 @@
             this.EventList0.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.EventList0.HideSelection = false;
             this.EventList0.Location = new System.Drawing.Point(3, 3);
-            this.EventList0.Margin = new System.Windows.Forms.Padding(1);
+            this.EventList0.Margin = new System.Windows.Forms.Padding(0);
             this.EventList0.Name = "EventList0";
-            this.EventList0.Size = new System.Drawing.Size(627, 495);
+            this.EventList0.Size = new System.Drawing.Size(737, 503);
             this.EventList0.TabIndex = 3;
             this.EventList0.UseCompatibleStateImageBehavior = false;
             this.EventList0.View = System.Windows.Forms.View.Details;
@@ -1160,7 +907,7 @@
             this.EventList1.Location = new System.Drawing.Point(3, 3);
             this.EventList1.Margin = new System.Windows.Forms.Padding(1);
             this.EventList1.Name = "EventList1";
-            this.EventList1.Size = new System.Drawing.Size(627, 495);
+            this.EventList1.Size = new System.Drawing.Size(755, 544);
             this.EventList1.TabIndex = 4;
             this.EventList1.UseCompatibleStateImageBehavior = false;
             this.EventList1.View = System.Windows.Forms.View.Details;
@@ -1211,7 +958,7 @@
             this.EventList2.Location = new System.Drawing.Point(3, 3);
             this.EventList2.Margin = new System.Windows.Forms.Padding(1);
             this.EventList2.Name = "EventList2";
-            this.EventList2.Size = new System.Drawing.Size(627, 495);
+            this.EventList2.Size = new System.Drawing.Size(755, 544);
             this.EventList2.TabIndex = 5;
             this.EventList2.UseCompatibleStateImageBehavior = false;
             this.EventList2.View = System.Windows.Forms.View.Details;
@@ -1262,7 +1009,7 @@
             this.EventList3.Location = new System.Drawing.Point(3, 3);
             this.EventList3.Margin = new System.Windows.Forms.Padding(1);
             this.EventList3.Name = "EventList3";
-            this.EventList3.Size = new System.Drawing.Size(627, 495);
+            this.EventList3.Size = new System.Drawing.Size(755, 544);
             this.EventList3.TabIndex = 6;
             this.EventList3.UseCompatibleStateImageBehavior = false;
             this.EventList3.View = System.Windows.Forms.View.Details;
@@ -1314,7 +1061,7 @@
             this.EventList4.Location = new System.Drawing.Point(3, 3);
             this.EventList4.Margin = new System.Windows.Forms.Padding(1);
             this.EventList4.Name = "EventList4";
-            this.EventList4.Size = new System.Drawing.Size(627, 495);
+            this.EventList4.Size = new System.Drawing.Size(755, 544);
             this.EventList4.TabIndex = 6;
             this.EventList4.UseCompatibleStateImageBehavior = false;
             this.EventList4.View = System.Windows.Forms.View.Details;
@@ -1356,67 +1103,70 @@
             this.tabControl1.Controls.Add(this.Overlay3);
             this.tabControl1.Controls.Add(this.Overlay4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(641, 527);
+            this.tabControl1.Size = new System.Drawing.Size(753, 537);
             this.tabControl1.TabIndex = 34;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.lb_overlay_SelectedIndexChanged);
             // 
             // Overlay0
             // 
+            this.Overlay0.BackColor = System.Drawing.SystemColors.Control;
+            this.Overlay0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Overlay0.Controls.Add(this.EventList0);
+            this.Overlay0.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Overlay0.Location = new System.Drawing.Point(4, 22);
             this.Overlay0.Name = "Overlay0";
             this.Overlay0.Padding = new System.Windows.Forms.Padding(3);
-            this.Overlay0.Size = new System.Drawing.Size(633, 501);
+            this.Overlay0.Size = new System.Drawing.Size(745, 511);
             this.Overlay0.TabIndex = 0;
             this.Overlay0.Text = "Main";
-            this.Overlay0.UseVisualStyleBackColor = true;
             // 
             // Overlay1
             // 
+            this.Overlay1.BackColor = System.Drawing.SystemColors.Control;
             this.Overlay1.Controls.Add(this.EventList1);
             this.Overlay1.Location = new System.Drawing.Point(4, 22);
             this.Overlay1.Name = "Overlay1";
             this.Overlay1.Padding = new System.Windows.Forms.Padding(3);
-            this.Overlay1.Size = new System.Drawing.Size(633, 501);
+            this.Overlay1.Size = new System.Drawing.Size(761, 550);
             this.Overlay1.TabIndex = 1;
             this.Overlay1.Text = "Overlay 1";
-            this.Overlay1.UseVisualStyleBackColor = true;
             // 
             // Overlay2
             // 
+            this.Overlay2.BackColor = System.Drawing.SystemColors.Control;
             this.Overlay2.Controls.Add(this.EventList2);
             this.Overlay2.Location = new System.Drawing.Point(4, 22);
             this.Overlay2.Name = "Overlay2";
             this.Overlay2.Padding = new System.Windows.Forms.Padding(3);
-            this.Overlay2.Size = new System.Drawing.Size(633, 501);
+            this.Overlay2.Size = new System.Drawing.Size(761, 550);
             this.Overlay2.TabIndex = 2;
             this.Overlay2.Text = "Overlay 2";
-            this.Overlay2.UseVisualStyleBackColor = true;
             // 
             // Overlay3
             // 
+            this.Overlay3.BackColor = System.Drawing.SystemColors.Control;
             this.Overlay3.Controls.Add(this.EventList3);
             this.Overlay3.Location = new System.Drawing.Point(4, 22);
             this.Overlay3.Name = "Overlay3";
             this.Overlay3.Padding = new System.Windows.Forms.Padding(3);
-            this.Overlay3.Size = new System.Drawing.Size(633, 501);
+            this.Overlay3.Size = new System.Drawing.Size(761, 550);
             this.Overlay3.TabIndex = 3;
             this.Overlay3.Text = "Overlay 3";
-            this.Overlay3.UseVisualStyleBackColor = true;
             // 
             // Overlay4
             // 
+            this.Overlay4.BackColor = System.Drawing.SystemColors.Control;
             this.Overlay4.Controls.Add(this.EventList4);
             this.Overlay4.Location = new System.Drawing.Point(4, 22);
             this.Overlay4.Name = "Overlay4";
             this.Overlay4.Padding = new System.Windows.Forms.Padding(3);
-            this.Overlay4.Size = new System.Drawing.Size(633, 501);
+            this.Overlay4.Size = new System.Drawing.Size(761, 550);
             this.Overlay4.TabIndex = 4;
             this.Overlay4.Text = "Overlay 4";
-            this.Overlay4.UseVisualStyleBackColor = true;
             // 
             // mainmenu
             // 
@@ -1430,74 +1180,6 @@
             this.mainmenu.Size = new System.Drawing.Size(999, 24);
             this.mainmenu.TabIndex = 35;
             this.mainmenu.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.openToolStripMenuItem,
-            this.appendToolStripMenuItem,
-            this.toolStripSeparator,
-            this.saveToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "&File";
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripMenuItem.Image")));
-            this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.newToolStripMenuItem.Text = "&New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripMenuItem.Image")));
-            this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.openToolStripMenuItem.Text = "&Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.bn_load_Click);
-            // 
-            // appendToolStripMenuItem
-            // 
-            this.appendToolStripMenuItem.Name = "appendToolStripMenuItem";
-            this.appendToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.appendToolStripMenuItem.Text = "Append";
-            this.appendToolStripMenuItem.Click += new System.EventHandler(this.bn_append_Click);
-            // 
-            // toolStripSeparator
-            // 
-            this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(143, 6);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem.Image")));
-            this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.saveToolStripMenuItem.Text = "&Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.bn_save_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(143, 6);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -1527,7 +1209,7 @@
             this.colortoolStripMenuItem,
             this.InputtoolStripMenuItem});
             this.addeventToolStripMenuItem.Name = "addeventToolStripMenuItem";
-            this.addeventToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addeventToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.addeventToolStripMenuItem.Text = "Add Event";
             // 
             // videotoolStripMenuItem
@@ -1582,68 +1264,38 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // cutToolStripMenuItem
-            // 
-            this.cutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripMenuItem.Image")));
-            this.cutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.cutToolStripMenuItem.Text = "Cu&t";
-            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripMenuItem.Image")));
-            this.copyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.copyToolStripMenuItem.Text = "&Copy";
-            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripMenuItem.Image")));
-            this.pasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.pasteToolStripMenuItem.Text = "&Paste";
-            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.deleteToolStripMenuItem.Text = "&Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.bn_remove_Click);
             // 
             // spliceToolStripMenuItem
             // 
             this.spliceToolStripMenuItem.Name = "spliceToolStripMenuItem";
-            this.spliceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.spliceToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.spliceToolStripMenuItem.Text = "Sp&lice";
             this.spliceToolStripMenuItem.Click += new System.EventHandler(this.spliceToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(141, 6);
             // 
             // findToolStripMenuItem
             // 
             this.findToolStripMenuItem.Name = "findToolStripMenuItem";
-            this.findToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.findToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.findToolStripMenuItem.Text = "&Find";
             this.findToolStripMenuItem.Click += new System.EventHandler(this.findToolStripMenuItem_Click);
             // 
             // selectAllToolStripMenuItem
             // 
             this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.selectAllToolStripMenuItem.Text = "Select &All";
             this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
@@ -1657,7 +1309,7 @@
             this.cpToolStripMenuItem,
             this.optionsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // mergeToolStripMenuItem
@@ -1747,22 +1399,383 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             // 
+            // cb_audio
+            // 
+            this.cb_audio.AutoSize = true;
+            this.cb_audio.Enabled = false;
+            this.cb_audio.Location = new System.Drawing.Point(134, 69);
+            this.cb_audio.Name = "cb_audio";
+            this.cb_audio.Size = new System.Drawing.Size(53, 17);
+            this.cb_audio.TabIndex = 39;
+            this.cb_audio.Text = "Audio";
+            this.toolTip1.SetToolTip(this.cb_audio, "Enable or disable audio");
+            this.cb_audio.UseVisualStyleBackColor = true;
+            this.cb_audio.CheckedChanged += new System.EventHandler(this.cb_audio_CheckedChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.checkBox4);
+            this.panel1.Controls.Add(this.checkBox3);
+            this.panel1.Controls.Add(this.checkBox2);
+            this.panel1.Controls.Add(this.checkBox1);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.dtp_endtime);
+            this.panel1.Controls.Add(this.bn_clear);
+            this.panel1.Controls.Add(this.bn_sync);
+            this.panel1.Controls.Add(this.bn_load);
+            this.panel1.Controls.Add(this.bn_save);
+            this.panel1.Controls.Add(this.bn_now);
+            this.panel1.Controls.Add(this.bn_append);
+            this.panel1.Controls.Add(this.bn_pull);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.bn_erase_schedule);
+            this.panel1.Controls.Add(this.label13);
+            this.panel1.Controls.Add(this.bn_schedule);
+            this.panel1.Controls.Add(this.label14);
+            this.panel1.Controls.Add(this.dtp_timetable);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(246, 169);
+            this.panel1.TabIndex = 35;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(10, 119);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(110, 13);
+            this.label3.TabIndex = 35;
+            this.label3.Text = "Schedule Settings";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(13, 133);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(50, 17);
+            this.checkBox1.TabIndex = 36;
+            this.checkBox1.Text = "Loop";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(94, 133);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(64, 17);
+            this.checkBox2.TabIndex = 37;
+            this.checkBox2.Text = "External";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(175, 133);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(59, 17);
+            this.checkBox3.TabIndex = 38;
+            this.checkBox3.Text = "Stream";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(13, 151);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(61, 17);
+            this.checkBox4.TabIndex = 39;
+            this.checkBox4.Text = "Record";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // pnl_preview
+            // 
+            this.pnl_preview.Controls.Add(this.pictureBox1);
+            this.pnl_preview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnl_preview.Location = new System.Drawing.Point(0, 482);
+            this.pnl_preview.Name = "pnl_preview";
+            this.pnl_preview.Size = new System.Drawing.Size(246, 55);
+            this.pnl_preview.TabIndex = 36;
+            this.pnl_preview.TabStop = false;
+            this.pnl_preview.Text = "PREVIEW";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.MidnightBlue;
+            this.pictureBox1.BackgroundImage = global::vManager.Properties.Resources.Refresh_256x256;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 16);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(240, 36);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // bn_add_replace
+            // 
+            this.bn_add_replace.BackColor = System.Drawing.Color.Red;
+            this.bn_add_replace.BackgroundImage = global::vManager.Properties.Resources.Add_24x24;
+            this.bn_add_replace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bn_add_replace.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.bn_add_replace.Location = new System.Drawing.Point(178, 13);
+            this.bn_add_replace.Name = "bn_add_replace";
+            this.bn_add_replace.Size = new System.Drawing.Size(24, 24);
+            this.bn_add_replace.TabIndex = 22;
+            this.toolTip1.SetToolTip(this.bn_add_replace, "Add event by \r\nreplacing selected one");
+            this.bn_add_replace.UseVisualStyleBackColor = false;
+            // 
+            // bn_add
+            // 
+            this.bn_add.BackColor = System.Drawing.Color.Transparent;
+            this.bn_add.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bn_add.BackgroundImage")));
+            this.bn_add.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bn_add.Location = new System.Drawing.Point(151, 13);
+            this.bn_add.Name = "bn_add";
+            this.bn_add.Size = new System.Drawing.Size(24, 24);
+            this.bn_add.TabIndex = 22;
+            this.toolTip1.SetToolTip(this.bn_add, "Add an event");
+            this.bn_add.UseVisualStyleBackColor = false;
+            // 
+            // bn_move_up
+            // 
+            this.bn_move_up.BackgroundImage = global::vManager.Properties.Resources.Stock_Index_Up_32x32;
+            this.bn_move_up.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bn_move_up.Enabled = false;
+            this.bn_move_up.Location = new System.Drawing.Point(13, 44);
+            this.bn_move_up.Name = "bn_move_up";
+            this.bn_move_up.Size = new System.Drawing.Size(32, 32);
+            this.bn_move_up.TabIndex = 13;
+            this.toolTip1.SetToolTip(this.bn_move_up, "Move Up");
+            this.bn_move_up.UseVisualStyleBackColor = true;
+            this.bn_move_up.Click += new System.EventHandler(this.bn_move_up_Click);
+            // 
+            // bn_move_down
+            // 
+            this.bn_move_down.BackgroundImage = global::vManager.Properties.Resources.Stock_Index_Down_32x32;
+            this.bn_move_down.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bn_move_down.Enabled = false;
+            this.bn_move_down.Location = new System.Drawing.Point(50, 43);
+            this.bn_move_down.Name = "bn_move_down";
+            this.bn_move_down.Size = new System.Drawing.Size(32, 32);
+            this.bn_move_down.TabIndex = 14;
+            this.toolTip1.SetToolTip(this.bn_move_down, "Move Down");
+            this.bn_move_down.UseVisualStyleBackColor = true;
+            this.bn_move_down.Click += new System.EventHandler(this.bn_move_down_Click);
+            // 
+            // bn_clone
+            // 
+            this.bn_clone.BackgroundImage = global::vManager.Properties.Resources.Copy_v2_32x32;
+            this.bn_clone.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bn_clone.Location = new System.Drawing.Point(87, 43);
+            this.bn_clone.Name = "bn_clone";
+            this.bn_clone.Size = new System.Drawing.Size(32, 32);
+            this.bn_clone.TabIndex = 28;
+            this.toolTip1.SetToolTip(this.bn_clone, "Duplicate selected\r\nevents");
+            this.bn_clone.UseVisualStyleBackColor = true;
+            this.bn_clone.Click += new System.EventHandler(this.bn_clone_Click);
+            // 
+            // bn_splice
+            // 
+            this.bn_splice.BackgroundImage = global::vManager.Properties.Resources.Cut_16x16;
+            this.bn_splice.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.bn_splice.Enabled = false;
+            this.bn_splice.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bn_splice.Location = new System.Drawing.Point(161, 44);
+            this.bn_splice.Name = "bn_splice";
+            this.bn_splice.Size = new System.Drawing.Size(32, 32);
+            this.bn_splice.TabIndex = 15;
+            this.bn_splice.Text = "2";
+            this.bn_splice.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.bn_splice.UseVisualStyleBackColor = true;
+            this.bn_splice.Click += new System.EventHandler(this.bn_remove_Click);
+            // 
+            // bn_shuffle
+            // 
+            this.bn_shuffle.BackColor = System.Drawing.Color.Transparent;
+            this.bn_shuffle.BackgroundImage = global::vManager.Properties.Resources.Refresh_32x32;
+            this.bn_shuffle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bn_shuffle.Enabled = false;
+            this.bn_shuffle.Location = new System.Drawing.Point(198, 44);
+            this.bn_shuffle.Name = "bn_shuffle";
+            this.bn_shuffle.Size = new System.Drawing.Size(32, 32);
+            this.bn_shuffle.TabIndex = 15;
+            this.toolTip1.SetToolTip(this.bn_shuffle, "Shuffle selected\r\nevents");
+            this.bn_shuffle.UseVisualStyleBackColor = false;
+            this.bn_shuffle.Click += new System.EventHandler(this.bn_remove_Click);
+            // 
+            // bn_remove
+            // 
+            this.bn_remove.BackgroundImage = global::vManager.Properties.Resources.Delete_32x32;
+            this.bn_remove.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bn_remove.Enabled = false;
+            this.bn_remove.Location = new System.Drawing.Point(124, 43);
+            this.bn_remove.Name = "bn_remove";
+            this.bn_remove.Size = new System.Drawing.Size(32, 32);
+            this.bn_remove.TabIndex = 15;
+            this.toolTip1.SetToolTip(this.bn_remove, "Remove selected\r\nevents");
+            this.bn_remove.UseVisualStyleBackColor = true;
+            this.bn_remove.Click += new System.EventHandler(this.bn_remove_Click);
+            // 
+            // bn_sync
+            // 
+            this.bn_sync.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bn_sync.BackgroundImage")));
+            this.bn_sync.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bn_sync.Location = new System.Drawing.Point(210, 70);
+            this.bn_sync.Name = "bn_sync";
+            this.bn_sync.Size = new System.Drawing.Size(22, 22);
+            this.bn_sync.TabIndex = 33;
+            this.toolTip1.SetToolTip(this.bn_sync, "Sync all layer");
+            this.bn_sync.UseVisualStyleBackColor = true;
+            this.bn_sync.Click += new System.EventHandler(this.bn_sync_Click);
+            // 
+            // bn_now
+            // 
+            this.bn_now.BackColor = System.Drawing.Color.Transparent;
+            this.bn_now.BackgroundImage = global::vManager.Properties.Resources.Globe_24x24;
+            this.bn_now.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.bn_now.FlatAppearance.BorderSize = 0;
+            this.bn_now.Location = new System.Drawing.Point(187, 70);
+            this.bn_now.Name = "bn_now";
+            this.bn_now.Size = new System.Drawing.Size(22, 22);
+            this.bn_now.TabIndex = 26;
+            this.toolTip1.SetToolTip(this.bn_now, "Start Now");
+            this.bn_now.UseVisualStyleBackColor = false;
+            this.bn_now.Click += new System.EventHandler(this.bn_now_Click);
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
+            this.openToolStripMenuItem,
+            this.appendToolStripMenuItem,
+            this.toolStripSeparator,
+            this.saveToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Image = global::vManager.Properties.Resources.Text_Document_24x24;
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Image = global::vManager.Properties.Resources.New_24x24;
+            this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.newToolStripMenuItem.Text = "&New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Image = global::vManager.Properties.Resources.Open_24x24;
+            this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Text = "&Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.bn_load_Click);
+            // 
+            // appendToolStripMenuItem
+            // 
+            this.appendToolStripMenuItem.Image = global::vManager.Properties.Resources.Add_24x24;
+            this.appendToolStripMenuItem.Name = "appendToolStripMenuItem";
+            this.appendToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.appendToolStripMenuItem.Text = "Append";
+            this.appendToolStripMenuItem.Click += new System.EventHandler(this.bn_append_Click);
+            // 
+            // toolStripSeparator
+            // 
+            this.toolStripSeparator.Name = "toolStripSeparator";
+            this.toolStripSeparator.Size = new System.Drawing.Size(143, 6);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Image = global::vManager.Properties.Resources.Save_24x24;
+            this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Text = "&Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.bn_save_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(143, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Image = global::vManager.Properties.Resources.Log_Out_24x24;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // cutToolStripMenuItem
+            // 
+            this.cutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripMenuItem.Image")));
+            this.cutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+            this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.cutToolStripMenuItem.Text = "Cu&t";
+            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripMenuItem.Image")));
+            this.copyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.copyToolStripMenuItem.Text = "&Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripMenuItem.Image")));
+            this.pasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.pasteToolStripMenuItem.Text = "&Paste";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
+            // label8
+            // 
+            this.label8.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(0, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(246, 13);
+            this.label8.TabIndex = 40;
+            this.label8.Text = "SCHEDULE PANEL";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // vMixManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(999, 551);
+            this.ClientSize = new System.Drawing.Size(999, 561);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.Management);
             this.Controls.Add(this.mainmenu);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainmenu;
-            this.MinimumSize = new System.Drawing.Size(1015, 589);
+            this.MinimumSize = new System.Drawing.Size(1015, 600);
             this.Name = "vMixManager";
             this.Text = "vManager";
             this.Load += new System.EventHandler(this.vMixManager_Load);
             this.Management.ResumeLayout(false);
-            this.Management.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.EventDetails.ResumeLayout(false);
@@ -1781,6 +1794,10 @@
             this.Overlay4.ResumeLayout(false);
             this.mainmenu.ResumeLayout(false);
             this.mainmenu.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.pnl_preview.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1789,11 +1806,9 @@
         #endregion
 
         private System.Windows.Forms.Panel Management;
-        private System.Windows.Forms.Button bn_add_video;
         private System.Windows.Forms.ComboBox lb_transition;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tb_title;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dtp_start;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label6;
@@ -1816,11 +1831,6 @@
         private System.Windows.Forms.GroupBox EventDetails;
         private System.Windows.Forms.Button bn_clear;
         private System.Windows.Forms.Button bn_append;
-        private System.Windows.Forms.Button bn_add_black;
-        private System.Windows.Forms.Button bn_add_manual;
-        private System.Windows.Forms.Button bn_add_image;
-        private System.Windows.Forms.Button bn_add_audio;
-        private System.Windows.Forms.Button bn_add_photos;
         private System.Windows.Forms.ColumnHeader event_title;
         private System.Windows.Forms.ColumnHeader event_start;
         private System.Windows.Forms.ColumnHeader event_duration;
@@ -1836,32 +1846,18 @@
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.ColumnHeader columnHeader8;
         private System.Windows.Forms.Panel pnl_slideshow;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown ud_slideshow_transition;
         private System.Windows.Forms.ComboBox lb_slideshow_transition;
         private System.Windows.Forms.NumericUpDown ud_slideshow_interval;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button bn_schedule;
         private System.Windows.Forms.Button bn_clone;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button bn_erase_schedule;
-        private System.Windows.Forms.Button bn_view_text;
         private System.Windows.Forms.Button bn_now;
-        private System.Windows.Forms.Button bn_settime_0;
         private System.Windows.Forms.DateTimePicker dtp_inpoint;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button bn_ip_25;
-        private System.Windows.Forms.Button bn_ip_33;
-        private System.Windows.Forms.Button bn_ip_50;
-        private System.Windows.Forms.Button bn_ip_zero;
-        private System.Windows.Forms.Button bn_dr_100;
-        private System.Windows.Forms.Button bn_dr_50;
-        private System.Windows.Forms.Button bn_dr_33;
-        private System.Windows.Forms.Button bn_dr_25;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button bn_add_input;
-        private System.Windows.Forms.ComboBox lb_overlay;
         private System.Windows.Forms.ListView EventList1;
         private System.Windows.Forms.ColumnHeader columnHeader9;
         private System.Windows.Forms.ColumnHeader columnHeader10;
@@ -1886,7 +1882,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader26;
         private System.Windows.Forms.ColumnHeader columnHeader27;
         private System.Windows.Forms.ColumnHeader columnHeader28;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button bn_sync;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage Overlay0;
@@ -1894,7 +1889,6 @@
         private System.Windows.Forms.TabPage Overlay2;
         private System.Windows.Forms.TabPage Overlay3;
         private System.Windows.Forms.TabPage Overlay4;
-        private System.Windows.Forms.CheckBox cb_audio;
         private System.Windows.Forms.MenuStrip mainmenu;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
@@ -1941,6 +1935,27 @@
         private System.Windows.Forms.ToolStripMenuItem texttoolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem htmltoolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bbcodetoolStripMenuItem;
+        private System.Windows.Forms.Button bn_pull;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox dtp_endtime;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button bn_add;
+        private System.Windows.Forms.ComboBox lb_event;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button bn_add_replace;
+        private System.Windows.Forms.Button bn_splice;
+        private System.Windows.Forms.Button bn_shuffle;
+        private System.Windows.Forms.CheckBox cb_audio;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox pnl_preview;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label8;
     }
 }
 

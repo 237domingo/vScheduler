@@ -3,8 +3,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Resources;
 
-[assembly: AssemblyTitle("vManager")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("vManager for vScheduler")]
+[assembly: AssemblyDescription("Flexible playlist builder for vMix")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("vManager")]

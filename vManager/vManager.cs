@@ -53,9 +53,9 @@ namespace vMixManager
         private void vMixManager_Load(object sender, EventArgs e)
         {
             dtp_timetable.Value = DateTime.Today + new TimeSpan(1, 0, 0, 0, 0);
+            lb_event.Text = "Video";
             lb_transition.Text = "Fade";
             lb_slideshow_transition.Text = "Fade";
-            lb_overlay.Text = "0";
         }
 
         private void EventList_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
@@ -119,14 +119,6 @@ namespace vMixManager
                 }
                 dtp_duration.Enabled = !ActiveEvent.KeepDuration;
                 dtp_inpoint.Enabled = ActiveEvent.HasDuration && !ActiveEvent.KeepDuration;
-                bn_ip_zero.Enabled = ActiveEvent.HasDuration && !ActiveEvent.KeepDuration;
-                bn_ip_50.Enabled = ActiveEvent.HasDuration && !ActiveEvent.KeepDuration;
-                bn_ip_33.Enabled = ActiveEvent.HasDuration && !ActiveEvent.KeepDuration;
-                bn_ip_25.Enabled = ActiveEvent.HasDuration && !ActiveEvent.KeepDuration;
-                bn_dr_100.Enabled = ActiveEvent.HasDuration && !ActiveEvent.KeepDuration;
-                bn_dr_50.Enabled = ActiveEvent.HasDuration && !ActiveEvent.KeepDuration;
-                bn_dr_33.Enabled = ActiveEvent.HasDuration && !ActiveEvent.KeepDuration;
-                bn_dr_25.Enabled = ActiveEvent.HasDuration && !ActiveEvent.KeepDuration;
                 lb_transition.Text = ActiveEvent.TransitionTypeString();
                 ud_transition_time.Enabled = (ActiveEvent.EventTransition != vmTransitionType.cut);
                 ud_transition_time.Value = ActiveEvent.EventTransitionTime;
@@ -1065,7 +1057,7 @@ namespace vMixManager
         }
         private void bn_ip_zero_Click(object sender, EventArgs e)
         {
-            if (ActiveEvent != null && ActiveEvent .HasDuration)
+            if (ActiveEvent != null && ActiveEvent.HasDuration)
             {
                 ActiveEvent.EventInPoint = new TimeSpan(0);
                 FixInPointAndDuration();
@@ -1140,7 +1132,7 @@ namespace vMixManager
         private void lb_overlay_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (donotredraw) return;
-            string ovrl = lb_overlay.Text;
+            string ovrl = Convert.ToString(tabControl1.SelectedTab.Name[7]);
             ovrl = Convert.ToString(tabControl1.SelectedIndex);
             if (ActiveOverlay == ovrl)
                 return;
@@ -1269,6 +1261,11 @@ namespace vMixManager
         }
 
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }
