@@ -8,10 +8,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Globalization;
+using System.IO;
 using MediaInfoLib;
 using vManager;
 
-namespace vMixManager
+namespace vManager
 {
     public partial class vMixManager : Form
     {
@@ -22,14 +23,21 @@ namespace vMixManager
         List<vMixEvent> vMixEvents3 = new List<vMixEvent>();
         List<vMixEvent> vMixEvents4 = new List<vMixEvent>();
         List<vMixEvent>[] ListOfvMixEvents = new List<vMixEvent>[5];
+
         ListView[] ListOfEventList = new ListView[5];
         vMixEvent ActiveEvent;
         MediaInfo FileInfo;
-        bool donotredraw = false;
         ListView EventList;
         String ActiveOverlay;
         List<vMixEvent> copybuffer = new List<vMixEvent>();
         public delegate void SelectedOverlay(bool[] Overlay);
+        bool donotredraw = false;
+        //
+        //settings for vManager
+        string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\sCheduler\\settings.xml";
+        private List<string> recentfiles = new List<string>();
+        int maxrecents = 5;
+        private Xml settings; 
 
         public vMixManager()
         {
@@ -45,6 +53,9 @@ namespace vMixManager
             ListOfEventList[2] = EventList2;
             ListOfEventList[3] = EventList3;
             ListOfEventList[4] = EventList4;
+            settings.LoadXml(SettingsPath);
+            recentfiles.AddRange(settings.GetValue("vManager", "recentfiles", "").Split('|'));
+            maxrecents = settings.GetValue("vManager", "maxrecents", 5);
             vMixEvents = vMixEvents0;
             EventList = EventList0;
             ActiveOverlay = "0";
@@ -488,6 +499,7 @@ namespace vMixManager
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "XML-Files|*.xml|all Files|*.*";
+            ofd.InitialDirectory = Path.GetDirectoryName(recentfiles[recentfiles.Count - 1]);
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 List<vMixEvent > vmes = new List<vMixEvent> ();
@@ -542,6 +554,28 @@ namespace vMixManager
                 ActiveOverlay = tempActiveOverlay;
                 MessageBox.Show(eventcount.ToString() + " events loaded from xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
+            updaterecentfiles(ofd.FileName);
+        }
+
+        private void updaterecentfiles(string filepath)
+        {
+            if (recentfiles.Count == maxrecents) recentfiles.RemoveAt(0);
+            recentfiles.Add(filepath);
+            settings.SetValue("vManager", "recentfiles", ConcateArrayOfString(recentfiles));
+            settings.Save();
+        }
+
+        private string ConcateArrayOfString(List<string> toconcat)
+        {
+            string result = toconcat[0];
+            if (toconcat.Count == 1) return result;
+            if (toconcat.Count > 2)
+            {
+                for (int i = 1; i < toconcat.Count - 1; i++)
+                { result = result + "|" + toconcat[i]; }
+            }
+            return result + "|" + toconcat[toconcat.Count - 1];
         }
         private void bn_append_Click(object sender, EventArgs e)
         {

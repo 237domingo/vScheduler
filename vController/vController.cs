@@ -12,11 +12,11 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Xml;
 
-namespace vMixControler
+namespace vControler
 {
     public partial class vMixControler : Form
     {
-        vMixPreferences settings;
+        vPreferences settings;
         List<vMixEvent> EventList;
         List<vMixEvent>[] EventLists = new List<vMixEvent>[5];
         Semaphore EventListLock;
@@ -49,16 +49,11 @@ namespace vMixControler
 
         private void vMaster_Load(object sender, EventArgs e)
         {
-            settings = new vMixPreferences();
 
             EventListLock = new Semaphore(1, 1);
             EventList = new List<vMixEvent>();
             for (int i = 0; i < 5; i++) { EventLists[i] = new List<vMixEvent>(); }
             for (int i = 0; i < 5; i++) { Workloads[i] = new BlockingCollection<vMixMicroEvent>(); }
-
-            for (int i = 0; i < 5; i++) { MasterClocks[i] = new vMixScheduler(100, settings.vMixPreload, settings.vMixLinger, Workloads[i]); }
-            //MasterClock = new vMixScheduler(100, settings.vMixPreload , settings.vMixLinger, Workload);
-            WebClient = new vMixWebClient(settings.vMixURL);
 
             for (int i = 0; i < 5; i++)
             {
@@ -71,9 +66,9 @@ namespace vMixControler
             //Workload = Workloads[0];
             //WorkloadThread = WorkloadThreads[0];
             
-            ScheduleFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vMixScheduler";
+            ScheduleFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vScheduler";
             if (!Directory.Exists (ScheduleFolder)) Directory.CreateDirectory (ScheduleFolder);
-
+            
             for (int i = 0; i < 5; i++)
             {
                 WatchDogs[i] = new FileSystemWatcher(ScheduleFolder, ScheduleFile[i]);
@@ -90,6 +85,14 @@ namespace vMixControler
             //WatchDog.Created += new FileSystemEventHandler(WatchDogBark);
             //WatchDog.Deleted += new FileSystemEventHandler(WatchDogBark);
             //WatchDog.EnableRaisingEvents = true;
+
+            if (!File.Exists(ScheduleFolder + "Settings.xml")) File.Create(ScheduleFolder + "Settings.xml");
+
+            settings = new vPreferences();
+
+            for (int i = 0; i < 5; i++) { MasterClocks[i] = new vMixScheduler(100, settings.vMixPreload, settings.vMixLinger, Workloads[i]); }
+            //MasterClock = new vMixScheduler(100, settings.vMixPreload , settings.vMixLinger, Workload);
+            WebClient = new vMixWebClient(settings.vMixURL);
 
             if (settings.vMixAutoLoad)
             {

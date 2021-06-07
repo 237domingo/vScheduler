@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>vControler</RootNamespace>
-    <AssemblyName>vControler</AssemblyName>
+    <AssemblyName>vController</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -121,6 +121,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="vXmlProfile.cs" />
     <Compile Include="MediaInfoDLL.cs" />
     <Compile Include="vController.cs">
       <SubType>Form</SubType>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace vMixControler
+namespace vControler
 {
     public enum vmEventType {manual, black, video, audio, image, photos, input};
     public enum vmTransitionType {cut, fade, zoom, wipe, slide, fly, cross, rotate, cube, cubezoom};

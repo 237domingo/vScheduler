@@ -1,4 +1,4 @@
-﻿namespace vMixControler
+﻿namespace vControler
 {
     partial class vMixControler
     {

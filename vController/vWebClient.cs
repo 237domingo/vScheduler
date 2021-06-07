@@ -6,7 +6,7 @@ using System.Net;
 using System.Xml;
 using System.Web;
 
-namespace vMixControler
+namespace vControler
 {
     public class vMixWebClient
     {

@@ -1,4 +1,4 @@
-﻿namespace vMixManager
+﻿namespace vManager
 {
     partial class vOverlaySelection
     {

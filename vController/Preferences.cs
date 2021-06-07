@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,14 +9,16 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net;
 using System.Xml;
-using AMS.Profile;
 
-namespace vMixControler
+namespace vControler
 {
-    public partial class vMixPreferences : Form
+    public partial class vPreferences : Form
     {
+        private string _vMixIPadress = "127.0.0.1";
+        public string vMixIP { get { return _vMixIPadress; } }
+
         private int _vMixPort = 8088;
-        public string vMixURL { get { return "http://127.0.0.1:" + _vMixPort.ToString(); } }
+        public string vMixURL { get { return "http://" + _vMixIPadress + ":" + _vMixPort.ToString(); } }
 
         private int _vMixPreload = 5;
         public int vMixPreload { get { return _vMixPreload; } }
@@ -26,24 +29,31 @@ namespace vMixControler
         private bool _vMixAutoLoad = false;
         public bool vMixAutoLoad { get { return _vMixAutoLoad; } }
 
-        private Xml settings;
+        public string PreferencesPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vScheduler\\Settings.xml";
 
-        public vMixPreferences()
+        private Xml settings;
+        
+        public vPreferences()
         {
             InitializeComponent();
-            settings = new Xml (Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vMixScheduler\\Settings.xml");
-            ud_vMixPort.Value = _vMixPort = settings.GetValue("vMixScheduler", "vMixPort", 8088);
-            ud_preload.Value = _vMixPreload = settings.GetValue("vMixScheduler", "MediaPreload", 5);
-            ud_linger.Value = _vMixLinger = settings.GetValue("vMixScheduler", "MediaLinger", 5);
-            cb_autoload.Checked = _vMixAutoLoad = settings.GetValue("vMixScheduler", "AutoLoad", false);
+            settings = new Xml();
+            settings.LoadXml(PreferencesPath);
+            ud_vMixPort.Value = _vMixPort = settings.GetValue("vMix", "vMixPort", 8088);
+            tb_vMixIP.Text = _vMixIPadress = settings.GetValue("vMix", "vMixIPadress", "127.0.0.1");
+            ud_preload.Value = _vMixPreload = settings.GetValue("vController", "MediaPreload", 5);
+            ud_linger.Value = _vMixLinger = settings.GetValue("vController", "MediaLinger", 5);
+            cb_autoload.Checked = _vMixAutoLoad = settings.GetValue("vController", "AutoLoad", false);
+            if (!File.Exists(PreferencesPath)) settings.Save();    
         }
 
         private void SaveSettings()
         {
-            settings.SetValue("vMixScheduler", "vMixPort", _vMixPort);
-            settings.SetValue("vMixScheduler", "MediaPreload", _vMixPreload);
-            settings.SetValue("vMixScheduler", "MediaLinger", _vMixLinger);
-            settings.SetValue("vMixScheduler", "AutoLoad", _vMixAutoLoad);
+            settings.SetValue("vMix", "vMixPort", _vMixPort);
+            settings.SetValue("vMix", "vMixIPadress", _vMixIPadress);
+            settings.SetValue("vController", "MediaPreload", _vMixPreload);
+            settings.SetValue("vController", "MediaLinger", _vMixLinger);
+            settings.SetValue("vController", "AutoLoad", _vMixAutoLoad);
+            settings.Save();
         }
 
         private void bn_testport_Click(object sender, EventArgs e)
@@ -89,6 +99,11 @@ namespace vMixControler
         private void cb_autoload_CheckedChanged(object sender, EventArgs e)
         {
             _vMixAutoLoad = cb_autoload.Checked;
+        }
+
+        private void tb_vMixIP_TextChanged(object sender, EventArgs e)
+        {
+            _vMixIPadress = tb_vMixIP.Text;
         }
     }
 }
