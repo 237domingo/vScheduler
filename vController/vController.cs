@@ -437,5 +437,10 @@ namespace vControler
             }
                 
         }
+
+        private void bn_donate_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.paypal.com/donate?hosted_button_id=8KWHCKS3TX54S");
+        }
     }
 }

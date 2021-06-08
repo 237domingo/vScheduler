@@ -85,6 +85,7 @@
             this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.bn_donate = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -575,11 +576,27 @@
             this.columnHeader26.Text = "Type";
             this.columnHeader26.Width = 138;
             // 
+            // bn_donate
+            // 
+            this.bn_donate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.bn_donate.FlatAppearance.BorderSize = 0;
+            this.bn_donate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bn_donate.Font = new System.Drawing.Font("Microsoft YaHei UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bn_donate.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.bn_donate.Location = new System.Drawing.Point(576, 0);
+            this.bn_donate.Name = "bn_donate";
+            this.bn_donate.Size = new System.Drawing.Size(91, 25);
+            this.bn_donate.TabIndex = 16;
+            this.bn_donate.Text = "DONATE";
+            this.bn_donate.UseVisualStyleBackColor = false;
+            this.bn_donate.Click += new System.EventHandler(this.bn_donate_Click);
+            // 
             // vMixControler
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(667, 288);
+            this.Controls.Add(this.bn_donate);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -662,6 +679,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader24;
         private System.Windows.Forms.ColumnHeader columnHeader25;
         private System.Windows.Forms.ColumnHeader columnHeader26;
+        private System.Windows.Forms.Button bn_donate;
     }
 }
 

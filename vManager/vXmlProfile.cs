@@ -25,10 +25,11 @@ namespace vManager
         public void LoadXml(string path)
         {
             Path = path;
-            if (File.Exists(path)) 
+            if (File.Exists(path))
             {
                 if (!deletefile) xml.Load(path);
             }
+            else File.Create(path);
             if (xml.ChildNodes.Count == 1 && xml.GetElementsByTagName("vScheduler").Count == 1)
             {
                 XmlNode n = xml.FirstChild;

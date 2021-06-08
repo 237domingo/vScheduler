@@ -30,14 +30,17 @@ namespace vManager
         ListView EventList;
         String ActiveOverlay;
         List<vMixEvent> copybuffer = new List<vMixEvent>();
+        string formtitle;
+        string openedfile;
+        readonly string defaultfilename = "untitled.xml";
         public delegate void SelectedOverlay(bool[] Overlay);
         bool donotredraw = false;
         //
         //settings for vManager
-        string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\sCheduler\\settings.xml";
+        string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vScheduler\\settings.xml";
         private List<string> recentfiles = new List<string>();
         int maxrecents = 5;
-        private Xml settings; 
+        private Xml settings;
 
         public vMixManager()
         {
@@ -53,12 +56,14 @@ namespace vManager
             ListOfEventList[2] = EventList2;
             ListOfEventList[3] = EventList3;
             ListOfEventList[4] = EventList4;
+            settings = new Xml();
             settings.LoadXml(SettingsPath);
             recentfiles.AddRange(settings.GetValue("vManager", "recentfiles", "").Split('|'));
             maxrecents = settings.GetValue("vManager", "maxrecents", 5);
             vMixEvents = vMixEvents0;
             EventList = EventList0;
             ActiveOverlay = "0";
+            formtitle = Text;
         }
 
         private void vMixManager_Load(object sender, EventArgs e)
@@ -67,6 +72,8 @@ namespace vManager
             lb_event.Text = "Video";
             lb_transition.Text = "Fade";
             lb_slideshow_transition.Text = "Fade";
+            Text = formtitle + " - " + defaultfilename;
+            openedfile = defaultfilename;
         }
 
         private void EventList_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
@@ -499,7 +506,6 @@ namespace vManager
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "XML-Files|*.xml|all Files|*.*";
-            ofd.InitialDirectory = Path.GetDirectoryName(recentfiles[recentfiles.Count - 1]);
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 List<vMixEvent > vmes = new List<vMixEvent> ();
@@ -554,7 +560,8 @@ namespace vManager
                 ActiveOverlay = tempActiveOverlay;
                 MessageBox.Show(eventcount.ToString() + " events loaded from xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
+            openedfile = ofd.FileName;
+            Text = formtitle + " - " + Path.GetFileName(ofd.FileName);
             updaterecentfiles(ofd.FileName);
         }
 
@@ -1302,6 +1309,11 @@ namespace vManager
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void bn_donate_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.paypal.com/donate?hosted_button_id=8KWHCKS3TX54S");
         }
 
     }
