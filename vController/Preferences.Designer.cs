@@ -1,6 +1,6 @@
-﻿namespace vMixControler
+﻿namespace vControler
 {
-    partial class vMixPreferences
+    partial class vPreferences
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -28,6 +28,7 @@
             this.ud_linger = new System.Windows.Forms.NumericUpDown();
             this.cb_autoload = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.tb_vMixIP = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.ud_vMixPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ud_preload)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ud_linger)).BeginInit();
@@ -63,9 +64,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(139, 13);
+            this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Port of vMix\' Web-Interface:";
+            this.label1.Text = "vMix API:";
             // 
             // bn_testport
             // 
@@ -186,11 +187,22 @@
             this.label6.TabIndex = 10;
             this.label6.Text = "(if vMix is online)";
             // 
-            // vMixPreferences
+            // tb_vMixIP
+            // 
+            this.tb_vMixIP.Location = new System.Drawing.Point(61, 5);
+            this.tb_vMixIP.Name = "tb_vMixIP";
+            this.tb_vMixIP.Size = new System.Drawing.Size(92, 20);
+            this.tb_vMixIP.TabIndex = 11;
+            this.tb_vMixIP.Text = "127.0.0.1";
+            this.tb_vMixIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tb_vMixIP.TextChanged += new System.EventHandler(this.tb_vMixIP_TextChanged);
+            // 
+            // vPreferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 106);
+            this.Controls.Add(this.tb_vMixIP);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.cb_autoload);
             this.Controls.Add(this.label4);
@@ -205,7 +217,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "vMixPreferences";
+            this.Name = "vPreferences";
             this.ShowIcon = false;
             this.Text = "Settings";
             this.TopMost = true;
@@ -231,5 +243,6 @@
         private System.Windows.Forms.NumericUpDown ud_linger;
         private System.Windows.Forms.CheckBox cb_autoload;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox tb_vMixIP;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace vMixControler
+﻿namespace vControler
 {
     partial class vMixControler
     {
@@ -44,7 +44,7 @@
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lvEventList = new System.Windows.Forms.ListView();
+            this.lvEventList0 = new System.Windows.Forms.ListView();
             this.column_title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.column_start = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.column_duration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -59,9 +59,42 @@
             this.bn_load_schedule = new System.Windows.Forms.ToolStripButton();
             this.bn_showpreferences = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.Overlay0 = new System.Windows.Forms.TabPage();
+            this.Overlay1 = new System.Windows.Forms.TabPage();
+            this.lvEventList1 = new System.Windows.Forms.ListView();
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Overlay2 = new System.Windows.Forms.TabPage();
+            this.lvEventList2 = new System.Windows.Forms.ListView();
+            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Overlay3 = new System.Windows.Forms.TabPage();
+            this.lvEventList3 = new System.Windows.Forms.ListView();
+            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Overlay4 = new System.Windows.Forms.TabPage();
+            this.lvEventList4 = new System.Windows.Forms.ListView();
+            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.bn_donate = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.Overlay0.SuspendLayout();
+            this.Overlay1.SuspendLayout();
+            this.Overlay2.SuspendLayout();
+            this.Overlay3.SuspendLayout();
+            this.Overlay4.SuspendLayout();
             this.SuspendLayout();
             // 
             // event_title
@@ -139,29 +172,29 @@
             this.columnHeader10.Text = "Path";
             this.columnHeader10.Width = 300;
             // 
-            // lvEventList
+            // lvEventList0
             // 
-            this.lvEventList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lvEventList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvEventList0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lvEventList0.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.column_title,
             this.column_start,
             this.column_duration,
             this.column_type});
-            this.lvEventList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvEventList.FullRowSelect = true;
-            this.lvEventList.GridLines = true;
-            this.lvEventList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lvEventList.HideSelection = false;
-            this.lvEventList.Location = new System.Drawing.Point(0, 0);
-            this.lvEventList.Margin = new System.Windows.Forms.Padding(1);
-            this.lvEventList.MultiSelect = false;
-            this.lvEventList.Name = "lvEventList";
-            this.lvEventList.Size = new System.Drawing.Size(667, 263);
-            this.lvEventList.TabIndex = 2;
-            this.lvEventList.UseCompatibleStateImageBehavior = false;
-            this.lvEventList.View = System.Windows.Forms.View.Details;
-            this.lvEventList.VirtualMode = true;
-            this.lvEventList.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvEventList_RetrieveVirtualItem);
+            this.lvEventList0.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvEventList0.FullRowSelect = true;
+            this.lvEventList0.GridLines = true;
+            this.lvEventList0.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvEventList0.HideSelection = false;
+            this.lvEventList0.Location = new System.Drawing.Point(3, 3);
+            this.lvEventList0.Margin = new System.Windows.Forms.Padding(1);
+            this.lvEventList0.MultiSelect = false;
+            this.lvEventList0.Name = "lvEventList0";
+            this.lvEventList0.Size = new System.Drawing.Size(653, 231);
+            this.lvEventList0.TabIndex = 2;
+            this.lvEventList0.UseCompatibleStateImageBehavior = false;
+            this.lvEventList0.View = System.Windows.Forms.View.Details;
+            this.lvEventList0.VirtualMode = true;
+            this.lvEventList0.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvEventList_RetrieveVirtualItem);
             // 
             // column_title
             // 
@@ -171,7 +204,7 @@
             // column_start
             // 
             this.column_start.Text = "Start";
-            this.column_start.Width = 179;
+            this.column_start.Width = 127;
             // 
             // column_duration
             // 
@@ -190,7 +223,7 @@
             this.panel1.Controls.Add(this.bn_connect_);
             this.panel1.Controls.Add(this.bn_showpreferences_);
             this.panel1.Controls.Add(this.bn_load_schedule_);
-            this.panel1.Location = new System.Drawing.Point(524, 113);
+            this.panel1.Location = new System.Drawing.Point(613, 18);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(109, 149);
             this.panel1.TabIndex = 13;
@@ -284,7 +317,7 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.lvEventList);
+            this.panel2.Controls.Add(this.tabControl1);
             this.panel2.Controls.Add(this.panel1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 25);
@@ -292,11 +325,278 @@
             this.panel2.Size = new System.Drawing.Size(667, 263);
             this.panel2.TabIndex = 15;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.Overlay0);
+            this.tabControl1.Controls.Add(this.Overlay1);
+            this.tabControl1.Controls.Add(this.Overlay2);
+            this.tabControl1.Controls.Add(this.Overlay3);
+            this.tabControl1.Controls.Add(this.Overlay4);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(667, 263);
+            this.tabControl1.TabIndex = 16;
+            // 
+            // Overlay0
+            // 
+            this.Overlay0.BackColor = System.Drawing.Color.Transparent;
+            this.Overlay0.Controls.Add(this.lvEventList0);
+            this.Overlay0.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Overlay0.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Overlay0.Location = new System.Drawing.Point(4, 22);
+            this.Overlay0.Name = "Overlay0";
+            this.Overlay0.Padding = new System.Windows.Forms.Padding(3);
+            this.Overlay0.Size = new System.Drawing.Size(659, 237);
+            this.Overlay0.TabIndex = 0;
+            this.Overlay0.Text = "Overlay 0";
+            this.Overlay0.UseVisualStyleBackColor = true;
+            // 
+            // Overlay1
+            // 
+            this.Overlay1.Controls.Add(this.lvEventList1);
+            this.Overlay1.Location = new System.Drawing.Point(4, 22);
+            this.Overlay1.Name = "Overlay1";
+            this.Overlay1.Padding = new System.Windows.Forms.Padding(3);
+            this.Overlay1.Size = new System.Drawing.Size(659, 237);
+            this.Overlay1.TabIndex = 1;
+            this.Overlay1.Text = "Overlay 1";
+            this.Overlay1.UseVisualStyleBackColor = true;
+            // 
+            // lvEventList1
+            // 
+            this.lvEventList1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lvEventList1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader11,
+            this.columnHeader12,
+            this.columnHeader13,
+            this.columnHeader14});
+            this.lvEventList1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvEventList1.FullRowSelect = true;
+            this.lvEventList1.GridLines = true;
+            this.lvEventList1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvEventList1.HideSelection = false;
+            this.lvEventList1.Location = new System.Drawing.Point(3, 3);
+            this.lvEventList1.Margin = new System.Windows.Forms.Padding(1);
+            this.lvEventList1.MultiSelect = false;
+            this.lvEventList1.Name = "lvEventList1";
+            this.lvEventList1.Size = new System.Drawing.Size(653, 231);
+            this.lvEventList1.TabIndex = 3;
+            this.lvEventList1.UseCompatibleStateImageBehavior = false;
+            this.lvEventList1.View = System.Windows.Forms.View.Details;
+            this.lvEventList1.VirtualMode = true;
+            this.lvEventList1.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvEventList_RetrieveVirtualItem);
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "Title";
+            this.columnHeader11.Width = 223;
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "Start";
+            this.columnHeader12.Width = 158;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "Duration";
+            this.columnHeader13.Width = 125;
+            // 
+            // columnHeader14
+            // 
+            this.columnHeader14.Text = "Type";
+            this.columnHeader14.Width = 138;
+            // 
+            // Overlay2
+            // 
+            this.Overlay2.Controls.Add(this.lvEventList2);
+            this.Overlay2.Location = new System.Drawing.Point(4, 22);
+            this.Overlay2.Name = "Overlay2";
+            this.Overlay2.Padding = new System.Windows.Forms.Padding(3);
+            this.Overlay2.Size = new System.Drawing.Size(659, 237);
+            this.Overlay2.TabIndex = 2;
+            this.Overlay2.Text = "Overlay 2";
+            this.Overlay2.UseVisualStyleBackColor = true;
+            // 
+            // lvEventList2
+            // 
+            this.lvEventList2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lvEventList2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader15,
+            this.columnHeader16,
+            this.columnHeader17,
+            this.columnHeader18});
+            this.lvEventList2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvEventList2.FullRowSelect = true;
+            this.lvEventList2.GridLines = true;
+            this.lvEventList2.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvEventList2.HideSelection = false;
+            this.lvEventList2.Location = new System.Drawing.Point(3, 3);
+            this.lvEventList2.Margin = new System.Windows.Forms.Padding(1);
+            this.lvEventList2.MultiSelect = false;
+            this.lvEventList2.Name = "lvEventList2";
+            this.lvEventList2.Size = new System.Drawing.Size(653, 231);
+            this.lvEventList2.TabIndex = 3;
+            this.lvEventList2.UseCompatibleStateImageBehavior = false;
+            this.lvEventList2.View = System.Windows.Forms.View.Details;
+            this.lvEventList2.VirtualMode = true;
+            this.lvEventList2.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvEventList_RetrieveVirtualItem);
+            // 
+            // columnHeader15
+            // 
+            this.columnHeader15.Text = "Title";
+            this.columnHeader15.Width = 223;
+            // 
+            // columnHeader16
+            // 
+            this.columnHeader16.Text = "Start";
+            this.columnHeader16.Width = 157;
+            // 
+            // columnHeader17
+            // 
+            this.columnHeader17.Text = "Duration";
+            this.columnHeader17.Width = 125;
+            // 
+            // columnHeader18
+            // 
+            this.columnHeader18.Text = "Type";
+            this.columnHeader18.Width = 138;
+            // 
+            // Overlay3
+            // 
+            this.Overlay3.Controls.Add(this.lvEventList3);
+            this.Overlay3.Location = new System.Drawing.Point(4, 22);
+            this.Overlay3.Name = "Overlay3";
+            this.Overlay3.Padding = new System.Windows.Forms.Padding(3);
+            this.Overlay3.Size = new System.Drawing.Size(659, 237);
+            this.Overlay3.TabIndex = 3;
+            this.Overlay3.Text = "Overlay 3";
+            this.Overlay3.UseVisualStyleBackColor = true;
+            // 
+            // lvEventList3
+            // 
+            this.lvEventList3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lvEventList3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader19,
+            this.columnHeader20,
+            this.columnHeader21,
+            this.columnHeader22});
+            this.lvEventList3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvEventList3.FullRowSelect = true;
+            this.lvEventList3.GridLines = true;
+            this.lvEventList3.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvEventList3.HideSelection = false;
+            this.lvEventList3.Location = new System.Drawing.Point(3, 3);
+            this.lvEventList3.Margin = new System.Windows.Forms.Padding(1);
+            this.lvEventList3.MultiSelect = false;
+            this.lvEventList3.Name = "lvEventList3";
+            this.lvEventList3.Size = new System.Drawing.Size(653, 231);
+            this.lvEventList3.TabIndex = 3;
+            this.lvEventList3.UseCompatibleStateImageBehavior = false;
+            this.lvEventList3.View = System.Windows.Forms.View.Details;
+            this.lvEventList3.VirtualMode = true;
+            this.lvEventList3.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvEventList_RetrieveVirtualItem);
+            // 
+            // columnHeader19
+            // 
+            this.columnHeader19.Text = "Title";
+            this.columnHeader19.Width = 223;
+            // 
+            // columnHeader20
+            // 
+            this.columnHeader20.Text = "Start";
+            this.columnHeader20.Width = 142;
+            // 
+            // columnHeader21
+            // 
+            this.columnHeader21.Text = "Duration";
+            this.columnHeader21.Width = 125;
+            // 
+            // columnHeader22
+            // 
+            this.columnHeader22.Text = "Type";
+            this.columnHeader22.Width = 138;
+            // 
+            // Overlay4
+            // 
+            this.Overlay4.Controls.Add(this.lvEventList4);
+            this.Overlay4.Location = new System.Drawing.Point(4, 22);
+            this.Overlay4.Name = "Overlay4";
+            this.Overlay4.Padding = new System.Windows.Forms.Padding(3);
+            this.Overlay4.Size = new System.Drawing.Size(659, 237);
+            this.Overlay4.TabIndex = 4;
+            this.Overlay4.Text = "Overlay 4";
+            this.Overlay4.UseVisualStyleBackColor = true;
+            // 
+            // lvEventList4
+            // 
+            this.lvEventList4.BackColor = System.Drawing.SystemColors.Window;
+            this.lvEventList4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lvEventList4.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader23,
+            this.columnHeader24,
+            this.columnHeader25,
+            this.columnHeader26});
+            this.lvEventList4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvEventList4.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lvEventList4.FullRowSelect = true;
+            this.lvEventList4.GridLines = true;
+            this.lvEventList4.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvEventList4.HideSelection = false;
+            this.lvEventList4.Location = new System.Drawing.Point(3, 3);
+            this.lvEventList4.Margin = new System.Windows.Forms.Padding(1);
+            this.lvEventList4.MultiSelect = false;
+            this.lvEventList4.Name = "lvEventList4";
+            this.lvEventList4.Size = new System.Drawing.Size(653, 231);
+            this.lvEventList4.TabIndex = 3;
+            this.lvEventList4.Tag = "";
+            this.lvEventList4.UseCompatibleStateImageBehavior = false;
+            this.lvEventList4.View = System.Windows.Forms.View.Details;
+            this.lvEventList4.VirtualMode = true;
+            this.lvEventList4.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvEventList_RetrieveVirtualItem);
+            // 
+            // columnHeader23
+            // 
+            this.columnHeader23.Text = "Title";
+            this.columnHeader23.Width = 223;
+            // 
+            // columnHeader24
+            // 
+            this.columnHeader24.Text = "Start";
+            this.columnHeader24.Width = 135;
+            // 
+            // columnHeader25
+            // 
+            this.columnHeader25.Text = "Duration";
+            this.columnHeader25.Width = 125;
+            // 
+            // columnHeader26
+            // 
+            this.columnHeader26.Text = "Type";
+            this.columnHeader26.Width = 138;
+            // 
+            // bn_donate
+            // 
+            this.bn_donate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.bn_donate.FlatAppearance.BorderSize = 0;
+            this.bn_donate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bn_donate.Font = new System.Drawing.Font("Microsoft YaHei UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bn_donate.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.bn_donate.Location = new System.Drawing.Point(576, 0);
+            this.bn_donate.Name = "bn_donate";
+            this.bn_donate.Size = new System.Drawing.Size(91, 25);
+            this.bn_donate.TabIndex = 16;
+            this.bn_donate.Text = "DONATE";
+            this.bn_donate.UseVisualStyleBackColor = false;
+            this.bn_donate.Click += new System.EventHandler(this.bn_donate_Click);
+            // 
             // vMixControler
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(667, 288);
+            this.Controls.Add(this.bn_donate);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -310,6 +610,12 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.Overlay0.ResumeLayout(false);
+            this.Overlay1.ResumeLayout(false);
+            this.Overlay2.ResumeLayout(false);
+            this.Overlay3.ResumeLayout(false);
+            this.Overlay4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -332,7 +638,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader8;
         private System.Windows.Forms.ColumnHeader columnHeader9;
         private System.Windows.Forms.ColumnHeader columnHeader10;
-        private System.Windows.Forms.ListView lvEventList;
+        private System.Windows.Forms.ListView lvEventList0;
         private System.Windows.Forms.ColumnHeader column_title;
         private System.Windows.Forms.ColumnHeader column_start;
         private System.Windows.Forms.ColumnHeader column_duration;
@@ -347,6 +653,33 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ToolStripButton bn_showpreferences;
         private System.Windows.Forms.ToolStripButton bn_load_schedule;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage Overlay0;
+        private System.Windows.Forms.TabPage Overlay1;
+        private System.Windows.Forms.ListView lvEventList1;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.ColumnHeader columnHeader12;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.ColumnHeader columnHeader14;
+        private System.Windows.Forms.TabPage Overlay2;
+        private System.Windows.Forms.ListView lvEventList2;
+        private System.Windows.Forms.ColumnHeader columnHeader15;
+        private System.Windows.Forms.ColumnHeader columnHeader16;
+        private System.Windows.Forms.ColumnHeader columnHeader17;
+        private System.Windows.Forms.ColumnHeader columnHeader18;
+        private System.Windows.Forms.TabPage Overlay3;
+        private System.Windows.Forms.ListView lvEventList3;
+        private System.Windows.Forms.ColumnHeader columnHeader19;
+        private System.Windows.Forms.ColumnHeader columnHeader20;
+        private System.Windows.Forms.ColumnHeader columnHeader21;
+        private System.Windows.Forms.ColumnHeader columnHeader22;
+        private System.Windows.Forms.TabPage Overlay4;
+        private System.Windows.Forms.ListView lvEventList4;
+        private System.Windows.Forms.ColumnHeader columnHeader23;
+        private System.Windows.Forms.ColumnHeader columnHeader24;
+        private System.Windows.Forms.ColumnHeader columnHeader25;
+        private System.Windows.Forms.ColumnHeader columnHeader26;
+        private System.Windows.Forms.Button bn_donate;
     }
 }
 

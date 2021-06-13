@@ -12,25 +12,35 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Xml;
 
-namespace vMixControler
+namespace vControler
 {
     public partial class vMixControler : Form
     {
-        vMixPreferences settings;
+        vPreferences settings;
         List<vMixEvent> EventList;
+        List<vMixEvent>[] EventLists = new List<vMixEvent>[5];
         Semaphore EventListLock;
 
-        vMixScheduler MasterClock;
-        BlockingCollection<vMixMicroEvent> Workload;
+        //vMixScheduler MasterClock;
+        vMixScheduler[] MasterClocks = new vMixScheduler[5];
+
+        //BlockingCollection<vMixMicroEvent> Workload;
+        BlockingCollection<vMixMicroEvent>[] Workloads = new BlockingCollection<vMixMicroEvent>[5] ;
         
-        Thread WorkloadThread;
+        
+        //Thread WorkloadThread;
+        Thread[] WorkloadThreads = new Thread[5];
 
         vMixWebClient WebClient;
-
+        
         bool exitApp = false;
+        bool[] Reloading = { false, false, false, false, false };
+        int WorkLayer = 0;
 
-        FileSystemWatcher WatchDog;
+        //FileSystemWatcher WatchDog;
+        FileSystemWatcher[] WatchDogs = new FileSystemWatcher[5];
         string ScheduleFolder;
+        string[] ScheduleFile = { "vSchedule0.xml", "vSchedule1.xml", "vSchedule2.xml", "vSchedule3.xml", "vSchedule4.xml" };
 
         public vMixControler()
         {
@@ -39,38 +49,88 @@ namespace vMixControler
 
         private void vMaster_Load(object sender, EventArgs e)
         {
-            settings = new vMixPreferences();
 
             EventListLock = new Semaphore(1, 1);
             EventList = new List<vMixEvent>();
-            Workload = new BlockingCollection<vMixMicroEvent>();
+            for (int i = 0; i < 5; i++) { EventLists[i] = new List<vMixEvent>(); }
+            for (int i = 0; i < 5; i++) { Workloads[i] = new BlockingCollection<vMixMicroEvent>(); }
 
-            MasterClock = new vMixScheduler(100, settings.vMixPreload , settings.vMixLinger, Workload);
+            for (int i = 0; i < 5; i++)
+            {
+                //Workload = Workloads[i];
+                ThreadStart workstart = new ThreadStart(WorkloadFunc);
+                WorkloadThreads[i] = new Thread(workstart);
+                WorkloadThreads[i].Name = Convert.ToString(i);
+                WorkloadThreads[i].Start();
+            }
+            //Workload = Workloads[0];
+            //WorkloadThread = WorkloadThreads[0];
+            
+            ScheduleFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vScheduler";
+            if (!Directory.Exists (ScheduleFolder)) Directory.CreateDirectory (ScheduleFolder);
+            
+            for (int i = 0; i < 5; i++)
+            {
+                WatchDogs[i] = new FileSystemWatcher(ScheduleFolder, ScheduleFile[i]);
+                WatchDogs[i].NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName;
+                WatchDogs[i].Changed += new FileSystemEventHandler(WatchDogBark);
+                WatchDogs[i].Created += new FileSystemEventHandler(WatchDogBark);
+                WatchDogs[i].Deleted += new FileSystemEventHandler(WatchDogBark);
+                WatchDogs[i].EnableRaisingEvents = true;
+            }
+            
+            //WatchDog = new FileSystemWatcher(ScheduleFolder, "vMixSchedule.xml");
+            //WatchDog.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName;
+            //WatchDog.Changed += new FileSystemEventHandler(WatchDogBark);
+            //WatchDog.Created += new FileSystemEventHandler(WatchDogBark);
+            //WatchDog.Deleted += new FileSystemEventHandler(WatchDogBark);
+            //WatchDog.EnableRaisingEvents = true;
+
+            if (!File.Exists(ScheduleFolder + "Settings.xml")) File.Create(ScheduleFolder + "Settings.xml");
+
+            settings = new vPreferences();
+
+            for (int i = 0; i < 5; i++) { MasterClocks[i] = new vMixScheduler(100, settings.vMixPreload, settings.vMixLinger, Workloads[i]); }
+            //MasterClock = new vMixScheduler(100, settings.vMixPreload , settings.vMixLinger, Workload);
             WebClient = new vMixWebClient(settings.vMixURL);
 
-            ThreadStart workstart = new ThreadStart(WorkloadFunc);
-            WorkloadThread = new Thread(workstart);
-            WorkloadThread.Start();
-
-            ScheduleFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vMixScheduler";
-            if (!Directory.Exists (ScheduleFolder)) Directory.CreateDirectory (ScheduleFolder);
-            WatchDog = new FileSystemWatcher(ScheduleFolder, "vMixSchedule.xml");
-            WatchDog.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName;
-            WatchDog.Changed += new FileSystemEventHandler(WatchDogBark);
-            WatchDog.Created += new FileSystemEventHandler(WatchDogBark);
-            WatchDog.Deleted += new FileSystemEventHandler(WatchDogBark);
-            WatchDog.EnableRaisingEvents = true;
-
-            if(settings.vMixAutoLoad) 
-                ReloadSchedule();
+            if (settings.vMixAutoLoad)
+            {
+                this.Enabled = false;
+                for (int i = 0; i < 5; i++) { WorkLayer = i; ReloadSchedule(); }
+                this.Enabled = true;
+            }
         }
 
         private void WatchDogBark(object sender, FileSystemEventArgs e)
         {
+            string name = e.Name[9].ToString();
+            //for (int i = 0; i < 5; i++) 
+            //{
+            //    if (e.Name=="vMixSchedule"+0+".XML")
+            //}
+            WorkLayer = int.Parse(name);
             if (e.ChangeType == WatcherChangeTypes.Deleted)
                 ClearList();
             else
+            {
+                //this.Enabled = false;
                 ReloadSchedule();
+                //this.Enabled = true;
+            }
+        }
+
+        private ListView FindListView(int WorkList) 
+        {
+            switch (WorkList) 
+            {
+                case 0: { return lvEventList0; }
+                case 1: { return lvEventList1; }
+                case 2: { return lvEventList2; }
+                case 3: { return lvEventList3; }
+                case 4: { return lvEventList4; }
+            }
+            return new ListView(); 
         }
 
         private void ClearList()
@@ -79,89 +139,123 @@ namespace vMixControler
                 this.Invoke(new MethodInvoker(ClearList));
             else
             {
-                lvEventList.SelectedIndices.Clear();
-                EventListLock.WaitOne();
-                for (int n = EventList.Count - 1; n >= 0; n--)
-                {
-                    MasterClock.RemoveMicroEvents(EventList[n]);
-                    if (EventList[n].EventType != vmEventType.input)
-                        WebClient.CloseInput(EventList[n].GUID);
-                    EventList.RemoveAt(n);
-                }
-                EventListLock.Release();
-                lvEventList.VirtualListSize = EventList.Count;
+                
+                ClearList(WorkLayer);
+                //lvEventList.SelectedIndices.Clear();
+                //EventListLock.WaitOne();
+                //for (int n = EventList.Count - 1; n >= 0; n--)
+                //{
+                //    MasterClock.RemoveMicroEvents(EventList[n]);
+                //    if (EventList[n].EventType != vmEventType.input)
+                //        WebClient.CloseInput(EventList[n].GUID);
+                //    EventList.RemoveAt(n);
+                //}
+                //EventListLock.Release();
+                //lvEventList.VirtualListSize = EventList.Count;
             }
+        }
+
+        private void ClearList(int WorkList) 
+        {
+            ListView lvEventList = FindListView(WorkList);
+            lvEventList.SelectedIndices.Clear();
+            EventListLock.WaitOne();
+            for (int n = EventLists[WorkList].Count - 1; n >= 0; n--)
+            {
+                MasterClocks[WorkList].RemoveMicroEvents(EventLists[WorkList][n]);
+                if (EventLists[WorkList][n].EventType != vmEventType.input)
+                    WebClient.CloseInput(EventLists[WorkList][n].GUID);
+                EventLists[WorkList].RemoveAt(n);
+            }
+            EventListLock.Release();
+            lvEventList.VirtualListSize = EventLists[WorkList].Count;
+            
         }
 
         private void ReloadSchedule()
         {
             if (this.InvokeRequired)
                 this.Invoke(new MethodInvoker(ReloadSchedule));
-            else
+            else { 
+                ReloadSchedule(WorkLayer);
+
+            }
+        }
+
+        private void ReloadSchedule(int WorkList)
+        {
+            string schedulename = ScheduleFolder + "\\" + ScheduleFile[WorkList];
+            if (File.Exists(schedulename))
             {
-                this.Enabled = false;
-
-                string schedulename = ScheduleFolder + "\\vMixSchedule.xml";
-                if (File.Exists(schedulename))
+                List<vMixEvent> vmes = new List<vMixEvent>();
+                XmlDocument d = new XmlDocument();
+                ListView lvEventList = FindListView(WorkList);
+                try
                 {
-                    List<vMixEvent> vmes = new List<vMixEvent>();
-                    XmlDocument d = new XmlDocument();
-                    try
+                    d.Load(schedulename);
+                    lvEventList.SelectedIndices.Clear();
+                    vmes.Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
+                    for (int n = EventLists[WorkList].Count - 1; n >= 0; n--)
                     {
-                        d.Load(schedulename);
-                        lvEventList.SelectedIndices.Clear();
-                        vmes.Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
-                        for (int n = EventList.Count - 1; n >= 0; n--)
+                        if (!EventLists[WorkList][n].IsLoaded)
                         {
-                            if (!EventList[n].IsLoaded)
-                            {
-                                MasterClock.RemoveMicroEvents(EventList[n]);
-                                EventList.RemoveAt(n);
-                            }
-                        }
-                        
-                        foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
-                        {
-                            vMixEvent ne = new vMixEvent (n);
-                            if (ne.EventEnd > DateTime.Now )
-                            {
-                                bool found = false;
-                                foreach (vMixEvent ve in EventList)
-                                    if (ve.IsLike (ne))
-                                        found = true;
-                                if (!found)
-                                    vmes.Add(new vMixEvent (n));
-                            }
-                        }
-
-                        if (vmes.Count > 0)
-                        {
-                            DateTime revoke = vmes[0].EventStart > DateTime.Now ? vmes[0].EventStart : DateTime.Now;
-                            foreach (vMixEvent ve in EventList)
-                                MasterClock.RevokeMicroEvents (ve,revoke);
-                            foreach (vMixEvent vme in vmes)
-                                if (MasterClock.AddMicroEvents(vme))
-                                    EventList.Add(vme);
-                            EventList.Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
-                            lvEventList.VirtualListSize = EventList.Count;
-                            lvEventList.RedrawItems(0, EventList.Count - 1, false);
+                            MasterClocks[WorkList].RemoveMicroEvents(EventLists[WorkList][n]);
+                            EventLists[WorkList].RemoveAt(n);
                         }
                     }
-                    catch {}
+
+                    foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
+                    {
+                        vMixEvent ne = new vMixEvent(n);
+                        if (ne.EventEnd > DateTime.Now)
+                        {
+                            bool found = false;
+                            foreach (vMixEvent ve in EventLists[WorkList])
+                                if (ve.IsLike(ne))
+                                    found = true;
+                            if (!found)
+                                vmes.Add(new vMixEvent(n));
+                        }
+                    }
+
+                    if (vmes.Count > 0)
+                    {
+                        DateTime revoke = vmes[0].EventStart > DateTime.Now ? vmes[0].EventStart : DateTime.Now;
+                        foreach (vMixEvent ve in EventLists[WorkList])
+                            MasterClocks[WorkList].RevokeMicroEvents(ve, revoke);
+                        foreach (vMixEvent vme in vmes)
+                            if (MasterClocks[WorkList].AddMicroEvents(vme))
+                                EventLists[WorkList].Add(vme);
+                        EventLists[WorkList].Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
+                        lvEventList.VirtualListSize = EventLists[WorkList].Count;
+                        lvEventList.RedrawItems(0, EventLists[WorkList].Count - 1, false);
+                    }
                 }
-                this.Enabled = true;
+                catch { }
             }
         }
 
         private void bn_load_schedule_Click(object sender, EventArgs e)
         {
-            ReloadSchedule();
+            this.Enabled = false;
+            for (int i = 0; i < 5; i++) { WorkLayer = i; ReloadSchedule();}
+            this.Enabled = true;
         }
 
         private void lvEventList_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
-            if (e.ItemIndex < EventList.Count)
-                e.Item = EventListItem(EventList[e.ItemIndex]);
+            ListView name = new ListView();
+
+            for (int i = 0; i < 5; i++) 
+            {
+                name = FindListView(i);
+                if (sender.Equals(name))
+                {
+                    if (e.ItemIndex < EventLists[i].Count)
+                    e.Item = EventListItem(EventLists[i][e.ItemIndex]);
+                }
+            }
+                
         }
 
         public ListViewItem EventListItem(vMixEvent vmixevent)
@@ -179,11 +273,12 @@ namespace vMixControler
         private void WorkloadFunc()
         {
             vMixMicroEvent vme;
-
+            int i = int.Parse(Thread.CurrentThread.Name);
+            
             while(!exitApp)
             {
                 PaintTime();
-                if (Workload.TryTake(out vme, 1000))
+                if (Workloads[i].TryTake(out vme, 1000))
                 {
                     vMixEvent evnt = vme.with;
 
@@ -196,28 +291,42 @@ namespace vMixControler
                             evnt.state = 1;
                             if (evnt.EventType == vmEventType.input)
                             {
-                                    WebClient.GetGUID(evnt.Title, out evnt.GUID);
+                                while (!WebClient.GetGUID(evnt.Title, out evnt.GUID))
+                                {
+                                    Thread.Sleep(0);
+                                }
                             }
                             else if (evnt.EventType == vmEventType.black)
                             {
-                                    WebClient.AddInput("Colour", "black", evnt.GUID);
+                                while (!WebClient.AddInput("Colour", "black", evnt.GUID))
+                                {
+                                    Thread.Sleep(0);
+                                }
                             }
                             else if (evnt.HasMedia)
                             {
-                                    WebClient.AddInput(evnt.EventTypeString(), evnt.EventPath, evnt.GUID);
+                                while (!WebClient.AddInput(evnt.EventTypeString(), evnt.EventPath, evnt.GUID))
+                                {
+                                    Thread.Sleep(0);
+                                }
                             }
                             break;
                         case vmMicroEventType.setup:
-                            if (evnt.EventType == vmEventType.photos)
                             {
-                                    WebClient.SetupSlideshow (evnt.SlideshowInterval,evnt.SlideshowTypeString(),evnt.SlideshowTransitionTime, evnt.GUID);
+                                while (!WebClient.SetupSlideshow (evnt.SlideshowInterval,evnt.SlideshowTypeString(),evnt.SlideshowTransitionTime, evnt.GUID))
+                                {
+                                    Thread.Sleep(0);
+                                }
                             }
                             break;
                         case  vmMicroEventType.fastforward :
                             if (evnt.HasDuration)
                             {
                                 int position = (int)(DateTime.Now - evnt.EventStart + evnt.EventInPoint).TotalMilliseconds;
-                                    WebClient.ForwardTo(evnt.GUID, position);
+                                while (!WebClient.ForwardTo(evnt.GUID, position))
+                                {
+                                    Thread.Sleep(0);
+                                }
                             }
                             break;
                         case vmMicroEventType.transition:
@@ -226,39 +335,52 @@ namespace vMixControler
                             {
                                 string type = evnt.TransitionTypeString();
                                 int duration = evnt.EventTransitionTime;
-                                    WebClient.Transition(evnt.GUID, type, duration);
+                                while (!WebClient.Transition(evnt.GUID, evnt.Overlay, type, duration))
+                                {
+                                    Thread.Sleep(0);
+                                }
                             }
                             else if (evnt.HasMedia)
                             {
                                 string type = evnt.TransitionTypeString();
                                 int duration = evnt.EventTransitionTime;
-                                    WebClient.Transition(evnt.GUID, type, duration);
+                                while (!WebClient.Transition(evnt.GUID, evnt.Overlay, type, duration))
+                                {
+                                    Thread.Sleep(0);
+                                }
+                                while(!WebClient.MuteAudio(evnt.EventMuted,evnt.GUID))
+                                    Thread.Sleep(0);
                             }
                             break;
                         case vmMicroEventType.remove:
                             if (evnt.EventType != vmEventType.input)
-                                WebClient.CloseInput(evnt.GUID);
-                            RemoveEvent(evnt);
+                                while (!WebClient.CloseInput(evnt.GUID))
+                                {
+                                    Thread.Sleep(0);
+                                }
+                            RemoveEvent(evnt, i);
                             break;                       
                     }
                 }
             }
             CloseWindow();
+            
         }
 
-        private void RemoveEvent(vMixEvent evnt)
+        private void RemoveEvent(vMixEvent evnt, int WorkList)
         {
             
             try
             {
                 if (this.InvokeRequired)
-                    this.Invoke(new MethodInvoker(delegate { RemoveEvent(evnt); }));
+                    this.Invoke(new MethodInvoker(delegate { RemoveEvent(evnt, WorkList); }));
                 else
                 {
+                    ListView lvEventList = FindListView(WorkList);
                     EventListLock.WaitOne();
-                    EventList.Remove(evnt);
+                    EventLists[WorkList].Remove(evnt);
                     EventListLock.Release();
-                    lvEventList.VirtualListSize = EventList.Count;
+                    lvEventList.VirtualListSize = EventLists[WorkList].Count;
                 }
             }
             catch (Exception e)
@@ -280,7 +402,10 @@ namespace vMixControler
             if (this.InvokeRequired)
                 this.Invoke(new MethodInvoker(CloseWindow));
             else
+            {
+                for (int i = 0; i < 5; i++) { WorkloadThreads[i].Abort(); }
                 this.Close();
+            }
         }
 
         private void vMixControler_FormClosing(object sender, FormClosingEventArgs e)
@@ -288,9 +413,14 @@ namespace vMixControler
             if (!exitApp)
             {
                 exitApp = true;
-                Workload.Add(new vMixMicroEvent(vmMicroEventType.exit));
-                MasterClock.Abort();
-                ClearList();
+                for (int i = 0; i < 5; i++) {
+                    WorkLayer = i;
+                    Workloads[i].Add(new vMixMicroEvent(vmMicroEventType.exit));
+                    MasterClocks[i].Abort();
+                    ClearList();
+                }
+                //Workload.Add(new vMixMicroEvent(vmMicroEventType.exit));
+                //MasterClock.Abort();
                 e.Cancel = true;
             }
         }
@@ -299,9 +429,18 @@ namespace vMixControler
         {
             settings.ShowDialog();
             WebClient.URL = settings.vMixURL;
-            MasterClock.Intervall = 100;
-            MasterClock.MediaLinger = settings.vMixLinger;
-            MasterClock.MediaPreload = settings.vMixPreload;
+            for (int i = 0; i < 5; i++) 
+            {
+                MasterClocks[i].Intervall = 100;
+                MasterClocks[i].MediaLinger = settings.vMixLinger;
+                MasterClocks[i].MediaPreload = settings.vMixPreload;
+            }
+                
+        }
+
+        private void bn_donate_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.paypal.com/donate?hosted_button_id=8KWHCKS3TX54S");
         }
     }
 }
