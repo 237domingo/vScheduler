@@ -1061,11 +1061,11 @@ namespace vManager
                     DateTime start = vMixEvents[0].EventStart;
                     DateTime end = vMixEvents[vMixEvents.Count - 1].EventEnd;
 
-                    string datafolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vMixScheduler";
+                    string datafolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vScheduler";
                     if (!System.IO.Directory.Exists(datafolder))
                         System.IO.Directory.CreateDirectory(datafolder);
 
-                    string schedulename = datafolder + "\\vMixSchedule"+ Convert.ToString(i) +".xml";
+                    string schedulename = datafolder + "\\vSchedule"+ Convert.ToString(i) +".xml";
 
                     List<vMixEvent> vmes = new List<vMixEvent>();
                     XmlDocument d = new XmlDocument();
@@ -1109,14 +1109,14 @@ namespace vManager
 
         private void Erase_SchedulePlaylist(bool[] Overlay) 
         {
-            string datafolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vMixScheduler";
+            string datafolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vScheduler";
             if (MessageBox.Show("This will erase ALL currently scheduled Events,\r\nincluding the ones scheduled earlier;\r\nrunning events will be terminated.\r\n\r\nAre you sure?", "Beware!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.OK)
             {
                 for (int i = 0; i < Overlay.Length; i++)
                 {
                     if (Overlay[i])
                     {
-                        string schedulename = datafolder + "\\vMixSchedule" + Convert.ToString(i) + ".xml";
+                        string schedulename = datafolder + "\\vSchedule" + Convert.ToString(i) + ".xml";
                         if (System.IO.File.Exists(schedulename))
                             System.IO.File.Delete(schedulename);
                     }

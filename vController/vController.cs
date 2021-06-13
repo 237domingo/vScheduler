@@ -40,7 +40,7 @@ namespace vControler
         //FileSystemWatcher WatchDog;
         FileSystemWatcher[] WatchDogs = new FileSystemWatcher[5];
         string ScheduleFolder;
-        string[] ScheduleFile = { "vMixSchedule0.xml", "vMixSchedule1.xml", "vMixSchedule2.xml", "vMixSchedule3.xml", "vMixSchedule4.xml" };
+        string[] ScheduleFile = { "vSchedule0.xml", "vSchedule1.xml", "vSchedule2.xml", "vSchedule3.xml", "vSchedule4.xml" };
 
         public vMixControler()
         {
@@ -104,7 +104,7 @@ namespace vControler
 
         private void WatchDogBark(object sender, FileSystemEventArgs e)
         {
-            string name = e.Name[12].ToString();
+            string name = e.Name[9].ToString();
             //for (int i = 0; i < 5; i++) 
             //{
             //    if (e.Name=="vMixSchedule"+0+".XML")
