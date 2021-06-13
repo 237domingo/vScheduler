@@ -30,6 +30,7 @@ namespace vManager
         ListView EventList;
         String ActiveOverlay;
         List<vMixEvent> copybuffer = new List<vMixEvent>();
+        bool rebuildhasoccur = false;
         string formtitle;
         string openedfile;
         readonly string defaultfilename = "untitled.xml";
@@ -58,7 +59,7 @@ namespace vManager
             ListOfEventList[4] = EventList4;
             settings = new Xml();
             settings.LoadXml(SettingsPath);
-            recentfiles.AddRange(settings.GetValue("vManager", "recentfiles", "").Split('|'));
+            recentfiles.AddRange(settings.GetValue("vManager", "recentfiles", "...").Split('|'));
             maxrecents = settings.GetValue("vManager", "maxrecents", 5);
             vMixEvents = vMixEvents0;
             EventList = EventList0;
@@ -74,6 +75,37 @@ namespace vManager
             lb_slideshow_transition.Text = "Fade";
             Text = formtitle + " - " + defaultfilename;
             openedfile = defaultfilename;
+            foreach (string s in recentfiles) updaterecentfilestoolstripmenu(s);
+            //openToolStripMenuItem.DropDownItems.Add()
+        }
+
+        private void updaterecentfilestoolstripmenu(string filepath)
+        {
+            if (filepath == "") return;
+            ToolStripItem toolstripitem;
+            toolstripitem = recentfilestoolStripMenuItem.DropDownItems[filepath];
+            if (toolstripitem != null)
+            {
+                recentfilestoolStripMenuItem.DropDownItems.Remove(toolstripitem);
+            }
+            else
+            {
+                if (recentfilestoolStripMenuItem.DropDownItems.Count >= maxrecents + 1)
+                {
+                    toolstripitem = recentfilestoolStripMenuItem.DropDownItems[maxrecents - 1];
+                    toolstripitem.Text = filepath;
+                    recentfilestoolStripMenuItem.DropDownItems.Remove(toolstripitem);
+                }
+                else
+                {
+                    toolstripitem = recentfilestoolStripMenuItem.DropDownItems.Add(filepath);
+                    toolstripitem.Click += new System.EventHandler(recentfilestoolStripItem_Click);
+                }
+                toolstripitem.Name = filepath;
+            }
+            toolstripitem.Visible = true;
+            recentfilestoolStripMenuItem.DropDownItems.Insert(0, toolstripitem);
+            recentfilestoolStripMenuItem.Enabled = true;
         }
 
         private void EventList_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
@@ -189,6 +221,9 @@ namespace vManager
                 bn_move_up.Enabled = (EventList.SelectedIndices[0] > 0);
                 bn_move_down.Enabled = (EventList.SelectedIndices[0] < vMixEvents.Count - 1);
                 bn_remove.Enabled = true;
+                bn_clone.Enabled = true;
+                bn_splice.Enabled = true;
+                bn_shuffle.Enabled = false;
             }
             else
             {
@@ -199,6 +234,9 @@ namespace vManager
                 bn_move_up.Enabled = false;
                 bn_move_down.Enabled = false;
                 bn_remove.Enabled = true;
+                bn_clone.Enabled = false;
+                bn_splice.Enabled = false;
+                bn_shuffle.Enabled = true;
             }
             UpdateDisplay();
         }
@@ -443,25 +481,40 @@ namespace vManager
 
         private void bn_save_Click(object sender, EventArgs e)
         {
+            if (openedfile == defaultfilename) save_as();
+            else save(openedfile);
+        }
+
+        private void save(string filename)
+        {
+            XmlDocument d = new XmlDocument();
+            XmlNode root = d.CreateElement("vMixManager");
+            d.AppendChild(root);
+            XmlNode events = d.CreateElement("Events");
+            root.AppendChild(events);
+            int eventcount = 0;
+            foreach (List<vMixEvent> lvme in ListOfvMixEvents)
+            {
+                foreach (vMixEvent vme in lvme)
+                events.AppendChild(vme.ToXMLNode(d));
+                eventcount = eventcount + lvme.Count;
+            }
+            d.Save(filename);
+            MessageBox.Show(eventcount.ToString() + " events saved to xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            openedfile = filename;
+            Text = formtitle + " - " + Path.GetFileName(filename);
+            updaterecentfiles(filename);
+            updaterecentfilestoolstripmenu(filename);
+        }
+
+        private void save_as()
+        {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "XML-File|*.xml|all Files|*.*";
             sfd.FileName = dtp_timetable.Value.ToString("yyyy-MM-dd");
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                XmlDocument d = new XmlDocument();
-                XmlNode root = d.CreateElement("vMixManager");
-                d.AppendChild(root);
-                XmlNode events = d.CreateElement("Events");
-                root.AppendChild(events);
-                int eventcount = 0;
-                foreach (List<vMixEvent> lvme in ListOfvMixEvents)
-                {
-                    foreach (vMixEvent vme in lvme)
-                        events.AppendChild(vme.ToXMLNode(d));
-                    eventcount = eventcount + lvme.Count;
-                }
-                d.Save(sfd.FileName);
-                MessageBox.Show(eventcount.ToString() + " events saved to xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                save(sfd.FileName);
             }
         }
 
@@ -504,70 +557,81 @@ namespace vManager
 
         private void bn_load_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("Do you want to save before opening an new playlist?", "You are about to load a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            if (result == DialogResult.Yes) bn_save_Click(sender, e);
+            if (result == DialogResult.No) { }
+            else return;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "XML-Files|*.xml|all Files|*.*";
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                List<vMixEvent > vmes = new List<vMixEvent> ();
-                List<vMixEvent>[] ListOfvmes = new List<vMixEvent>[5];
-                XmlDocument d = new XmlDocument();
-                d.Load(ofd.FileName);
-
-                bool[] a= {true,true,true,true,true};
-                ClearPlaylist(a);
-                int eventcount = 0;
-                foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
-                {
-                    try
-                    {
-                        ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)].Add(new vMixEvent(n));
-                        eventcount++;
-                    }
-                    catch 
-                    {
-                        ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)] = new List<vMixEvent>();
-                        ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)].Add(new vMixEvent(n));
-                        eventcount++;
-                    }
-                }
-
-                donotredraw = true;
-                ListView tempEventList = EventList;
-                List<vMixEvent> tempvMixEvents = vMixEvents;
-                string tempActiveOverlay = ActiveOverlay;
-                for (int i = 0; i < 5; i++)
-                {
-                    int count = ListOfvMixEvents[i].Count;
-
-                    if (count > 0)
-                    {
-                        ActiveEvent = null;
-                        ListOfvMixEvents[i].Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
-                        vMixEvents = ListOfvMixEvents[i];
-                        ActiveOverlay = Convert.ToString(i);
-                        EventList = ListOfEventList[i];
-                        EventList.SelectedIndices.Clear();
-                        EventList.VirtualListSize = count;
-                        dtp_timetable.Value = ListOfvMixEvents[i][0].EventStart;
-                        RebuildTimetable();
-                        //UpdateDisplay();
-                     }
-                    
-                }
-                donotredraw = false;
-                EventList = tempEventList;
-                vMixEvents = tempvMixEvents;
-                ActiveOverlay = tempActiveOverlay;
-                MessageBox.Show(eventcount.ToString() + " events loaded from xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                load(ofd.FileName);
             }
-            openedfile = ofd.FileName;
-            Text = formtitle + " - " + Path.GetFileName(ofd.FileName);
-            updaterecentfiles(ofd.FileName);
+        }
+
+        private void load (string filename)
+        {
+            List<vMixEvent> vmes = new List<vMixEvent>();
+            List<vMixEvent>[] ListOfvmes = new List<vMixEvent>[5];
+            XmlDocument d = new XmlDocument();
+            d.Load(filename);
+
+            bool[] a = { true, true, true, true, true };
+            ClearPlaylist(a);
+            int eventcount = 0;
+            foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
+            {
+                try
+                {
+                    ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)].Add(new vMixEvent(n));
+                    eventcount++;
+                }
+                catch
+                {
+                    ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)] = new List<vMixEvent>();
+                    ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)].Add(new vMixEvent(n));
+                    eventcount++;
+                }
+            }
+
+            donotredraw = true;
+            ListView tempEventList = EventList;
+            List<vMixEvent> tempvMixEvents = vMixEvents;
+            string tempActiveOverlay = ActiveOverlay;
+            for (int i = 0; i < 5; i++)
+            {
+                int count = ListOfvMixEvents[i].Count;
+
+                if (count > 0)
+                {
+                    ActiveEvent = null;
+                    ListOfvMixEvents[i].Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
+                    vMixEvents = ListOfvMixEvents[i];
+                    ActiveOverlay = Convert.ToString(i);
+                    EventList = ListOfEventList[i];
+                    EventList.SelectedIndices.Clear();
+                    EventList.VirtualListSize = count;
+                    dtp_timetable.Value = ListOfvMixEvents[i][0].EventStart;
+                    RebuildTimetable();
+                    //UpdateDisplay();
+                }
+
+            }
+            donotredraw = false;
+            EventList = tempEventList;
+            vMixEvents = tempvMixEvents;
+            ActiveOverlay = tempActiveOverlay;
+            MessageBox.Show(eventcount.ToString() + " events loaded from xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            openedfile = filename;
+            Text = formtitle + " - " + Path.GetFileName(filename);
+            updaterecentfiles(filename);
+            updaterecentfilestoolstripmenu(filename);
         }
 
         private void updaterecentfiles(string filepath)
         {
-            if (recentfiles.Count == maxrecents) recentfiles.RemoveAt(0);
+            if (recentfiles.Contains(filepath)) recentfiles.Remove(filepath);
+            if (recentfiles.Count == maxrecents + 1) recentfiles.RemoveAt(0);
             recentfiles.Add(filepath);
             settings.SetValue("vManager", "recentfiles", ConcateArrayOfString(recentfiles));
             settings.Save();
@@ -584,7 +648,8 @@ namespace vManager
             }
             return result + "|" + toconcat[toconcat.Count - 1];
         }
-        private void bn_append_Click(object sender, EventArgs e)
+
+        private void append(bool[] overlay)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "XML-Files|*.xml|all Files|*.*";
@@ -594,19 +659,47 @@ namespace vManager
                 XmlDocument d = new XmlDocument();
                 d.Load(ofd.FileName);
                 foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
+                    if ( overlay[Convert.ToInt32(n.Attributes.GetNamedItem("Overlay").Value)] )
                     vmes.Add(new vMixEvent(n));
                 if (vmes.Count > 0)
                 {
                     vmes.Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
                     donotredraw = true;
                     vMixEvents.AddRange(vmes);
-                    EventList.VirtualListSize = vMixEvents .Count;
+                    EventList.VirtualListSize = vMixEvents.Count;
                     RebuildTimetable();
                     UpdateDisplay();
                     donotredraw = false;
                     MessageBox.Show(vmes.Count.ToString() + " events appended from xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+        }
+        private void bn_append_Click(object sender, EventArgs e)
+        {
+            vOverlaySelection vOver = new vOverlaySelection(ActiveOverlay, "Add selected\r\nto displayed", true, true);
+            vOver.SelectedOverlayValue = new SelectedOverlay(append);
+            vOver.ShowDialog();
+            //OpenFileDialog ofd = new OpenFileDialog();
+            //ofd.Filter = "XML-Files|*.xml|all Files|*.*";
+            //if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //{
+            //    List<vMixEvent> vmes = new List<vMixEvent>();
+            //    XmlDocument d = new XmlDocument();
+            //    d.Load(ofd.FileName);
+            //    foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
+            //        vmes.Add(new vMixEvent(n));
+            //    if (vmes.Count > 0)
+            //    {
+            //        vmes.Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
+            //        donotredraw = true;
+            //        vMixEvents.AddRange(vmes);
+            //        EventList.VirtualListSize = vMixEvents .Count;
+            //        RebuildTimetable();
+            //        UpdateDisplay();
+            //        donotredraw = false;
+            //        MessageBox.Show(vmes.Count.ToString() + " events appended from xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    }
+            //}
         }
 
         private void bn_add_input_Click(object sender, EventArgs e)
@@ -1240,13 +1333,27 @@ namespace vManager
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool[] a = { true, true, true, true, true };
-            ClearPlaylist(a);
+            DialogResult result = MessageBox.Show("Do you want to save before creating an new playlist?", "You are about to create a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            if (result == DialogResult.Yes)
+            {
+                bn_save_Click(sender, e);
+                bool[] a = { true, true, true, true, true };
+                ClearPlaylist(a);
+                Text = formtitle + " - " + defaultfilename;
+                openedfile = defaultfilename;
+            }
+            if (result==DialogResult.No)
+            {
+                bool[] a = { true, true, true, true, true };
+                ClearPlaylist(a);
+                Text = formtitle + " - " + defaultfilename;
+                openedfile = defaultfilename;
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void spliceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1314,6 +1421,88 @@ namespace vManager
         private void bn_donate_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.paypal.com/donate?hosted_button_id=8KWHCKS3TX54S");
+        }
+
+        private void saveasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            save_as();
+        }
+
+        private void vMixManager_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Do you want to save before closing?", "You are abour to leave!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            if (result == DialogResult.Yes)
+            {
+                bn_save_Click(sender, e);
+            }
+            if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+        }
+
+        private void eraseallToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int n = recentfiles.Count - 1;
+            for (int i = 0; i < n; i++ )
+            {
+                recentfiles.RemoveAt(n - i);
+                recentfilestoolStripMenuItem.DropDownItems[i].Name = "";
+                recentfilestoolStripMenuItem.DropDownItems[i].Text = "";
+                recentfilestoolStripMenuItem.DropDownItems[i].Visible = false;
+            }
+            recentfilestoolStripMenuItem.Enabled = false;
+            settings.SetValue("vManager", "recentfiles", ConcateArrayOfString(recentfiles));
+            settings.Save();
+        }
+
+        private void recentfilestoolStripItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Do you want to save before opening an new playlist?", "You are about to load a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            if (result == DialogResult.Yes) bn_save_Click(sender, e);
+            if (result == DialogResult.No) { }
+            else return;
+            load(sender.ToString());
+        }
+
+        private void bn_add_Click(object sender, EventArgs e)
+        {
+            string s = lb_event.Text;
+            switch (s)
+            {
+                case "Video":
+                    bn_add_video_Click(sender, e);
+                    break;
+                case "Audio":
+                    bn_add_audio_Click(sender, e);
+                    break;
+                case "Image":
+                    bn_add_image_Click(sender, e);
+                    break;
+                case "Slideshow":
+                    bn_add_photos_Click(sender, e);
+                    break;
+                case "Color":
+                    bn_add_black_Click(sender, e);
+                    break;
+                case "Input":
+                    bn_add_input_Click(sender, e);
+                    break;
+                case "Operator":
+                    bn_add_manual_Click(sender, e);
+                    break;
+            }
+        }
+
+        private void bn_add_replace_Click(object sender, EventArgs e)
+        {
+            bn_remove_Click(sender, e);
+            bn_add_Click(sender, e);
+        }
+
+        private void bn_splice_Click(object sender, EventArgs e)
+        {
+            SpliceEvent();
         }
 
     }

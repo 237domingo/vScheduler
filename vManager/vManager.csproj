@@ -158,6 +158,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="pencil.ico" />
+    <None Include="Resources\tag.png" />
     <None Include="Resources\Refresh_256x256.png" />
     <None Include="Resources\Text_Document_48x48.png" />
     <None Include="Resources\Text_Document_32x32.png" />
