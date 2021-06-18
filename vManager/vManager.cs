@@ -59,7 +59,7 @@ namespace vManager
             ListOfEventList[4] = EventList4;
             settings = new Xml();
             settings.LoadXml(SettingsPath);
-            recentfiles.AddRange(settings.GetValue("vManager", "recentfiles", "...").Split('|'));
+            recentfiles.AddRange(settings.GetValue("vManager", "recentfiles", "").Split('|'));
             maxrecents = settings.GetValue("vManager", "maxrecents", 5);
             vMixEvents = vMixEvents0;
             EventList = EventList0;
@@ -639,6 +639,7 @@ namespace vManager
 
         private string ConcateArrayOfString(List<string> toconcat)
         {
+            if (toconcat.Count == 0) return "";
             string result = toconcat[0];
             if (toconcat.Count == 1) return result;
             if (toconcat.Count > 2)

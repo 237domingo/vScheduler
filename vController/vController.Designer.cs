@@ -578,6 +578,7 @@
             // 
             // bn_donate
             // 
+            this.bn_donate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bn_donate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.bn_donate.FlatAppearance.BorderSize = 0;
             this.bn_donate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

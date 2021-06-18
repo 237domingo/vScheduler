@@ -27,9 +27,9 @@ namespace vControler
             Path = path;
             if (File.Exists(path))
             {
-                if (!deletefile) xml.Load(path);
+                try { if (!deletefile) xml.Load(path); }
+                catch { File.Delete(path); }
             }
-            else File.Create(path);
             if (xml.ChildNodes.Count == 1 && xml.GetElementsByTagName("vScheduler").Count == 1)
             {
                 XmlNode n = xml.FirstChild;
@@ -47,6 +47,7 @@ namespace vControler
             }
             xml = new XmlDocument();
             xml.AppendChild(xml.CreateElement("vScheduler"));
+            
         }
 
         public string GetValue(string section, string entry, string defaultvalue)
