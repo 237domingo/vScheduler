@@ -353,6 +353,30 @@ namespace vManager
 
         }
 
+        private void shuffle()
+        {
+            if (EventList.SelectedIndices.Count > 1)
+            {
+                Random x = new Random();
+                vMixEvent temp1;
+                vMixEvent temp2;
+                int b, a;//exchanging a random element "b" from de selected item with an element "a"
+                int eventnumber = EventList.SelectedIndices.Count - 1;
+                for (int n = 0; n < eventnumber ; n++)
+                {
+                    a = EventList.SelectedIndices[n];
+                    b = EventList.SelectedIndices[x.Next(n + 1, eventnumber)];
+                    temp1 = vMixEvents[a];
+                    temp2 = vMixEvents[b];
+                    vMixEvents.RemoveAt(a);
+                    vMixEvents.Insert(a, temp2);
+                    vMixEvents.RemoveAt(b);
+                    vMixEvents.Insert(b, temp1);
+                }
+                RebuildTimetable();
+            }
+        }
+
         private void dtp_timetable_ValueChanged(object sender, EventArgs e)
         {
             RebuildTimetable();
@@ -375,6 +399,7 @@ namespace vManager
                 UpdateDisplay();
             }
         }
+
         private void dtp_inpoint_ValueChanged(object sender, EventArgs e)
         {
             if (donotredraw) return;
@@ -1501,6 +1526,21 @@ namespace vManager
         private void bn_splice_Click(object sender, EventArgs e)
         {
             SpliceEvent();
+        }
+
+        private void shuffleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            shuffle();
+        }
+
+        private void shuffleToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            shuffle();
+        }
+
+        private void bn_shuffle_Click(object sender, EventArgs e)
+        {
+            shuffle();
         }
 
     }
