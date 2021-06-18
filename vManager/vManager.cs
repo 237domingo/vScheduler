@@ -329,6 +329,7 @@ namespace vManager
                 nextstart += e.EventDuration;
             }
             EventList.RedrawItems(0, vMixEvents.Count -1, false);
+            rebuildhasoccur = true;
         }
 
         private void SpliceEvent()
@@ -505,6 +506,7 @@ namespace vManager
             Text = formtitle + " - " + Path.GetFileName(filename);
             updaterecentfiles(filename);
             updaterecentfilestoolstripmenu(filename);
+            rebuildhasoccur = false;
         }
 
         private void save_as()
@@ -557,10 +559,12 @@ namespace vManager
 
         private void bn_load_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Do you want to save before opening an new playlist?", "You are about to load a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-            if (result == DialogResult.Yes) bn_save_Click(sender, e);
-            if (result == DialogResult.No) { }
-            else return;
+            if (rebuildhasoccur)
+            {
+                DialogResult result = MessageBox.Show("Do you want to save before opening an new playlist?", "You are about to load a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                if (result == DialogResult.Yes) bn_save_Click(sender, e);
+                if (result == DialogResult.Cancel) return;
+            }
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "XML-Files|*.xml|all Files|*.*";
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -621,6 +625,7 @@ namespace vManager
             EventList = tempEventList;
             vMixEvents = tempvMixEvents;
             ActiveOverlay = tempActiveOverlay;
+            rebuildhasoccur = false;
             MessageBox.Show(eventcount.ToString() + " events loaded from xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             openedfile = filename;
             Text = formtitle + " - " + Path.GetFileName(filename);
@@ -1303,7 +1308,7 @@ namespace vManager
                         break;
                 }
             }
-            //EventList_SelectedIndexChanged(sender,e);
+            EventList_SelectedIndexChanged(sender,e);
         }
 
         private void bn_sync_Click(object sender, EventArgs e)
@@ -1334,22 +1339,16 @@ namespace vManager
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Do you want to save before creating an new playlist?", "You are about to create a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-            if (result == DialogResult.Yes)
+            if (rebuildhasoccur)
             {
-                bn_save_Click(sender, e);
-                bool[] a = { true, true, true, true, true };
-                ClearPlaylist(a);
-                Text = formtitle + " - " + defaultfilename;
-                openedfile = defaultfilename;
+                DialogResult result = MessageBox.Show("Do you want to save before creating an new playlist?", "You are about to create a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                if (result == DialogResult.Yes){ bn_save_Click(sender, e); }
+                if (result == DialogResult.Cancel) { return; }
             }
-            if (result==DialogResult.No)
-            {
-                bool[] a = { true, true, true, true, true };
-                ClearPlaylist(a);
-                Text = formtitle + " - " + defaultfilename;
-                openedfile = defaultfilename;
-            }
+            bool[] a = { true, true, true, true, true };
+            ClearPlaylist(a);
+            Text = formtitle + " - " + defaultfilename;
+            openedfile = defaultfilename;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1431,14 +1430,10 @@ namespace vManager
 
         private void vMixManager_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show("Do you want to save before closing?", "You are abour to leave!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-            if (result == DialogResult.Yes)
+            if (rebuildhasoccur == true)
             {
-                bn_save_Click(sender, e);
-            }
-            if (result == DialogResult.Cancel)
-            {
-                return;
+                DialogResult result = MessageBox.Show("Do you want to save before closing?", "You are abour to leave!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (result == DialogResult.Yes) { bn_save_Click(sender, e); }
             }
         }
 
@@ -1459,10 +1454,12 @@ namespace vManager
 
         private void recentfilestoolStripItem_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Do you want to save before opening an new playlist?", "You are about to load a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-            if (result == DialogResult.Yes) bn_save_Click(sender, e);
-            if (result == DialogResult.No) { }
-            else return;
+            if (rebuildhasoccur == true)
+            {
+                DialogResult result = MessageBox.Show("Do you want to save before opening an new playlist?", "You are about to load a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                if (result == DialogResult.Yes) bn_save_Click(sender, e);
+                if (result == DialogResult.Cancel) return;
+            }
             load(sender.ToString());
         }
 
