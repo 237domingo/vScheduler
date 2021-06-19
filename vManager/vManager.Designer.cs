@@ -749,7 +749,7 @@
             this.dtp_endtime.Location = new System.Drawing.Point(61, 70);
             this.dtp_endtime.Name = "dtp_endtime";
             this.dtp_endtime.ReadOnly = true;
-            this.dtp_endtime.Size = new System.Drawing.Size(117, 22);
+            this.dtp_endtime.Size = new System.Drawing.Size(121, 22);
             this.dtp_endtime.TabIndex = 34;
             this.dtp_endtime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 

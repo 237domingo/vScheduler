@@ -329,7 +329,11 @@ namespace vManager
                 nextstart += e.EventDuration;
             }
             EventList.RedrawItems(0, vMixEvents.Count -1, false);
-            
+            if (vMixEvents.Count > 0)
+            {
+                dtp_timetable.Value = vMixEvents[0].EventStart;
+                dtp_endtime.Text = vMixEvents[0].EventEnd.ToString();
+            }
             rebuildhasoccur = true;
         }
 
@@ -661,8 +665,11 @@ namespace vManager
             EventList = tempEventList;
             vMixEvents = tempvMixEvents;
             ActiveOverlay = tempActiveOverlay;
-            dtp_timetable.Value = vMixEvents[0].EventStart;
-            dtp_endtime.Text = vMixEvents[0].EventEnd.ToString();
+            if (vMixEvents.Count > 0)
+            {
+                dtp_timetable.Value = vMixEvents[0].EventStart;
+                dtp_endtime.Text = vMixEvents[0].EventEnd.ToString();
+            }
             rebuildhasoccur = false;
             MessageBox.Show(eventcount.ToString() + " events loaded from xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             openedfile = filename;
@@ -1348,8 +1355,11 @@ namespace vManager
                         break;
                 }
             }
-            dtp_timetable.Value = vMixEvents[0].EventStart;
-            dtp_endtime.Text = vMixEvents[vMixEvents.Count - 1].EventEnd.ToString();
+            if (vMixEvents.Count > 0)
+            {
+                dtp_timetable.Value = vMixEvents[0].EventStart;
+                dtp_endtime.Text = vMixEvents[vMixEvents.Count - 1].EventEnd.ToString();
+            }
             EventList_SelectedIndexChanged(sender,e);
         }
 
