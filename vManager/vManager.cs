@@ -329,6 +329,7 @@ namespace vManager
                 nextstart += e.EventDuration;
             }
             EventList.RedrawItems(0, vMixEvents.Count -1, false);
+            
             rebuildhasoccur = true;
         }
 
@@ -336,6 +337,7 @@ namespace vManager
         {
             //vMixEvent v = vMixEvents.Find(delegate(vMixEvent e) { return e.EventEnd > timetofind;});
             if (ActiveEvent == null) return;
+            if (EventList.SelectedIndices.Count != 1) return;
             int position = vMixEvents.IndexOf(ActiveEvent) + 1;
             donotredraw = true;
             vMixEvent copy = new vMixEvent(ActiveEvent);
@@ -375,6 +377,15 @@ namespace vManager
                 }
                 RebuildTimetable();
             }
+        }
+
+        private void selectall()
+        {
+            EventList.SelectedIndices.Clear();
+            EventList.SuspendLayout();
+            for (int n = 0; n < EventList.VirtualListSize; n++)
+            { EventList.SelectedIndices.Add(n); }
+            EventList.ResumeLayout(true);
         }
 
         private void dtp_timetable_ValueChanged(object sender, EventArgs e)
@@ -650,6 +661,8 @@ namespace vManager
             EventList = tempEventList;
             vMixEvents = tempvMixEvents;
             ActiveOverlay = tempActiveOverlay;
+            dtp_timetable.Value = vMixEvents[0].EventStart;
+            dtp_endtime.Text = vMixEvents[0].EventEnd.ToString();
             rebuildhasoccur = false;
             MessageBox.Show(eventcount.ToString() + " events loaded from xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             openedfile = filename;
@@ -705,6 +718,7 @@ namespace vManager
                 }
             }
         }
+
         private void bn_append_Click(object sender, EventArgs e)
         {
             vOverlaySelection vOver = new vOverlaySelection(ActiveOverlay, "Add selected\r\nto displayed", true, true);
@@ -1220,6 +1234,7 @@ namespace vManager
                 UpdateDisplay();
             }
         }
+
         private void bn_ip_zero_Click(object sender, EventArgs e)
         {
             if (ActiveEvent != null && ActiveEvent.HasDuration)
@@ -1333,6 +1348,8 @@ namespace vManager
                         break;
                 }
             }
+            dtp_timetable.Value = vMixEvents[0].EventStart;
+            dtp_endtime.Text = vMixEvents[vMixEvents.Count - 1].EventEnd.ToString();
             EventList_SelectedIndexChanged(sender,e);
         }
 
@@ -1435,12 +1452,7 @@ namespace vManager
 
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
+            selectall();
         }
 
         private void bn_donate_Click(object sender, EventArgs e)
@@ -1541,6 +1553,11 @@ namespace vManager
         private void bn_shuffle_Click(object sender, EventArgs e)
         {
             shuffle();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            selectall();
         }
 
     }
