@@ -30,10 +30,15 @@ namespace vControler
         
         //Thread WorkloadThread;
         Thread[] WorkloadThreads = new Thread[5];
+        //Thred to check if vMix is running an start on stop sending command or updating microevents list
+        Thread OnlineThread;
+        ThreadStart workstart;
 
         vMixWebClient WebClient;
+        vMixWebClient[] WebClients = new vMixWebClient[5];
         
         bool exitApp = false;
+        bool stopthread = false;
         bool[] Reloading = { false, false, false, false, false };
         int WorkLayer = 0;
 
@@ -58,7 +63,7 @@ namespace vControler
             for (int i = 0; i < 5; i++)
             {
                 //Workload = Workloads[i];
-                ThreadStart workstart = new ThreadStart(WorkloadFunc);
+                workstart = new ThreadStart(WorkloadFunc);
                 WorkloadThreads[i] = new Thread(workstart);
                 WorkloadThreads[i].Name = Convert.ToString(i);
                 WorkloadThreads[i].Start();
@@ -93,6 +98,7 @@ namespace vControler
             for (int i = 0; i < 5; i++) { MasterClocks[i] = new vMixScheduler(100, settings.vMixPreload, settings.vMixLinger, Workloads[i]); }
             //MasterClock = new vMixScheduler(100, settings.vMixPreload , settings.vMixLinger, Workload);
             WebClient = new vMixWebClient(settings.vMixURL);
+            for (int i = 0; i < 5; i++) { WebClients[i] = new vMixWebClient(settings.vMixURL); } 
 
             if (settings.vMixAutoLoad)
             {
@@ -100,6 +106,79 @@ namespace vControler
                 for (int i = 0; i < 5; i++) { WorkLayer = i; ReloadSchedule(); }
                 this.Enabled = true;
             }
+            updatedsettings();
+            ThreadStart onlinestarter = new ThreadStart(onlinestarterfunc);
+            OnlineThread = new Thread(onlinestarter);
+            OnlineThread.Start();
+        }
+
+        private void onlinestarterfunc()
+        {
+            while (!exitApp)
+            {
+                Thread.Sleep(2000);
+                if (!WebClient.GetStatus())
+                {
+                    if (!stopthread)
+                    {
+                        //Monitor.Enter(Workloads);
+                        for (int i = 0; i < 5; i++)
+                        {
+                        WorkloadThreads[i].Abort();
+                        MasterClocks[i].Abort();
+                        }
+                        vMixMicroEvent t;
+                        int r;
+                        do 
+                            r = BlockingCollection<vMixMicroEvent>.TryTakeFromAny(Workloads, out t);
+                        while (r != -1);
+                        //for (int i = 0; i < 5; i++) Workloads[i].Add(new vMixMicroEvent(vmMicroEventType.exit));
+                        stopthread = true;
+                        //bn_Statuts.BackColor = System.Drawing.Color.Red;
+                        //bn_Statuts.Text = "OFFLINE";
+                        updatedsettings();
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (EventLists[i].Count > 0)
+                                if (EventLists[i][0].EventEnd < DateTime.Now - new TimeSpan(0, 0, 0, 1, 0))
+                                {
+                                    RemoveEvent(EventLists[i][0], i);
+                                    MasterClocks[i].RemoveMicroEvents(EventLists[i][0]);
+                                }
+                                else if (EventLists[i][0].IsLoaded) EventLists[i][0].state = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    if (stopthread)
+                    {
+                        //Monitor.Exit(Workloads);
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (!WorkloadThreads[i].IsAlive)
+                            {
+                                workstart = new ThreadStart(WorkloadFunc);
+                                WorkloadThreads[i] = new Thread(workstart);
+                                WorkloadThreads[i].Name = Convert.ToString(i);
+                                WorkloadThreads[i].Start();
+                            }
+                            MasterClocks[i].Start();
+                            WorkLayer = i;
+                            ReloadSchedule();
+                        }
+                        //for (int i = 0; i < 5; i++) WorkloadThreads[i].Start();
+                        stopthread = false;
+                        //bn_Statuts.BackColor = System.Drawing.Color.LimeGreen;
+                        //bn_Statuts.Text = "ONLINE";
+                        updatedsettings();
+                    }
+                }
+            }
+            CloseWindow();
         }
 
         private void WatchDogBark(object sender, FileSystemEventArgs e)
@@ -164,7 +243,7 @@ namespace vControler
             {
                 MasterClocks[WorkList].RemoveMicroEvents(EventLists[WorkList][n]);
                 if (EventLists[WorkList][n].EventType != vmEventType.input)
-                    WebClient.CloseInput(EventLists[WorkList][n].GUID);
+                    WebClients[WorkList].CloseInput(EventLists[WorkList][n].GUID);
                 EventLists[WorkList].RemoveAt(n);
             }
             EventListLock.Release();
@@ -207,7 +286,7 @@ namespace vControler
                     foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
                     {
                         vMixEvent ne = new vMixEvent(n);
-                        if (ne.EventEnd > DateTime.Now)
+                        if (ne.EventEnd > DateTime.Now + new TimeSpan(0,0,0,1,0))
                         {
                             bool found = false;
                             foreach (vMixEvent ve in EventLists[WorkList])
@@ -277,6 +356,7 @@ namespace vControler
             
             while(!exitApp)
             {
+                
                 PaintTime();
                 if (Workloads[i].TryTake(out vme, 1000))
                 {
@@ -288,83 +368,73 @@ namespace vControler
                     switch (vme.what)
                     {
                         case vmMicroEventType.prepare:
-                            evnt.state = 1;
-                            if (evnt.EventType == vmEventType.input)
+                            evnt.state = 0;//0 is not loaded, 1 is loded, 2 is running
+                            while (evnt.EventEnd > DateTime.Now)
                             {
-                                while (!WebClient.GetGUID(evnt.Title, out evnt.GUID))
+                                if (evnt.EventType == vmEventType.input)
                                 {
-                                    Thread.Sleep(0);
+                                    if (WebClients[1].GetGUID(evnt.Title, out evnt.GUID)) { evnt.state = 1; break;}
+                                    else { Thread.Sleep(0); }
                                 }
-                            }
-                            else if (evnt.EventType == vmEventType.black)
-                            {
-                                while (!WebClient.AddInput("Colour", "black", evnt.GUID))
+                                else if (evnt.EventType == vmEventType.black)
                                 {
-                                    Thread.Sleep(0);
+                                    if (WebClients[1].AddInput("Colour", evnt.Overlay, "black", evnt.GUID)) { evnt.state = 1; break; }
+                                    else { Thread.Sleep(0); }
                                 }
-                            }
-                            else if (evnt.HasMedia)
-                            {
-                                while (!WebClient.AddInput(evnt.EventTypeString(), evnt.EventPath, evnt.GUID))
+                                else if (evnt.HasMedia)
                                 {
-                                    Thread.Sleep(0);
+                                    if (WebClients[1].AddInput(evnt.EventTypeString(), evnt.Overlay, evnt.EventPath, evnt.GUID))
+                                    {
+                                        evnt.state = 1;
+                                        break;
+                                    }
+                                    else { Thread.Sleep(0); }
                                 }
                             }
                             break;
                         case vmMicroEventType.setup:
+                            while (evnt.EventEnd > DateTime.Now)
                             {
-                                while (!WebClient.SetupSlideshow (evnt.SlideshowInterval,evnt.SlideshowTypeString(),evnt.SlideshowTransitionTime, evnt.GUID))
-                                {
-                                    Thread.Sleep(0);
-                                }
+                                if (!WebClients[1].SetupSlideshow(evnt.SlideshowInterval, evnt.SlideshowTypeString(), evnt.SlideshowTransitionTime, evnt.GUID)) Thread.Sleep(0);
+                                else break;
                             }
                             break;
                         case  vmMicroEventType.fastforward :
-                            if (evnt.HasDuration)
-                            {
-                                int position = (int)(DateTime.Now - evnt.EventStart + evnt.EventInPoint).TotalMilliseconds;
-                                while (!WebClient.ForwardTo(evnt.GUID, position))
-                                {
-                                    Thread.Sleep(0);
-                                }
+                            int position;
+                            while (evnt.EventEnd > DateTime.Now)
+                            { 
+                                position = (int)(DateTime.Now - evnt.EventStart + evnt.EventInPoint).TotalMilliseconds;
+                                if (!WebClients[1].ForwardTo(evnt.GUID, position)) Thread.Sleep(0);
+                                else break;
                             }
                             break;
                         case vmMicroEventType.transition:
-                            evnt.state = 2;
-                            if (evnt.EventType == vmEventType.input)
+                            if (evnt.HasMedia) 
                             {
                                 string type = evnt.TransitionTypeString();
                                 int duration = evnt.EventTransitionTime;
-                                while (!WebClient.Transition(evnt.GUID, evnt.Overlay, type, duration))
+                                while (evnt.EventEnd > DateTime.Now)
                                 {
-                                    Thread.Sleep(0);
+                                    if (!WebClients[1].Transition(evnt.GUID, evnt.Overlay, evnt.EventMuted, type, duration)) Thread.Sleep(0);
+                                    else { evnt.state = 2; break; }
                                 }
                             }
-                            else if (evnt.HasMedia)
-                            {
-                                string type = evnt.TransitionTypeString();
-                                int duration = evnt.EventTransitionTime;
-                                while (!WebClient.Transition(evnt.GUID, evnt.Overlay, type, duration))
-                                {
-                                    Thread.Sleep(0);
-                                }
-                                while(!WebClient.MuteAudio(evnt.EventMuted,evnt.GUID))
-                                    Thread.Sleep(0);
-                            }
+
                             break;
                         case vmMicroEventType.remove:
                             if (evnt.EventType != vmEventType.input)
-                                while (!WebClient.CloseInput(evnt.GUID))
+                                for (int t = 0; t < 10; i++)
                                 {
-                                    Thread.Sleep(0);
+                                    if (!WebClients[1].CloseInput(evnt.GUID)) Thread.Sleep(100);
+                                    else break;
                                 }
                             RemoveEvent(evnt, i);
                             break;                       
                     }
                 }
+                //EventListLock.Release();
             }
-            CloseWindow();
-            
+            //CloseWindow();
         }
 
         private void RemoveEvent(vMixEvent evnt, int WorkList)
@@ -377,9 +447,9 @@ namespace vControler
                 else
                 {
                     ListView lvEventList = FindListView(WorkList);
-                    EventListLock.WaitOne();
+                    //EventListLock.WaitOne();
                     EventLists[WorkList].Remove(evnt);
-                    EventListLock.Release();
+                    //EventListLock.Release();
                     lvEventList.VirtualListSize = EventLists[WorkList].Count;
                 }
             }
@@ -403,7 +473,8 @@ namespace vControler
                 this.Invoke(new MethodInvoker(CloseWindow));
             else
             {
-                for (int i = 0; i < 5; i++) { WorkloadThreads[i].Abort(); }
+                //for (int i = 0; i < 5; i++) { WorkloadThreads[i].Abort(); }
+                settings.SaveSettings();
                 this.Close();
             }
         }
@@ -412,13 +483,16 @@ namespace vControler
         {
             if (!exitApp)
             {
-                exitApp = true;
+               // exitApp = true;
                 for (int i = 0; i < 5; i++) {
                     WorkLayer = i;
-                    Workloads[i].Add(new vMixMicroEvent(vmMicroEventType.exit));
-                    MasterClocks[i].Abort();
+                    exitApp = true;
+                    //Workloads[i].Add(new vMixMicroEvent(vmMicroEventType.exit));
+                    if (!stopthread) { WorkloadThreads[i].Abort(); MasterClocks[i].Abort(); }
                     ClearList();
                 }
+                try { OnlineThread.Start(); }
+                catch { }
                 //Workload.Add(new vMixMicroEvent(vmMicroEventType.exit));
                 //MasterClock.Abort();
                 e.Cancel = true;
@@ -428,14 +502,48 @@ namespace vControler
         private void bn_showpreferences_Click(object sender, EventArgs e)
         {
             settings.ShowDialog();
-            WebClient.URL = settings.vMixURL;
-            for (int i = 0; i < 5; i++) 
+            updatedsettings();
+        }
+
+        private void updatedsettings()
+        {
+            if (this.InvokeRequired)
+                this.Invoke(new MethodInvoker(updatedsettings));
+            else
             {
-                MasterClocks[i].Intervall = 100;
-                MasterClocks[i].MediaLinger = settings.vMixLinger;
-                MasterClocks[i].MediaPreload = settings.vMixPreload;
+                WebClient.URL = settings.vMixURL;
+                for (int i = 0; i < 5; i++) WebClients[i].URL = settings.vMixURL;
+                for (int i = 0; i < 5; i++)
+                {
+                    MasterClocks[i].Intervall = 100;
+                    MasterClocks[i].MediaLinger = settings.vMixLinger;
+                    MasterClocks[i].MediaPreload = settings.vMixPreload;
+                }
+                lb_address.Text = settings.vMixIP + ":" + settings.vMixPort.ToString();
+                lb_load.Text = settings.vMixPreload.ToString() + "/" + settings.vMixLinger + " Sec";
+                if (settings.vMixAutoLoad)
+                {
+                    bn_Autoload.Text = "AUTO ON";
+                    bn_Autoload.BackColor = System.Drawing.Color.LimeGreen;
+                }
+                else
+                {
+                    bn_Autoload.Text = "AUTO OFF";
+                    bn_Autoload.BackColor = System.Drawing.Color.Red;
+                }
+                if (WebClient.GetStatus())
+                {
+                    bn_Statuts.Text = "ONLINE";
+                    bn_Statuts.BackColor = System.Drawing.Color.LimeGreen;
+                    bn_Statuts.ToolTipText = "ONLINE";
+                }
+                else
+                {
+                    bn_Statuts.Text = "OFFLINE";
+                    bn_Statuts.BackColor = System.Drawing.Color.Red;
+                    bn_Statuts.ToolTipText = "OFFLINE";
+                }
             }
-                
         }
 
         private void bn_donate_Click(object sender, EventArgs e)

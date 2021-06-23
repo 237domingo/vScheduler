@@ -22,6 +22,7 @@ namespace vControler
         public int MediaLinger;
 
         public bool Working { get { return Worker.IsAlive; } }
+        ThreadStart workstart;
 
         public vMixScheduler(int intervall, int mediapreload, int medialinger, BlockingCollection <vMixMicroEvent> workload)
         {
@@ -33,7 +34,7 @@ namespace vControler
             MediaPreload = mediapreload;
             MediaLinger = medialinger;
 
-            ThreadStart workstart = new ThreadStart(ClockWorker);
+            workstart = new ThreadStart(ClockWorker);
             Worker = new Thread(workstart);
             Worker.Start();
         }
@@ -42,9 +43,20 @@ namespace vControler
         {
             StopWorking = true;
             Worker.Join();
+            Worker.Abort();
         }
 
-        void ClearEventList()
+        public void Start()
+        {
+            if (!Working)
+            {
+                workstart = new ThreadStart(ClockWorker);
+                Worker = new Thread(workstart);
+                Worker.Start();
+            }
+        }
+
+        public void ClearEventList()
         {
             LocalListLock.WaitOne();
             LocalList.Clear();
@@ -56,9 +68,11 @@ namespace vControler
             DateTime now = DateTime.Now;
             if (evnt.EventEnd < now + new TimeSpan(0, 0, MediaPreload+1))
                 return false;     // too late to add!
+            if (evnt.EventType == vmEventType.black)
+                return true;     // too late to add!
             
             List<vMixMicroEvent> vmes = new List<vMixMicroEvent>();
-
+            if (evnt.EventType == vmEventType.audio) evnt.EventType = vmEventType.video;
             // prepare, transition, remove
             if (!evnt.HasDuration)
             {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Net;
 using System.Xml;
 using System.Web;
+using System.Threading;
 
 namespace vControler
 {
@@ -14,6 +15,7 @@ namespace vControler
 
         public string URL { get { return vMix.BaseAddress; } set { vMix.BaseAddress = value; } }
         public List<vMixInput> vMixInputs;
+        List<string> ForceToStop;
 
         public vMixWebClient(string baseadress)
         {
@@ -118,25 +120,43 @@ namespace vControler
             if (toconvert) return True;
             else return False;
         }
+        public List<string> FindMembers( string overlay)
+        {
+            List<string> result = new List<string>();
+            if (GetStatus())
+            {
+                foreach (vMixInput vme in vMixInputs)
+                {
+                    if (vme.overlay == int.Parse(overlay)) result.Add(vme.guid);
+                }
+            }
+            return result;
+        }
 
-        public bool AddInput(string type, string path, string guid)
+        public bool AddInput(string type, string overlay, string path, string guid)
         {
             try
             {
-                vMix.DownloadString("api?function=AddInput&Input=" + guid + "&Value=" + type + "|" + HttpUtility.UrlEncode(path));                
+                ForceToStop = FindMembers(overlay);
+                string link = "api?function=AddInput&Input=" + HttpUtility.UrlEncode(guid) + "&Value=" + type + "|" + HttpUtility.UrlEncode(path);
+                vMix.DownloadString(link);
+                vMix.DownloadString("api?function=AutoPauseOn&Input=" + guid);
+                vMix.DownloadString("api?function=AutoPlayOn&Input=" + guid);
+                vMix.DownloadString("api?function=AudioAutoOff&Input=" + guid);
+                return true;
             }
             catch
             {
                 return false;
             }
-            return true;
         }
 
         public bool MuteAudio(bool audiostate, string guid)
         {
             try
             {
-                vMix.DownloadString("api?function=Audio" + BooltoString(!audiostate) + "&Input=" + Convert.ToString(FindNumber(guid)));
+                string link = "api?function=Audio" + BooltoString(!audiostate) + "&Input=" + Convert.ToString(FindNumber(guid));
+                vMix.DownloadString(link);
             }
             catch
             {
@@ -149,9 +169,9 @@ namespace vControler
         {
             try
             {
-                vMix.DownloadString("api?function=SetPictureTransition&Input=" + guid + "&Value=" + intervall.ToString());
-                vMix.DownloadString("api?function=SetPictureEffect&Input=" + guid + "&Value=" + transitioneffect);
-                vMix.DownloadString("api?function=SetPictureEffectDuration&Input=" + guid + "&Value=" + transitiontime.ToString());
+                vMix.DownloadString("api?function=SetPictureTransition&Input=" + HttpUtility.UrlEncode(guid) + "&Value=" + intervall.ToString());
+                vMix.DownloadString("api?function=SetPictureEffect&Input=" + HttpUtility.UrlEncode(guid) + "&Value=" + transitioneffect);
+                vMix.DownloadString("api?function=SetPictureEffectDuration&Input=" + HttpUtility.UrlEncode(guid) + "&Value=" + transitiontime.ToString());
             }
             catch
             {
@@ -164,7 +184,7 @@ namespace vControler
         {
             try
             {
-                vMix.DownloadString("api?function=SetPosition&Value=" + position.ToString() + "&Input=" + guid);
+                vMix.DownloadString("api?function=SetPosition&Value=" + position.ToString() + "&Input=" + HttpUtility.UrlEncode(guid));
             }
             catch
             {
@@ -173,16 +193,23 @@ namespace vControler
             return true;
         }
 
-        public bool Transition(string guid, string overlay, string type, int duration)
+        public bool Transition(string guid, string overlay, bool audiostate, string type, int duration)
         {
             try
             {
+                //vMix.DownloadString("api?function=Play&Input=" + HttpUtility.UrlEncode(guid));
+                //foreach (string input in ForceToStop)
+                //{
+                //    MuteAudio(true, input);
+                //}
                 if (overlay == "0")
                 {
+                    MuteAudio(audiostate, guid);
                     vMix.DownloadString("api?function=" + type + "&Duration=" + duration.ToString() + "&Input=" + guid);
                 }
                 else
                 {
+                    MuteAudio(audiostate, guid);
                     vMix.DownloadString("api?function=OverlayInput" + overlay + "&input=" + Convert.ToString(FindNumber(guid)));
                 }
             }
@@ -197,7 +224,7 @@ namespace vControler
         {
             try
             {
-                vMix.DownloadString("api?function=NextPicture&Input=" + guid);
+                vMix.DownloadString("api?function=NextPicture&Input=" + HttpUtility.UrlEncode(guid));
             }
             catch
             {
@@ -210,7 +237,7 @@ namespace vControler
         {
             try
             {
-                vMix.DownloadString("api?function=RemoveInput&Input=" + guid);
+                vMix.DownloadString("api?function=RemoveInput&Input=" + HttpUtility.UrlEncode(guid));
             }
             catch
             {

@@ -18,6 +18,7 @@ namespace vControler
         public string vMixIP { get { return _vMixIPadress; } }
 
         private int _vMixPort = 8088;
+        public int vMixPort { get { return _vMixPort; } }
         public string vMixURL { get { return "http://" + _vMixIPadress + ":" + _vMixPort.ToString(); } }
 
         private int _vMixPreload = 5;
@@ -46,7 +47,7 @@ namespace vControler
             if (!File.Exists(PreferencesPath)) settings.Save();    
         }
 
-        private void SaveSettings()
+        public void SaveSettings()
         {
             settings.SetValue("vMix", "vMixPort", _vMixPort);
             settings.SetValue("vMix", "vMixIPadress", _vMixIPadress);

@@ -174,10 +174,11 @@ namespace vManager
             EventTransition = transition;
             EventTransitionTime = transition_time;
             EventLooping = looping;
-            if (type == vmEventType.audio || type == vmEventType.video)
+            EventMuted = true;
+            if (type == vmEventType.video)
                 EventMuted = false; 
-            else 
-                EventMuted = true;
+            if (type == vmEventType.video)
+                EventMuted = false; 
             SlideshowInterval = 10; 
             SlideshowTransition = vmTransitionType.fade;
             SlideshowTransitionTime = 500;

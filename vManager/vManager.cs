@@ -227,10 +227,8 @@ namespace vManager
             }
             else
             {
-                int lastindex = EventList.SelectedIndices[0];
-                int previousindex = EventList.SelectedIndices[1];
-                if (lastindex < previousindex) ActiveEvent = vMixEvents[lastindex];
-                else ActiveEvent = vMixEvents[previousindex];
+                int lastindex = EventList.SelectedIndices[EventList.SelectedIndices.Count-1];
+                ActiveEvent = vMixEvents[lastindex];
                 bn_move_up.Enabled = false;
                 bn_move_down.Enabled = false;
                 bn_remove.Enabled = true;
@@ -332,7 +330,7 @@ namespace vManager
             if (vMixEvents.Count > 0)
             {
                 dtp_timetable.Value = vMixEvents[0].EventStart;
-                dtp_endtime.Text = vMixEvents[0].EventEnd.ToString();
+                dtp_endtime.Text = vMixEvents[vMixEvents.Count - 1].EventEnd.ToString();
             }
             rebuildhasoccur = true;
         }
@@ -404,6 +402,7 @@ namespace vManager
             if (ActiveEvent != null)
             {
                 TimeSpan dr = dtp_duration.Value.TimeOfDay;
+                TimeSpan.Parse()
                 if (ActiveEvent.HasDuration && dr + ActiveEvent.EventInPoint > ActiveEvent.MediaDuration)
                     dr = ActiveEvent.MediaDuration - ActiveEvent.EventInPoint;
                 if (dr > new TimeSpan(0, 0, 0))
@@ -512,18 +511,20 @@ namespace vManager
             ActiveEvent = null;
             EventList.VirtualListSize = vMixEvents.Count;
             EventList.SelectedIndices.Clear();
-            if (position >= vMixEvents.Count) position = vMixEvents.Count-1 ;
-            if (position >= 0)
-                EventList.SelectedIndices.Add(position);
             RebuildTimetable();
             donotredraw = false;
             UpdateDisplay();
         }
 
-        private void bn_save_Click(object sender, EventArgs e)
+        private void save_click(object sender, EventArgs e)
         {
-            if (openedfile == defaultfilename) save_as();
-            else save(openedfile);
+            AutoSave(sender, e);
+        }
+        
+        private bool AutoSave(object sender, EventArgs e)
+        {
+            if (openedfile == defaultfilename) return save_as();
+            else { save(openedfile); return true; }
         }
 
         private void save(string filename)
@@ -549,7 +550,7 @@ namespace vManager
             rebuildhasoccur = false;
         }
 
-        private void save_as()
+        private bool save_as()
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "XML-File|*.xml|all Files|*.*";
@@ -557,7 +558,9 @@ namespace vManager
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 save(sfd.FileName);
+                return true;
             }
+            else return false;
         }
 
         private void bn_clear_Click(object sender, EventArgs e)
@@ -602,7 +605,8 @@ namespace vManager
             if (rebuildhasoccur)
             {
                 DialogResult result = MessageBox.Show("Do you want to save before opening an new playlist?", "You are about to load a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                if (result == DialogResult.Yes) bn_save_Click(sender, e);
+                if (result == DialogResult.Yes) 
+                    if (!AutoSave(sender, e)) return;
                 if (result == DialogResult.Cancel) return;
             }
             OpenFileDialog ofd = new OpenFileDialog();
@@ -756,6 +760,22 @@ namespace vManager
 
         private void bn_add_input_Click(object sender, EventArgs e)
         {
+            int position;
+            if (ActiveEvent != null)
+                    position = vMixEvents.IndexOf(ActiveEvent) + 1;
+                else
+                    position = vMixEvents.Count;
+            if (add_input()) 
+            {
+                ActiveEvent = vMixEvents[position];
+                EventList.SelectedIndices.Clear();
+                EventList.SelectedIndices.Add(position);
+                UpdateDisplay();
+            }
+        }
+
+        private bool add_input()
+        {
             vMixEvent new_event = new vMixEvent(vmEventType.input, dtp_timetable.Value, new TimeSpan(0, 1, 0));
             if (new_event != null)
             {
@@ -768,19 +788,32 @@ namespace vManager
                 else
                     position = vMixEvents.Count;
                 vMixEvents.Insert(position, new_event);
-                ActiveEvent = new_event;
                 EventList.VirtualListSize = vMixEvents.Count;
-                EventList.SelectedIndices.Clear();
                 RebuildTimetable();
-                EventList.SelectedIndices.Add(position);
-                UpdateDisplay();
+                return true;
             }
-
+            else return false;
         }
 
         private void bn_add_black_Click(object sender, EventArgs e)
         {
-            vMixEvent new_event = new vMixEvent (vmEventType.black, dtp_timetable.Value,new TimeSpan (0,0,10));
+            int position;
+            if (ActiveEvent != null)
+                position = vMixEvents.IndexOf(ActiveEvent) + 1;
+            else
+                position = vMixEvents.Count;
+            if (add_black())
+            {
+                ActiveEvent = vMixEvents[position];
+                EventList.SelectedIndices.Clear();
+                EventList.SelectedIndices.Add(position);
+                UpdateDisplay();
+            }
+        }
+
+        private bool add_black()
+        {
+            vMixEvent new_event = new vMixEvent(vmEventType.black, dtp_timetable.Value, new TimeSpan(0, 0, 10));
             if (new_event != null)
             {
                 new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
@@ -792,16 +825,30 @@ namespace vManager
                 else
                     position = vMixEvents.Count;
                 vMixEvents.Insert(position, new_event);
-                ActiveEvent = new_event;
                 EventList.VirtualListSize = vMixEvents.Count;
-                EventList.SelectedIndices.Clear();
                 RebuildTimetable();
+                return true;
+            }
+            else return false;
+        }
+
+        private void bn_add_manual_Click(object sender, EventArgs e)
+        {
+            int position;
+            if (ActiveEvent != null)
+                position = vMixEvents.IndexOf(ActiveEvent) + 1;
+            else
+                position = vMixEvents.Count;
+            if (add_manual())
+            {
+                ActiveEvent = vMixEvents[position];
+                EventList.SelectedIndices.Clear();
                 EventList.SelectedIndices.Add(position);
                 UpdateDisplay();
             }
         }
 
-        private void bn_add_manual_Click(object sender, EventArgs e)
+        private bool add_manual()
         {
             vMixEvent new_event = new vMixEvent(vmEventType.manual, dtp_timetable.Value, new TimeSpan(1, 0, 0));
             if (new_event != null)
@@ -815,13 +862,11 @@ namespace vManager
                 else
                     position = vMixEvents.Count;
                 vMixEvents.Insert(position, new_event);
-                ActiveEvent = new_event;
                 EventList.VirtualListSize = vMixEvents.Count;
-                EventList.SelectedIndices.Clear();
                 RebuildTimetable();
-                EventList.SelectedIndices.Add(position);
-                UpdateDisplay();
+                return true;
             }
+            else return false;
         }
 
         private void bn_add_video_Click(object sender, EventArgs e)
@@ -830,7 +875,29 @@ namespace vManager
             ofd.Multiselect = true;
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                foreach (string file in ofd.FileNames)
+                int position;
+                if (ActiveEvent != null)
+                    position = vMixEvents.IndexOf(ActiveEvent);
+                else
+                    position = vMixEvents.Count - 1;
+                int n = add_video(ofd.FileNames);
+                ActiveEvent = vMixEvents[position + n];
+                EventList.SelectedIndices.Clear();
+                for (int i = 1 ; i < n; i++) EventList.SelectedIndices.Add(position + i);
+                EventList.SelectedIndices.Add(position + n);
+                UpdateDisplay();
+            }
+        }
+
+        private int add_video(string [] Filenames)
+        {
+            int position;
+            int n = 0;
+            if (ActiveEvent != null)
+                position = vMixEvents.IndexOf(ActiveEvent);
+            else
+                position = vMixEvents.Count - 1;
+            foreach (string file in Filenames)
                 {
                     vMixEvent new_event = ParseVideoData(file);
                     if (new_event != null)
@@ -839,21 +906,16 @@ namespace vManager
                         new_event.EventTransitionTime = (int)ud_transition_time.Value;
                         new_event.Overlay = ActiveOverlay;
                         if (ActiveOverlay != "0") new_event.EventMuted = true;
-                        int position;
-                        if (ActiveEvent != null)
-                            position = vMixEvents.IndexOf(ActiveEvent) + 1;
-                        else
-                            position = vMixEvents.Count;
+                        position++;
                         vMixEvents.Insert(position, new_event);
-                        ActiveEvent = new_event;
-                        EventList.VirtualListSize = vMixEvents.Count;
-                        EventList.SelectedIndices.Clear();
-                        RebuildTimetable();
-                        EventList.SelectedIndices.Add(position);
-                        UpdateDisplay();
+                        n++;
+                        //EventList.SelectedIndices.Clear();
+                        //EventList.SelectedIndices.Add(position);
                     }
                 }
-            }
+            EventList.VirtualListSize = vMixEvents.Count;
+            RebuildTimetable();
+            return n;
         }
 
         private vMixEvent ParseVideoData(string path)
@@ -903,33 +965,51 @@ namespace vManager
 
         private void bn_add_image_Click(object sender, EventArgs e)
         {
-           OpenFileDialog ofd = new OpenFileDialog();
-           ofd.Multiselect = true;
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = true;
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                foreach (string file in ofd.FileNames)
+                int position;
+                if (ActiveEvent != null)
+                    position = vMixEvents.IndexOf(ActiveEvent);
+                else
+                    position = vMixEvents.Count - 1;
+                int n = add_image(ofd.FileNames);
+                ActiveEvent = vMixEvents[position + n];
+                EventList.SelectedIndices.Clear();
+                for (int i = 1; i < n; i++) EventList.SelectedIndices.Add(position + i);
+                EventList.SelectedIndices.Add(position + n);
+                UpdateDisplay();
+            }
+        }
+
+        private int add_image(string[] Filenames)
+        {
+            int position;
+            int n = 0;
+            if (ActiveEvent != null)
+                position = vMixEvents.IndexOf(ActiveEvent);
+            else
+                position = vMixEvents.Count - 1;
+            foreach (string file in Filenames)
+            {
+                vMixEvent new_event = ParseImageData(file);
+                if (new_event != null)
                 {
-                    vMixEvent new_event = ParseImageData(file);
-                    if (new_event != null)
-                    {
-                        new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
-                        new_event.EventTransitionTime = (int)ud_transition_time.Value;
-                        new_event.Overlay = ActiveOverlay;
-                        int position;
-                        if (ActiveEvent != null)
-                            position = vMixEvents.IndexOf(ActiveEvent) + 1;
-                        else
-                            position = vMixEvents.Count;
-                        vMixEvents.Insert(position, new_event);
-                        ActiveEvent = new_event;
-                        EventList.VirtualListSize = vMixEvents.Count;
-                        EventList.SelectedIndices.Clear();
-                        RebuildTimetable();
-                        EventList.SelectedIndices.Add(position);
-                        UpdateDisplay();
-                    }
+                    new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
+                    new_event.EventTransitionTime = (int)ud_transition_time.Value;
+                    new_event.Overlay = ActiveOverlay;
+                    if (ActiveOverlay != "0") new_event.EventMuted = true;
+                    position++;
+                    vMixEvents.Insert(position, new_event);
+                    n++;
+                    //EventList.SelectedIndices.Clear();
+                    //EventList.SelectedIndices.Add(position);
                 }
             }
+            EventList.VirtualListSize = vMixEvents.Count;
+            RebuildTimetable();
+            return n;
         }
 
         private vMixEvent ParseImageData(string path)
@@ -971,29 +1051,47 @@ namespace vManager
             ofd.Multiselect = true;
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                foreach (string file in ofd.FileNames)
+                int position;
+                if (ActiveEvent != null)
+                    position = vMixEvents.IndexOf(ActiveEvent);
+                else
+                    position = vMixEvents.Count - 1;
+                int n = add_audio(ofd.FileNames);
+                ActiveEvent = vMixEvents[position + n];
+                EventList.SelectedIndices.Clear();
+                for (int i = 1; i < n; i++) EventList.SelectedIndices.Add(position + i);
+                EventList.SelectedIndices.Add(position + n);
+                UpdateDisplay();
+            }
+        }
+
+        private int add_audio(string[] Filenames)
+        {
+            int position;
+            int n = 0;
+            if (ActiveEvent != null)
+                position = vMixEvents.IndexOf(ActiveEvent);
+            else
+                position = vMixEvents.Count - 1;
+            foreach (string file in Filenames)
+            {
+                vMixEvent new_event = ParseAudioData(file);
+                if (new_event != null)
                 {
-                    vMixEvent new_event = ParseAudioData(file);
-                    if (new_event != null)
-                    {
-                        new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
-                        new_event.EventTransitionTime = (int)ud_transition_time.Value;
-                        new_event.Overlay = ActiveOverlay;
-                        int position;
-                        if (ActiveEvent != null)
-                            position = vMixEvents.IndexOf(ActiveEvent) + 1;
-                        else
-                            position = vMixEvents.Count;
-                        vMixEvents.Insert(position, new_event);
-                        ActiveEvent = new_event;
-                        EventList.VirtualListSize = vMixEvents.Count;
-                        EventList.SelectedIndices.Clear();
-                        RebuildTimetable();
-                        EventList.SelectedIndices.Add(position);
-                        UpdateDisplay();
-                    }
+                    new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
+                    new_event.EventTransitionTime = (int)ud_transition_time.Value;
+                    new_event.Overlay = ActiveOverlay;
+                    new_event.EventMuted = false;
+                    position++;
+                    vMixEvents.Insert(position, new_event);
+                    n++;
+                    //EventList.SelectedIndices.Clear();
+                    //EventList.SelectedIndices.Add(position);
                 }
             }
+            EventList.VirtualListSize = vMixEvents.Count;
+            RebuildTimetable();
+            return n;
         }
 
         private vMixEvent ParseAudioData(string path)
@@ -1039,49 +1137,107 @@ namespace vManager
             return new_event;
         }
 
+        //private void bn_add_photos_Click(object sender, EventArgs e)
+        //{
+        //    FolderBrowserDialog fbd = new FolderBrowserDialog();
+        //    if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        //    {
+        //        string path = fbd.SelectedPath;
+        //        TimeSpan ts = new TimeSpan(0, 3, 0);
+        //        vMixEvent new_event = new vMixEvent(System.IO.Path.GetFileName (path),
+        //            path,
+        //            vmEventType.photos,
+        //            dtp_timetable.Value,
+        //            new TimeSpan(0),
+        //            ts,
+        //            ts,
+        //            false,
+        //            vmTransitionType.fade,
+        //            500,
+        //            false);
+
+        //        if (new_event != null)
+        //        {
+        //            new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
+        //            new_event.EventTransitionTime = (int)ud_transition_time.Value;
+        //            new_event.SlideshowInterval = (int)ud_slideshow_interval.Value;
+        //            new_event.SlideshowTransition = new_event.TransitionTypeFromString(lb_slideshow_transition.Text);
+        //            new_event.SlideshowTransitionTime = (int)ud_slideshow_transition.Value;
+        //            new_event.EventInfoText = "slideshow";
+        //            new_event.Overlay = ActiveOverlay;
+
+        //            int position;
+        //            if (ActiveEvent != null)
+        //                position = vMixEvents.IndexOf(ActiveEvent) + 1;
+        //            else
+        //                position = vMixEvents.Count;
+        //            vMixEvents.Insert(position, new_event);
+        //            ActiveEvent = new_event;
+        //            EventList.VirtualListSize = vMixEvents.Count;
+        //            EventList.SelectedIndices.Clear();
+        //            RebuildTimetable();
+        //            EventList.SelectedIndices.Add(position);
+        //            UpdateDisplay();
+        //        }
+        //    }
+        //}
+
         private void bn_add_photos_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                string path = fbd.SelectedPath;
-                TimeSpan ts = new TimeSpan(0, 3, 0);
-                vMixEvent new_event = new vMixEvent(System.IO.Path.GetFileName (path),
-                    path,
-                    vmEventType.photos,
-                    dtp_timetable.Value,
-                    new TimeSpan(0),
-                    ts,
-                    ts,
-                    false,
-                    vmTransitionType.fade,
-                    500,
-                    false);
-
-                if (new_event != null)
+                int position;
+                if (ActiveEvent != null)
+                    position = vMixEvents.IndexOf(ActiveEvent) + 1;
+                else
+                    position = vMixEvents.Count;
+                if (add_photos(fbd.SelectedPath))
                 {
-                    new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
-                    new_event.EventTransitionTime = (int)ud_transition_time.Value;
-                    new_event.SlideshowInterval = (int)ud_slideshow_interval.Value;
-                    new_event.SlideshowTransition = new_event.TransitionTypeFromString(lb_slideshow_transition.Text);
-                    new_event.SlideshowTransitionTime = (int)ud_slideshow_transition.Value;
-                    new_event.EventInfoText = "slideshow";
-                    new_event.Overlay = ActiveOverlay;
-
-                    int position;
-                    if (ActiveEvent != null)
-                        position = vMixEvents.IndexOf(ActiveEvent) + 1;
-                    else
-                        position = vMixEvents.Count;
-                    vMixEvents.Insert(position, new_event);
-                    ActiveEvent = new_event;
-                    EventList.VirtualListSize = vMixEvents.Count;
+                    ActiveEvent = vMixEvents[position];
                     EventList.SelectedIndices.Clear();
-                    RebuildTimetable();
                     EventList.SelectedIndices.Add(position);
                     UpdateDisplay();
                 }
             }
+        }
+
+        private bool add_photos(string path)
+        {
+            TimeSpan ts = new TimeSpan(0, 3, 0);
+            vMixEvent new_event = new vMixEvent(System.IO.Path.GetFileName(path),
+                path,
+                vmEventType.photos,
+                dtp_timetable.Value,
+                new TimeSpan(0),
+                ts,
+                ts,
+                false,
+                vmTransitionType.fade,
+                500,
+                false);
+
+            if (new_event != null)
+            {
+                new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
+                new_event.EventTransitionTime = (int)ud_transition_time.Value;
+                new_event.SlideshowInterval = (int)ud_slideshow_interval.Value;
+                new_event.SlideshowTransition = new_event.TransitionTypeFromString(lb_slideshow_transition.Text);
+                new_event.SlideshowTransitionTime = (int)ud_slideshow_transition.Value;
+                new_event.EventInfoText = "slideshow";
+                new_event.Overlay = ActiveOverlay;
+
+                int position;
+                if (ActiveEvent != null)
+                    position = vMixEvents.IndexOf(ActiveEvent) + 1;
+                else
+                    position = vMixEvents.Count;
+                vMixEvents.Insert(position, new_event);
+                EventList.VirtualListSize = vMixEvents.Count;
+                RebuildTimetable();
+                return true;
+            }
+            else return false;
         }
 
         private void bn_schedule_Click(object sender, EventArgs e)
@@ -1394,7 +1550,8 @@ namespace vManager
             if (rebuildhasoccur)
             {
                 DialogResult result = MessageBox.Show("Do you want to save before creating an new playlist?", "You are about to create a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                if (result == DialogResult.Yes){ bn_save_Click(sender, e); }
+                if (result == DialogResult.Yes)
+                    if (!AutoSave(sender, e)) return ;
                 if (result == DialogResult.Cancel) { return; }
             }
             bool[] a = { true, true, true, true, true };
@@ -1447,9 +1604,9 @@ namespace vManager
             EventList.VirtualListSize = vMixEvents.Count + copybuffer.Count;
             foreach (vMixEvent v in copybuffer)
             {
-                vMixEvents.Insert(position, v);
+                vMixEvents.Insert(position++, v);
+                EventList.SelectedIndices.Add(position);
             }
-            for (int i = position; i < position + copybuffer.Count; i++) EventList.SelectedIndices.Add(i);
             RebuildTimetable();
             donotredraw = false;
             UpdateDisplay();
@@ -1479,8 +1636,10 @@ namespace vManager
         {
             if (rebuildhasoccur == true)
             {
-                DialogResult result = MessageBox.Show("Do you want to save before closing?", "You are abour to leave!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-                if (result == DialogResult.Yes) { bn_save_Click(sender, e); }
+                DialogResult result = MessageBox.Show("Do you want to save before closing?", "You are abour to leave!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (result == DialogResult.Yes)
+                    if (!AutoSave(sender, e)) e.Cancel = true;
+                if (result == DialogResult.Cancel) { e.Cancel = true; }
             }
         }
 
@@ -1504,7 +1663,8 @@ namespace vManager
             if (rebuildhasoccur == true)
             {
                 DialogResult result = MessageBox.Show("Do you want to save before opening an new playlist?", "You are about to load a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-                if (result == DialogResult.Yes) bn_save_Click(sender, e);
+                if (result == DialogResult.Yes) 
+                    if (!AutoSave(sender, e)) return;
                 if (result == DialogResult.Cancel) return;
             }
             load(sender.ToString());
@@ -1541,8 +1701,114 @@ namespace vManager
 
         private void bn_add_replace_Click(object sender, EventArgs e)
         {
-            bn_remove_Click(sender, e);
-            bn_add_Click(sender, e);
+            int position;
+            if (ActiveEvent != null)
+                position = vMixEvents.IndexOf(ActiveEvent) + 1 - EventList.SelectedIndices.Count;
+            else
+                position = vMixEvents.Count - EventList.SelectedIndices.Count;
+            string s = lb_event.Text;
+            OpenFileDialog ofd = new OpenFileDialog();
+            switch (s)
+            {
+                case "Video":
+                    ofd.Multiselect = true;
+                    if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        position--;
+                        int n = add_video(ofd.FileNames);
+                        if (n > 0) 
+                        {
+                            bn_remove_Click(sender, e);
+                            ActiveEvent = vMixEvents[position + n];
+                            EventList.SelectedIndices.Clear();
+                            for (int i = 1; i < n; i++) EventList.SelectedIndices.Add(position + i);
+                            EventList.SelectedIndices.Add(position + n);
+                            UpdateDisplay();
+                            return;
+                        }
+                    }
+                    break;
+                case "Audio":
+                    ofd.Multiselect = true;
+                    if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        position--;
+                        int n = add_audio(ofd.FileNames);
+                        if (n > 0) 
+                        {
+                            bn_remove_Click(sender, e);
+                            ActiveEvent = vMixEvents[position + n];
+                            EventList.SelectedIndices.Clear();
+                            for (int i = 1; i < n; i++) EventList.SelectedIndices.Add(position + i);
+                            EventList.SelectedIndices.Add(position + n);
+                            UpdateDisplay();
+                            return;
+                        }
+                    }
+                    break;
+                case "Image":
+                    ofd.Multiselect = true;
+                    if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        position--;
+                        int n = add_image(ofd.FileNames);
+                        if (n > 0) 
+                        {
+                            bn_remove_Click(sender, e);
+                            ActiveEvent = vMixEvents[position + n];
+                            EventList.SelectedIndices.Clear();
+                            for (int i = 1; i < n; i++) EventList.SelectedIndices.Add(position + i);
+                            EventList.SelectedIndices.Add(position + n);
+                            UpdateDisplay();
+                            return;
+                        }
+                    }
+                    break;
+                case "Slideshow":
+                    FolderBrowserDialog fbd = new FolderBrowserDialog();
+                    if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        if (add_photos(fbd.SelectedPath))
+                        {
+                            bn_remove_Click(sender, e);
+                            ActiveEvent = vMixEvents[position];
+                            EventList.SelectedIndices.Clear();
+                            EventList.SelectedIndices.Add(position);
+                            UpdateDisplay();
+                        }
+                    }
+                    break;
+                case "Color":
+                    if (add_black())
+                    {
+                        bn_remove_Click(sender, e);
+                        ActiveEvent = vMixEvents[position];
+                        EventList.SelectedIndices.Clear();
+                        EventList.SelectedIndices.Add(position);
+                        UpdateDisplay();
+                    }
+                    break;
+                case "Input":
+                    if (add_input())
+                    {
+                        bn_remove_Click(sender, e);
+                        ActiveEvent = vMixEvents[position];
+                        EventList.SelectedIndices.Clear();
+                        EventList.SelectedIndices.Add(position);
+                        UpdateDisplay();
+                    }
+                    break;
+                case "Operator":
+                    if (add_manual())
+                    {
+                        bn_remove_Click(sender, e);
+                        ActiveEvent = vMixEvents[position];
+                        EventList.SelectedIndices.Clear();
+                        EventList.SelectedIndices.Add(position);
+                        UpdateDisplay();
+                    }
+                    break;
+            }
         }
 
         private void bn_splice_Click(object sender, EventArgs e)

@@ -27,7 +27,7 @@ namespace vControler
         {
             get
             {
-                return EventStart + EventInPoint + EventDuration;
+                return EventStart + EventDuration;
             }
             set
             {

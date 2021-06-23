@@ -98,7 +98,7 @@
             0,
             0});
             this.ud_preload.Minimum = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
@@ -150,7 +150,7 @@
             0,
             0});
             this.ud_linger.Minimum = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
