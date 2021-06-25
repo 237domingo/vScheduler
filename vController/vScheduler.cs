@@ -68,8 +68,7 @@ namespace vControler
             DateTime now = DateTime.Now;
             if (evnt.EventEnd < now + new TimeSpan(0, 0, MediaPreload+1))
                 return false;     // too late to add!
-            if (evnt.EventType == vmEventType.black)
-                return true;     // too late to add!
+            if (evnt.EventType == vmEventType.manual) evnt.EventType = vmEventType.black;
             
             List<vMixMicroEvent> vmes = new List<vMixMicroEvent>();
             if (evnt.EventType == vmEventType.audio) evnt.EventType = vmEventType.video;

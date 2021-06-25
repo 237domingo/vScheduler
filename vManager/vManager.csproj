@@ -84,6 +84,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -92,9 +93,17 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="vFind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vFind.Designer.cs">
+      <DependentUpon>vFind.cs</DependentUpon>
+    </Compile>
     <Compile Include="MediaInfoDLL.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -124,6 +133,9 @@
       <DependentUpon>vTextviewer.cs</DependentUpon>
     </Compile>
     <Compile Include="vXmlProfile.cs" />
+    <EmbeddedResource Include="vFind.resx">
+      <DependentUpon>vFind.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -153,6 +165,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="pencil.ico" />
+    <None Include="Resources\Synchronize_24x24.png" />
+    <None Include="Resources\Synchronize_32x32.png" />
+    <None Include="Resources\Find.ico" />
     <None Include="Resources\Picture_48x48.png" />
     <None Include="Resources\Picture_32x32.png" />
     <None Include="Resources\Picture_24x24.png" />

@@ -189,6 +189,9 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.bn_donate = new System.Windows.Forms.Button();
+            this.findnextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findpreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.Management.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.pnl_preview.SuspendLayout();
@@ -566,14 +569,14 @@
             // 
             // dtp_end
             // 
-            this.dtp_end.CustomFormat = "yyyy/MM/dd HH:mm:ss.ss";
+            this.dtp_end.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             this.dtp_end.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
             this.dtp_end.Enabled = false;
-            this.dtp_end.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp_end.Location = new System.Drawing.Point(-47, 130);
+            this.dtp_end.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtp_end.Location = new System.Drawing.Point(48, 130);
             this.dtp_end.Name = "dtp_end";
             this.dtp_end.ShowUpDown = true;
-            this.dtp_end.Size = new System.Drawing.Size(162, 20);
+            this.dtp_end.Size = new System.Drawing.Size(67, 20);
             this.dtp_end.TabIndex = 22;
             this.toolTip1.SetToolTip(this.dtp_end, "End time of the playback");
             this.dtp_end.Value = new System.DateTime(2021, 6, 24, 14, 29, 10, 600);
@@ -621,14 +624,14 @@
             // 
             // dtp_duration
             // 
-            this.dtp_duration.CustomFormat = "HH:mm:ss.ll";
+            this.dtp_duration.CustomFormat = "HH:mm:ss";
             this.dtp_duration.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
             this.dtp_duration.Enabled = false;
             this.dtp_duration.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp_duration.Location = new System.Drawing.Point(28, 107);
+            this.dtp_duration.Location = new System.Drawing.Point(48, 107);
             this.dtp_duration.Name = "dtp_duration";
             this.dtp_duration.ShowUpDown = true;
-            this.dtp_duration.Size = new System.Drawing.Size(87, 20);
+            this.dtp_duration.Size = new System.Drawing.Size(67, 20);
             this.dtp_duration.TabIndex = 20;
             this.toolTip1.SetToolTip(this.dtp_duration, "Exact duration of the playback");
             this.dtp_duration.ValueChanged += new System.EventHandler(this.dtp_duration_ValueChanged);
@@ -923,7 +926,7 @@
             // 
             // bn_sync
             // 
-            this.bn_sync.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bn_sync.BackgroundImage")));
+            this.bn_sync.BackgroundImage = global::vManager.Properties.Resources.Synchronize_24x24;
             this.bn_sync.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.bn_sync.Location = new System.Drawing.Point(210, 70);
             this.bn_sync.Name = "bn_sync";
@@ -1665,8 +1668,11 @@
             this.deleteToolStripMenuItem,
             this.spliceToolStripMenuItem,
             this.toolStripSeparator4,
+            this.selectAllToolStripMenuItem,
+            this.toolStripSeparator6,
             this.findToolStripMenuItem,
-            this.selectAllToolStripMenuItem});
+            this.findnextToolStripMenuItem,
+            this.findpreToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.editToolStripMenuItem.Text = "&EVENTS";
@@ -1840,21 +1846,21 @@
             // pushToolStripMenuItem
             // 
             this.pushToolStripMenuItem.Name = "pushToolStripMenuItem";
-            this.pushToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.pushToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pushToolStripMenuItem.Text = "P&ush...";
             this.pushToolStripMenuItem.Click += new System.EventHandler(this.bn_schedule_Click);
             // 
             // eraseToolStripMenuItem
             // 
             this.eraseToolStripMenuItem.Name = "eraseToolStripMenuItem";
-            this.eraseToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.eraseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.eraseToolStripMenuItem.Text = "E&rase";
             this.eraseToolStripMenuItem.Click += new System.EventHandler(this.bn_erase_schedule_Click);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
             // helpToolStripMenuItem
@@ -1893,6 +1899,27 @@
             this.bn_donate.Text = "DONATE";
             this.bn_donate.UseVisualStyleBackColor = false;
             this.bn_donate.Click += new System.EventHandler(this.bn_donate_Click);
+            // 
+            // findnextToolStripMenuItem
+            // 
+            this.findnextToolStripMenuItem.Name = "findnextToolStripMenuItem";
+            this.findnextToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.findnextToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.findnextToolStripMenuItem.Text = "Find Next";
+            this.findnextToolStripMenuItem.Click += new System.EventHandler(this.findnextToolStripMenuItem_Click);
+            // 
+            // findpreToolStripMenuItem
+            // 
+            this.findpreToolStripMenuItem.Name = "findpreToolStripMenuItem";
+            this.findpreToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F3)));
+            this.findpreToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.findpreToolStripMenuItem.Text = "Find Previous";
+            this.findpreToolStripMenuItem.Click += new System.EventHandler(this.findpreToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(197, 6);
             // 
             // vMixManager
             // 
@@ -2101,6 +2128,9 @@
         private System.Windows.Forms.ToolStripMenuItem selecAllTtoolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.ToolStripMenuItem findnextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem findpreToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }
 

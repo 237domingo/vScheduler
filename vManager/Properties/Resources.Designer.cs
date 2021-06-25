@@ -421,6 +421,16 @@ namespace vManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Find {
+            get {
+                object obj = ResourceManager.GetObject("Find", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Find_16x16 {
@@ -1236,6 +1246,26 @@ namespace vManager.Properties {
         internal static System.Drawing.Bitmap Stock_Index_Up_48x48 {
             get {
                 object obj = ResourceManager.GetObject("Stock_Index_Up_48x48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Synchronize_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("Synchronize_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Synchronize_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("Synchronize_32x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

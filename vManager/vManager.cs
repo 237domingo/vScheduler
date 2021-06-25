@@ -41,7 +41,8 @@ namespace vManager
         string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vScheduler\\settings.xml";
         private List<string> recentfiles = new List<string>();
         int maxrecents = 5;
-        private Xml settings;
+        Xml settings;
+        FindBox finder = new FindBox();
 
         public vMixManager()
         {
@@ -76,7 +77,6 @@ namespace vManager
             Text = formtitle + " - " + defaultfilename;
             openedfile = defaultfilename;
             foreach (string s in recentfiles) updaterecentfilestoolstripmenu(s);
-            //openToolStripMenuItem.DropDownItems.Add()
         }
 
         private void updaterecentfilestoolstripmenu(string filepath)
@@ -329,7 +329,6 @@ namespace vManager
             EventList.RedrawItems(0, vMixEvents.Count -1, false);
             if (vMixEvents.Count > 0)
             {
-                dtp_timetable.Value = vMixEvents[0].EventStart;
                 dtp_endtime.Text = vMixEvents[vMixEvents.Count - 1].EventEnd.ToString();
             }
             rebuildhasoccur = true;
@@ -381,6 +380,31 @@ namespace vManager
             }
         }
 
+        private void find(int startindex, int count, bool first, DateTime date)
+        {
+            int i;
+            if (first) i = vMixEvents.FindIndex(startindex, count, delegate(vMixEvent e1) { return e1.EventEnd > date; });
+            else i = vMixEvents.FindLastIndex(startindex, count, delegate(vMixEvent e1) { return e1.EventEnd > date; });
+            if (i >= 0)
+            {
+                EventList.SelectedIndices.Clear();
+                EventList.SelectedIndices.Add(i);
+            }
+        }
+
+        private void find(int startindex, int count, bool first, string title)
+        {
+            if (title == "") return;
+            int i;
+            if (first) i = vMixEvents.FindIndex(startindex, count, delegate(vMixEvent e1) { return e1.Title.ToLower().Contains(title.ToLower()); });
+            else i = vMixEvents.FindLastIndex(startindex, count, delegate(vMixEvent e1) { return e1.Title.ToLower().Contains(title.ToLower()); });
+            if (i >= 0)
+            {
+                EventList.SelectedIndices.Clear();
+                EventList.SelectedIndices.Add(i);
+            }
+        }
+
         private void selectall()
         {
             EventList.SelectedIndices.Clear();
@@ -392,8 +416,15 @@ namespace vManager
 
         private void dtp_timetable_ValueChanged(object sender, EventArgs e)
         {
-            RebuildTimetable();
-            UpdateDisplay();
+            if (vMixEvents.Count > 0)
+            {
+                if (dtp_timetable.Focused)
+                {
+                    vMixEvents[0].EventStart = dtp_timetable.Value;
+                    RebuildTimetable();
+                    UpdateDisplay();
+                }
+            }
         }
 
         private void dtp_duration_ValueChanged(object sender, EventArgs e)
@@ -402,7 +433,6 @@ namespace vManager
             if (ActiveEvent != null)
             {
                 TimeSpan dr = dtp_duration.Value.TimeOfDay;
-                TimeSpan.Parse()
                 if (ActiveEvent.HasDuration && dr + ActiveEvent.EventInPoint > ActiveEvent.MediaDuration)
                     dr = ActiveEvent.MediaDuration - ActiveEvent.EventInPoint;
                 if (dr > new TimeSpan(0, 0, 0))
@@ -1352,6 +1382,7 @@ namespace vManager
 
         private void bn_now_Click(object sender, EventArgs e)
         {
+            dtp_timetable.Focus();
             dtp_timetable.Value = DateTime.Now + new TimeSpan(0, 0, 10);
         }
 
@@ -1596,24 +1627,34 @@ namespace vManager
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ActiveEvent == null) return;
-            int position = vMixEvents.IndexOf(ActiveEvent);
+            int position, initial;
+            initial = EventList.SelectedIndices[EventList.SelectedIndices.Count -1];
+            position = initial + 1;
             donotredraw = true;
             if (copybuffer.Count == 0) return;
-
-            EventList.SelectedIndices.Clear();
-            EventList.VirtualListSize = vMixEvents.Count + copybuffer.Count;
             foreach (vMixEvent v in copybuffer)
             {
-                vMixEvents.Insert(position++, v);
-                EventList.SelectedIndices.Add(position);
+                vMixEvents.Insert(position, v);
+                position++;
             }
+            EventList.VirtualListSize = vMixEvents.Count;
             RebuildTimetable();
             donotredraw = false;
+            EventList.SelectedIndices.Clear();
+            for (int i = initial + 1; i <= initial + copybuffer.Count; i++)
+                EventList.SelectedIndices.Add(i);
+            
             UpdateDisplay();
         }
 
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            finder.ShowDialog();
+            if (vMixEvents.Count > 0)
+            {
+                if (finder.findtype == 0) find(0, vMixEvents.Count, true, finder.date);
+                if (finder.findtype == 1) find(0, vMixEvents.Count, true, finder.title);
+            }
 
         }
 
@@ -1834,6 +1875,26 @@ namespace vManager
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             selectall();
+        }
+
+        private void findnextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int i = EventList.SelectedIndices[EventList.SelectedIndices.Count -1];
+            if (i != vMixEvents.Count - 1)
+            {
+                if (finder.findtype == 0) find(i + 1, vMixEvents.Count - i - 1, true, finder.date);
+                if (finder.findtype == 1) find(i + 1, vMixEvents.Count - i - 1, true, finder.title);
+            }
+        }
+
+        private void findpreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int i = EventList.SelectedIndices[EventList.SelectedIndices.Count - 1];
+            if (i != 0)
+            {
+                if (finder.findtype == 0) find(i - 1, i, false, finder.date);
+                if (finder.findtype == 1) find(i - 1, i, false, finder.title);
+            }
         }
 
     }
