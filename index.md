@@ -18,6 +18,7 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 * * *
 ## latest
 **Download:** [vScheduler.v1.1.4-debug.2+buiddate260821.zip](https://github.com/237domingo/vScheduler/releases/download/v1.1.4-alpha.2/vScheduler.v1.1.4-debug.2+buiddate260821.zip)
+
 **CHANGELOG:**
 > **vManager 1.1.4-alpha.2+builddate26082021**
 > 1. **[COMPATIBILITY]** Compatible with previous version of vManager 1.0.0 (can read/write schedule file)
@@ -72,6 +73,7 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 
 ## v1.0.0.debug.2
 **Download:** [vScheduler v1.0.0-debug.2+builddate130621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.2+builddate130621/vScheduler.zip)
+
 **CHANGELOG:**
 > **FOR TESTING PURPOSE ongoing work**
 > **vController v1.0.0-debug.2+builddate130621**
@@ -93,6 +95,7 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 
 ## v1.0.0.debug.1
 **Download:** [vScheduler v1.0.0-debug.1+builddate080621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.1+builddate080621/vScheduler.zip)
+
 **CHANGELOG:**
 > **For testing purpose: Some drastics changes made to the code**
 > **vController v1.0.0-debug.1+builddate080621**
@@ -112,6 +115,7 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 
 ## v1.0
 **Download:** [vMixScheduler v1.0](https://github.com/Tim-R/vScheduler/releases/download/v1/vMixScheduler.zip)
+
 **CHANGELOG:**
 > 1. Storing initial source code from macjaeger on the git
 > 1. Changes to vWebClient
