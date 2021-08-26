@@ -24,6 +24,9 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 
 # Gallery
 * * *
+[vmanager ui.png](./assets/images/vmanager ui.png)
+
+![Branching](https://guides.github.com/activities/hello-world/branching.png)
 
 # Support
 * * *
