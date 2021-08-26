@@ -75,10 +75,10 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 * **CHANGELOG:**
 > **FOR TESTING PURPOSE ongoing work**
 > **vController v1.0.0-debug.2+builddate130621**
-> 1. Remove meidainfo references from vController
+> 1. Remove mediainfo references from vController
 > 1. fixing bug
 > 
-> **vManager**
+> **vManager v1.0.0-debug.2+builddate130621**
 > 1. Add entry in settings file for recent files
 > 1. Now display the current edited playlist name
 > 1. Prompt to save when closing, creating or opening a playlist
@@ -94,25 +94,25 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 ## v1.0.0.debug.1
 * **Download:** [vController v1.0.0-debug.1+builddate080621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.1+builddate080621/vScheduler.zip)
 * **CHANGELOG:**
-> **FOR TESTING PURPOSE ongoing work**
-> **vController v1.0.0-debug.2+builddate130621**
-> 1. Remove meidainfo references from vController
-> 1. fixing bug
+> **For testing purpose: Some drastics changes made to the code**
+> **vController v1.0.0-debug.1+builddate080621**
+> 1. Add a vMix address settings and ability to control vMix on another pc
+> 1. Remove "Mix" from name of classes and properties of project
+> 1. Add ability to control multiples overlays
+> 1. Adding 4 more tabs to the controler for overlays
+> 1. Others minor stuffs on vControler
 > 
-> **vManager**
-> 1. Add entry in settings file for recent files
-> 1. Now display the current edited playlist name
-> 1. Prompt to save when closing, creating or opening a playlist
-> 1. Append function now only append the selected overlay content from the selection box to the current displayed overlay
-> 1. Adding export submenu to the file menu
-> 1. Adding recent files list to the file menu
-> 1. Fix some bug in Schedule Panel
-> 1. Renaming Edit menu to Events and Tools to Schedule
-> 1. UI fixing
-> 1. Other bug fixing
-> 1. **STILL ONGOING TESTER NEEDED**
+> **vManager v1.0.0-debug.1+builddate080621**
+> 1. Redesign UI of vManager (adding icons, remove useless button, adding a menu ...)
+> 1. Add ability of managing multiples overlays
+> 1. Add a context menu
+> 1. Rewrite some functions for multiselection purpose
+> 1. Add new functions
+> 1. STILL ONGOING NEED TESTERS
 
 ## v1.0
+* **Download:** [vController v1.0.0-debug.1+builddate080621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.1+builddate080621/vScheduler.zip)
+* **CHANGELOG:**
 
 # Gallery
 * * *
