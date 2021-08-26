@@ -24,8 +24,8 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 
 # Gallery
 * * *
-[![Branching](./assets/images/vmanager ui mini.png)](./assets/images/vmanager ui mini.png)
-[![Branching](./assets/images/vScheduler 1.1.4 mini.png)](./assets/images/vScheduler 1.1.4 mini.png)
+[![Branching](./assets/images/vmanager ui mini.png)](./assets/images/vmanager ui.png)
+[![Branching](./assets/images/vScheduler 1.1.4 mini.png)](./assets/images/vScheduler 1.1.4.png)
 [![Branching](./assets/images/vController 1.1.4.png)](./assets/images/vController 1.1.4.png)
 
 # Support
