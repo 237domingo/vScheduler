@@ -17,8 +17,8 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 # Downloads
 * * *
 ## latest
-* **Download:** [vScheduler.v1.1.4-debug.2+buiddate260821.zip](https://github.com/237domingo/vScheduler/releases/download/v1.1.4-alpha.2/vScheduler.v1.1.4-debug.2+buiddate260821.zip)
-* **CHANGELOG:**
+**Download:** [vScheduler.v1.1.4-debug.2+buiddate260821.zip](https://github.com/237domingo/vScheduler/releases/download/v1.1.4-alpha.2/vScheduler.v1.1.4-debug.2+buiddate260821.zip)
+**CHANGELOG:**
 > **vManager 1.1.4-alpha.2+builddate26082021**
 > 1. **[COMPATIBILITY]** Compatible with previous version of vManager 1.0.0 (can read/write schedule file)
 > 1. **[COMPATIBILITY]** Not compatible with previous version of vController 1.0.0 (bug occurs when using schedule generated with previous versions)
@@ -71,8 +71,8 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 > 1. **A lot more fixes**
 
 ## v1.0.0.debug.2
-* **Download:** [vScheduler v1.0.0-debug.2+builddate130621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.2+builddate130621/vScheduler.zip)
-* **CHANGELOG:**
+**Download:** [vScheduler v1.0.0-debug.2+builddate130621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.2+builddate130621/vScheduler.zip)
+**CHANGELOG:**
 > **FOR TESTING PURPOSE ongoing work**
 > **vController v1.0.0-debug.2+builddate130621**
 > 1. Remove mediainfo references from vController
@@ -92,8 +92,8 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 > 1. **STILL ONGOING TESTER NEEDED**
 
 ## v1.0.0.debug.1
-* **Download:** [vScheduler v1.0.0-debug.1+builddate080621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.1+builddate080621/vScheduler.zip)
-* **CHANGELOG:**
+**Download:** [vScheduler v1.0.0-debug.1+builddate080621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.1+builddate080621/vScheduler.zip)
+**CHANGELOG:**
 > **For testing purpose: Some drastics changes made to the code**
 > **vController v1.0.0-debug.1+builddate080621**
 > 1. Add a vMix address settings and ability to control vMix on another pc
@@ -111,15 +111,15 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 > 1. STILL ONGOING NEED TESTERS
 
 ## v1.0
-* **Download:** [vMixScheduler v1.0](https://github.com/Tim-R/vScheduler/releases/download/v1/vMixScheduler.zip)
-* **CHANGELOG:**
+**Download:** [vMixScheduler v1.0](https://github.com/Tim-R/vScheduler/releases/download/v1/vMixScheduler.zip)
+**CHANGELOG:**
 > 1. Storing initial source code from macjaeger on the git
 > 1. Changes to vWebClient
 
 # Gallery
 * * *
-[![Branching](./assets/images/vmanager ui mini.png)](./assets/images/vmanager ui.png)
-[![Branching](./assets/images/vScheduler 1.1.4 mini.png)](./assets/images/vScheduler 1.1.4.png)
+[![Branching](./assets/images/vmanager ui.png)](./assets/images/vmanager ui.png)
+[![Branching](./assets/images/vScheduler 1.1.4.png)](./assets/images/vScheduler 1.1.4.png)
 [![Branching](./assets/images/vController 1.1.4.png)](./assets/images/vController 1.1.4.png)
 
 # Support
