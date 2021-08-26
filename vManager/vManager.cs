@@ -23,7 +23,6 @@ namespace vManager
         List<vMixEvent> vMixEvents3 = new List<vMixEvent>();
         List<vMixEvent> vMixEvents4 = new List<vMixEvent>();
         List<vMixEvent>[] ListOfvMixEvents = new List<vMixEvent>[5];
-
         ListView[] ListOfEventList = new ListView[5];
         vMixEvent ActiveEvent;
         MediaInfo FileInfo;
@@ -35,14 +34,19 @@ namespace vManager
         string openedfile;
         readonly string defaultfilename = "untitled.xml";
         public delegate void SelectedOverlay(bool[] Overlay);
+        public delegate int FixPath(out vMixEvent Event, vMixEvent evnt);
         bool donotredraw = false;
         //
         //settings for vManager
-        string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vScheduler\\settings.xml";
+        string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vScheduler";
         private List<string> recentfiles = new List<string>();
         int maxrecents = 5;
+        bool fixonload;
         Xml settings;
         FindBox finder = new FindBox();
+        //
+        //Library init
+        vLibrary library;
 
         public vMixManager()
         {
@@ -58,10 +62,13 @@ namespace vManager
             ListOfEventList[2] = EventList2;
             ListOfEventList[3] = EventList3;
             ListOfEventList[4] = EventList4;
+            if (!Directory.Exists(SettingsPath)) Directory.CreateDirectory(SettingsPath);
             settings = new Xml();
-            settings.LoadXml(SettingsPath);
+            settings.LoadXml(SettingsPath + "\\Settings.xml");
+            library = new vLibrary(settings);
             recentfiles.AddRange(settings.GetValue("vManager", "recentfiles", "").Split('|'));
             maxrecents = settings.GetValue("vManager", "maxrecents", 5);
+            fixonload = settings.GetValue("vManager", "fixonload", false);
             vMixEvents = vMixEvents0;
             EventList = EventList0;
             ActiveOverlay = "0";
@@ -76,6 +83,7 @@ namespace vManager
             lb_slideshow_transition.Text = "Fade";
             Text = formtitle + " - " + defaultfilename;
             openedfile = defaultfilename;
+            autoFixOnLoadToolStripMenuItem.Checked = fixonload;
             foreach (string s in recentfiles) updaterecentfilestoolstripmenu(s);
         }
 
@@ -135,7 +143,28 @@ namespace vManager
                                };
             ListViewItem lvi = new ListViewItem(caption);
             lvi.ToolTipText = vmixevent.EventInfoText;
+            if (vmixevent.MediaType >= 2) {if (!File.Exists(vmixevent.EventPath)) lvi.BackColor = Color.Red; }
+            else if (vmixevent.MediaType == 1) { if (!Directory.Exists(vmixevent.EventPath)) lvi.BackColor = Color.Red; }
+            if (vmixevent.EventType == vmEventType.black) { if (ColorFromString(vmixevent.EventPath).IsEmpty) lvi.BackColor = Color.Red; }
             return lvi;
+        }
+
+        private void DefaultDetailsView()
+        {
+            tb_title.Text = "";
+            dtp_start.Text = "00:00:00";
+            dtp_inpoint.Text = "00:00:00";
+            dtp_duration.Text = "00:00:00";
+            dtp_end.Text = "00:00:00";
+            cb_looping.Checked = false;
+            cb_keep_duration.Checked = false;
+            lb_transition.SelectedIndex = 0;
+            ud_transition_time.Value = 500;
+            rtb_fileinfo.Text = "";
+            pnl_slideshow.Visible = false;
+            cb_audio.Checked = false;
+            EventDetails.Enabled = false;
+            pictureBox1.Image = null;
         }
 
         private void UpdateDisplay()
@@ -144,6 +173,7 @@ namespace vManager
                 return;
 
             donotredraw = true;
+
             if (ActiveEvent != null)
             {
                 EventDetails.Enabled = true; 
@@ -152,61 +182,56 @@ namespace vManager
                 dtp_duration.Text = ActiveEvent.EventDuration.ToString("c");
                 dtp_inpoint.Text = ActiveEvent.EventInPoint.ToString("c");
                 dtp_end.Value = ActiveEvent.EventEnd;
+
                 cb_audio.Checked = !ActiveEvent.EventMuted;
-                if (ActiveEvent.EventLooping)
-                    rb_looping.Checked = true;
-                else
-                    rb_toblack.Checked = true;
-                if (ActiveEvent.HasDuration)
-                {
-                    cb_keep_duration.Checked = ActiveEvent.KeepDuration;
-                    cb_keep_duration.Enabled = true;
-                }
-                else
-                {
-                    cb_keep_duration.Checked = false;
-                    cb_keep_duration.Enabled = false;
-                }
-                dtp_duration.Enabled = !ActiveEvent.KeepDuration;
+                cb_audio.Enabled = (ActiveEvent.EventType == vmEventType.video);
+
+                cb_keep_duration.Checked = ActiveEvent.KeepDuration;
+                cb_keep_duration.Enabled = ActiveEvent.HasDuration;
+
+                dtp_duration.Enabled = !ActiveEvent.KeepDuration || !ActiveEvent.HasDuration;
                 dtp_inpoint.Enabled = ActiveEvent.HasDuration && !ActiveEvent.KeepDuration;
+                
                 lb_transition.Text = ActiveEvent.TransitionTypeString();
+                
                 ud_transition_time.Enabled = (ActiveEvent.EventTransition != vmTransitionType.cut);
                 ud_transition_time.Value = ActiveEvent.EventTransitionTime;
+                
                 rtb_fileinfo.Text = ActiveEvent.EventInfoText;
 
-                if (ActiveEvent.EventType == vmEventType.photos)
-                {
-                    pnl_slideshow.Visible = true;
-                    ud_slideshow_interval.Value = ActiveEvent.SlideshowInterval;
-                    lb_slideshow_transition.Text = ActiveEvent.SlideshowTypeString();
-                    ud_slideshow_transition.Value = ActiveEvent.SlideshowTransitionTime;
-                }
-                else
-                    pnl_slideshow.Visible = false;
+                pnl_slideshow.Visible = (ActiveEvent.EventType == vmEventType.photos);
+                ud_slideshow_interval.Value = ActiveEvent.SlideshowInterval;
+                lb_slideshow_transition.Text = ActiveEvent.SlideshowTypeString();
+                ud_slideshow_transition.Value = ActiveEvent.SlideshowTransitionTime;
+                cb_looping.Checked = ActiveEvent.EventLooping;
 
-                if (ActiveEvent.EventType == vmEventType.video)
+                switch (ActiveEvent.EventType)
                 {
-                    cb_audio.Enabled = true;
+                    case vmEventType.image:
+                        pictureBox1.ImageLocation = ActiveEvent.EventPath;
+                        break;
+                    case vmEventType.photos:
+                        pictureBox1.Image = null;
+                        List <string> i = Directory.EnumerateFiles(ActiveEvent.EventPath).ToList(); 
+                        foreach (string a in i)
+                         {
+                            if (a.ToLower().Contains(".jpg")) { pictureBox1.ImageLocation = a; break; }
+                            if (a.ToLower().Contains(".jpeg")) { pictureBox1.ImageLocation = a; break; }
+                            if (a.ToLower().Contains(".png")) { pictureBox1.ImageLocation = a; break; }
+                            if (a.ToLower().Contains(".bmp")) { pictureBox1.ImageLocation = a; break; }
+                          }   
+                        break;
+                    case vmEventType.black:
+                        pictureBox1.BackColor = ColorFromString(ActiveEvent.EventPath);
+                        break;
+                    default:
+                        pictureBox1.Image = null;
+                        break;
                 }
-                else
-                    cb_audio.Enabled = false;
             }
             else 
             {
-                tb_title.Text = "";
-                dtp_start.Text = "00:00:00";
-                dtp_inpoint.Text = "00:00:00";
-                dtp_duration.Text = "00:00:00";
-                dtp_end.Text = "00:00:00";
-                rb_toblack.Checked = false;
-                rb_looping.Checked = false;
-                cb_keep_duration.Checked = false;
-                lb_transition.SelectedIndex = 0;
-                ud_transition_time.Value = 1000;
-                rtb_fileinfo.Text = "";
-                pnl_slideshow.Visible = false;
-                cb_audio.Checked = false; 
-                EventDetails.Enabled = false;
+                DefaultDetailsView();
             }
             donotredraw = false;
         }
@@ -214,7 +239,7 @@ namespace vManager
         private void EventList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ActiveEvent = null;
-            if (EventList.SelectedIndices.Count == 0) return;
+            if (EventList.SelectedIndices.Count == 0) { UpdateDisplay(); return; }
             if (EventList.SelectedIndices.Count == 1)
             {
                 ActiveEvent = vMixEvents[EventList.SelectedIndices[0]];
@@ -268,7 +293,7 @@ namespace vManager
         {
             if (donotredraw) return;
             if (ActiveEvent != null)
-                ActiveEvent.EventLooping = rb_looping.Checked;
+                ActiveEvent.EventLooping = cb_looping.Checked;
         }
 
         private void cb_audio_CheckedChanged(object sender, EventArgs e)
@@ -300,9 +325,6 @@ namespace vManager
                 ActiveEvent.KeepDuration = true;
                 dtp_duration.Enabled = false;
                 dtp_inpoint.Enabled = false;
-                //dtp_end.Enabled = false;
-                rb_looping.Enabled = false;
-                rb_toblack.Enabled = false;
                 RebuildTimetable();
                 UpdateDisplay();
             }
@@ -329,7 +351,7 @@ namespace vManager
             EventList.RedrawItems(0, vMixEvents.Count -1, false);
             if (vMixEvents.Count > 0)
             {
-                dtp_endtime.Text = vMixEvents[vMixEvents.Count - 1].EventEnd.ToString();
+                dtp_endtime.Text = vMixEvents[vMixEvents.Count - 1].EventEnd.ToString("yyyy/MM/dd HH:mm:ss");
             }
             rebuildhasoccur = true;
         }
@@ -416,6 +438,7 @@ namespace vManager
 
         private void dtp_timetable_ValueChanged(object sender, EventArgs e)
         {
+            if (donotredraw) return;
             if (vMixEvents.Count > 0)
             {
                 if (dtp_timetable.Focused)
@@ -469,16 +492,19 @@ namespace vManager
 
         private void ud_slideshow_interval_ValueChanged(object sender, EventArgs e)
         {
+            if (donotredraw) return;
             if (ActiveEvent != null)
                 ActiveEvent.SlideshowInterval = (int)ud_slideshow_interval.Value;
         }
         private void lb_slideshow_transition_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (donotredraw) return;
             if (ActiveEvent != null)
                 ActiveEvent.SlideshowTransition = ActiveEvent.TransitionTypeFromString(lb_slideshow_transition.Text);
         }
         private void ud_slideshow_transition_ValueChanged(object sender, EventArgs e)
         {
+            if (donotredraw) return;
             if (ActiveEvent != null)
                 ActiveEvent.SlideshowTransitionTime = (int)ud_slideshow_transition.Value;
         }
@@ -574,7 +600,7 @@ namespace vManager
             d.Save(filename);
             MessageBox.Show(eventcount.ToString() + " events saved to xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             openedfile = filename;
-            Text = formtitle + " - " + Path.GetFileName(filename);
+            Text = formtitle + "(" + Path.GetFileName(filename) + ")";
             updaterecentfiles(filename);
             updaterecentfilestoolstripmenu(filename);
             rebuildhasoccur = false;
@@ -657,17 +683,20 @@ namespace vManager
             bool[] a = { true, true, true, true, true };
             ClearPlaylist(a);
             int eventcount = 0;
+            vMixEvent k;
             foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
             {
+                k = new vMixEvent(n);
+                if (fixonload) fixpath(out k, k);
                 try
                 {
-                    ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)].Add(new vMixEvent(n));
+                    ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)].Add(new vMixEvent(k));
                     eventcount++;
                 }
                 catch
                 {
                     ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)] = new List<vMixEvent>();
-                    ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)].Add(new vMixEvent(n));
+                    ListOfvMixEvents[int.Parse(n.Attributes.GetNamedItem("Overlay").Value)].Add(new vMixEvent(k));
                     eventcount++;
                 }
             }
@@ -702,12 +731,12 @@ namespace vManager
             if (vMixEvents.Count > 0)
             {
                 dtp_timetable.Value = vMixEvents[0].EventStart;
-                dtp_endtime.Text = vMixEvents[0].EventEnd.ToString();
+                dtp_endtime.Text = vMixEvents[0].EventEnd.ToString("yyyy/MM/dd HH:mm:ss");
             }
             rebuildhasoccur = false;
             MessageBox.Show(eventcount.ToString() + " events loaded from xml.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             openedfile = filename;
-            Text = formtitle + " - " + Path.GetFileName(filename);
+            Text = formtitle + "(" + Path.GetFileName(filename) + ")";
             updaterecentfiles(filename);
             updaterecentfilestoolstripmenu(filename);
         }
@@ -743,9 +772,14 @@ namespace vManager
                 List<vMixEvent> vmes = new List<vMixEvent>();
                 XmlDocument d = new XmlDocument();
                 d.Load(ofd.FileName);
+                vMixEvent k;
                 foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
-                    if ( overlay[Convert.ToInt32(n.Attributes.GetNamedItem("Overlay").Value)] )
-                    vmes.Add(new vMixEvent(n));
+                {
+                    k = new vMixEvent(n);
+                    if (fixonload) fixpath(out k, k);
+                    if (overlay[int.Parse(k.Overlay)])
+                        vmes.Add(new vMixEvent(k));
+                }
                 if (vmes.Count > 0)
                 {
                     vmes.Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
@@ -827,27 +861,65 @@ namespace vManager
 
         private void bn_add_black_Click(object sender, EventArgs e)
         {
-            int position;
-            if (ActiveEvent != null)
-                position = vMixEvents.IndexOf(ActiveEvent) + 1;
-            else
-                position = vMixEvents.Count;
-            if (add_black())
+            ColorDialog colorpicker = new ColorDialog();
+            if (colorpicker.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                ActiveEvent = vMixEvents[position];
-                EventList.SelectedIndices.Clear();
-                EventList.SelectedIndices.Add(position);
-                UpdateDisplay();
-            }
+                string color = ColorToString(colorpicker.Color);
+                int position;
+                if (ActiveEvent != null)
+                    position = vMixEvents.IndexOf(ActiveEvent) + 1;
+                else
+                    position = vMixEvents.Count;
+                if (add_black(color))
+                {
+                    ActiveEvent = vMixEvents[position];
+                    EventList.SelectedIndices.Clear();
+                    EventList.SelectedIndices.Add(position);
+                    UpdateDisplay();
+                }
+            }   
         }
 
-        private bool add_black()
+        private string ColorToString(Color color)
+        {
+            string result;
+            if (color.IsNamedColor) result = color.Name;
+            else result = color.A.ToString() + ";" 
+                + color.R.ToString() + ";" 
+                + color.G.ToString() + ";" 
+                + color.B.ToString();
+            return result;
+        }
+
+        private Color ColorFromString(string color)
+        {
+            Color result;
+            result = Color.FromName(color);
+            if (!result.IsKnownColor)
+            {
+                result = Color.Empty;
+                string[] argb = color.Split(';');
+                if (argb.Length != 4) return result;
+                result = Color.FromArgb
+                    (
+                    Convert.ToInt32(argb[0]), 
+                    Convert.ToInt32(argb[1]), 
+                    Convert.ToInt32(argb[2]), 
+                    Convert.ToInt32(argb[3])
+                    );
+
+            }
+            return result;
+        }
+
+        private bool add_black(string color)
         {
             vMixEvent new_event = new vMixEvent(vmEventType.black, dtp_timetable.Value, new TimeSpan(0, 0, 10));
             if (new_event != null)
             {
                 new_event.EventTransition = new_event.TransitionTypeFromString(lb_transition.Text);
                 new_event.EventTransitionTime = (int)ud_transition_time.Value;
+                new_event.EventPath = color;
                 new_event.Overlay = ActiveOverlay;
                 int position;
                 if (ActiveEvent != null)
@@ -983,7 +1055,7 @@ namespace vManager
                     true,
                     vmTransitionType.cut,
                     1000,
-                    true);
+                    false);
                 new_event.EventInfoText = infotext;
             }
             else
@@ -1064,8 +1136,8 @@ namespace vManager
                     duration,
                     false,
                     vmTransitionType.cut,
-                    1000,
-                    true);
+                    500,
+                    false);
                 new_event.EventInfoText = infotext;
             }
             else
@@ -1147,7 +1219,7 @@ namespace vManager
                 else
                     MessageBox.Show("I can't decode this files duration!", "No Duration?", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                new_event = new vMixEvent(System.IO.Path.GetFileNameWithoutExtension(path),
+                new_event = new vMixEvent(System.IO.Path.GetFileName(path),
                     path,
                     vmEventType.audio,
                     dtp_timetable.Value,
@@ -1156,8 +1228,8 @@ namespace vManager
                     duration,
                     true,
                     vmTransitionType.cut,
-                    1000,
-                    true);
+                    500,
+                    false);
                 new_event.EventInfoText = infotext;
             }
             else
@@ -1234,7 +1306,7 @@ namespace vManager
 
         private bool add_photos(string path)
         {
-            TimeSpan ts = new TimeSpan(0, 3, 0);
+            TimeSpan ts = new TimeSpan(0, 5, 0);
             vMixEvent new_event = new vMixEvent(System.IO.Path.GetFileName(path),
                 path,
                 vmEventType.photos,
@@ -1336,6 +1408,73 @@ namespace vManager
             vMixEvents = tempvMixEvents; //restore
             MessageBox.Show("Events scheduled.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+        }
+
+        private bool PullPlaylist()
+        {
+            ActiveEvent = null;
+            bool result = false;
+            ClearPlaylist(new bool[] {true,true,true,true,true});
+            openedfile = defaultfilename;
+            this.Text = formtitle + "(" + openedfile + ")";
+            string datafolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vScheduler";
+
+            List<vMixEvent>[] ListOfvmes = new List<vMixEvent>[5];
+            for (int i = 0; i < 5; i++)
+            {
+                string schedulename = datafolder + "\\vSchedule" + Convert.ToString(i) + ".xml";
+
+                List<vMixEvent> vmes = new List<vMixEvent>();
+                XmlDocument d = new XmlDocument();
+                if (System.IO.File.Exists(schedulename))
+                {
+                    d.Load(schedulename);
+                    foreach (XmlNode n in d.SelectNodes("//vMixManager//Events//Event"))
+                    {
+                        vMixEvent vme = new vMixEvent(n);
+                        if (vme.EventEnd > DateTime.Now)
+                        {
+                            if (fixonload) fixpath(out vme, vme);
+                            vmes.Add(vme);
+                        }
+                    }
+                    d = new XmlDocument();
+                    result = true;
+                }
+                ListOfvmes[i] = vmes;
+            }
+                
+            donotredraw = true;
+            ListView tempEventList = EventList;
+            List<vMixEvent> tempvMixEvents = vMixEvents;
+            string tempActiveOverlay = ActiveOverlay;
+            for (int i = 0; i < 5; i++)
+            {
+                int count = ListOfvmes[i].Count;
+                if (count > 0)
+                {
+                    vMixEvents = ListOfvMixEvents[i];
+                    vMixEvents.AddRange(ListOfvmes[i]);
+                    vMixEvents.Sort(delegate(vMixEvent e1, vMixEvent e2) { return e1.EventStart.CompareTo(e2.EventStart); });
+                    ActiveOverlay = Convert.ToString(i);
+                    EventList = ListOfEventList[i];
+                    EventList.SelectedIndices.Clear();
+                    EventList.VirtualListSize = count;
+                    dtp_timetable.Value = vMixEvents[0].EventStart;
+                    RebuildTimetable();
+                    //UpdateDisplay();
+                }
+            }
+            donotredraw = false;
+            EventList = tempEventList;
+            vMixEvents = tempvMixEvents;
+            ActiveOverlay = tempActiveOverlay;
+            if (vMixEvents.Count > 0)
+            {
+                dtp_timetable.Value = vMixEvents[0].EventStart;
+                dtp_endtime.Text = vMixEvents[0].EventEnd.ToString("yyyy/MM/dd HH:mm:ss");
+            }
+            return result;
         }
 
         private void bn_erase_schedule_Click(object sender, EventArgs e)
@@ -1545,7 +1684,7 @@ namespace vManager
             if (vMixEvents.Count > 0)
             {
                 dtp_timetable.Value = vMixEvents[0].EventStart;
-                dtp_endtime.Text = vMixEvents[vMixEvents.Count - 1].EventEnd.ToString();
+                dtp_endtime.Text = vMixEvents[vMixEvents.Count - 1].EventEnd.ToString("yyyy/MM/dd HH:mm:ss");
             }
             EventList_SelectedIndexChanged(sender,e);
         }
@@ -1587,13 +1726,13 @@ namespace vManager
             }
             bool[] a = { true, true, true, true, true };
             ClearPlaylist(a);
-            Text = formtitle + " - " + defaultfilename;
+            Text = formtitle + "(" + defaultfilename + ")";
             openedfile = defaultfilename;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Close();
+            this.Close();
         }
 
         private void spliceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1682,6 +1821,7 @@ namespace vManager
                     if (!AutoSave(sender, e)) e.Cancel = true;
                 if (result == DialogResult.Cancel) { e.Cancel = true; }
             }
+            settings.Save();
         }
 
         private void eraseallToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1820,13 +1960,18 @@ namespace vManager
                     }
                     break;
                 case "Color":
-                    if (add_black())
+                    ColorDialog colorpicker = new ColorDialog();
+                    if (colorpicker.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                        bn_remove_Click(sender, e);
-                        ActiveEvent = vMixEvents[position];
-                        EventList.SelectedIndices.Clear();
-                        EventList.SelectedIndices.Add(position);
-                        UpdateDisplay();
+                        string color = ColorToString(colorpicker.Color);
+                        if (add_black(color))
+                        {
+                            bn_remove_Click(sender, e);
+                            ActiveEvent = vMixEvents[position];
+                            EventList.SelectedIndices.Clear();
+                            EventList.SelectedIndices.Add(position);
+                            UpdateDisplay();
+                        }
                     }
                     break;
                 case "Input":
@@ -1897,5 +2042,147 @@ namespace vManager
             }
         }
 
+        private void bn_pull_Click(object sender, EventArgs e)
+        {
+            if (rebuildhasoccur)
+            {
+                DialogResult result = MessageBox.Show("Do you want to save before opening an new playlist?", "You are about to load a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                if (result == DialogResult.Yes)
+                    if (!AutoSave(sender, e)) return;
+                if (result == DialogResult.Cancel) return;
+            }
+            if (PullPlaylist()) MessageBox.Show("Events Pull Completed!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else MessageBox.Show("Nothing to Pull!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void pullToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (rebuildhasoccur)
+            {
+                DialogResult result = MessageBox.Show("Do you want to save before opening an new playlist?", "You are about to load a new playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                if (result == DialogResult.Yes)
+                    if (!AutoSave(sender, e)) return;
+                if (result == DialogResult.Cancel) return;
+            }
+            if (PullPlaylist()) MessageBox.Show("Events Pull Completed!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else MessageBox.Show("Nothing to Pull!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private int fixpath(out vMixEvent Event, vMixEvent evnt)
+        {
+            //Event is the same as evnt plus file path fixed. must reference the same vMixEvent from the vMixEvent list
+            int result = 0;
+            if (evnt != null)
+            {
+                string filename = ""; //file to find
+                string newpath = "";
+                List<string> folders = library.folders;//collection of folders
+                List<string> contentfile = library.files; //collection of file in folders
+
+                filename = Path.GetFileName(evnt.EventPath);
+                if (evnt.MediaType >= 2)
+                {
+                    if (!File.Exists(evnt.EventPath))
+                    {
+                        result = -1;
+                        newpath = contentfile.Find(delegate(string e1) { return File.Exists(e1 + "\\" + filename); });
+                        if (newpath != null && newpath != "") 
+                        { 
+                            evnt.EventPath = newpath + "\\" + filename; 
+                            result = 1; 
+                        }
+                    }
+                }
+                else if (evnt.MediaType == 1)
+                {
+                    if (!Directory.Exists(evnt.EventPath))
+                    {
+                        result = -1;
+                        newpath = contentfile.Find(delegate(string e1) { return Directory.Exists(e1 + "\\" + filename); });
+                        if (newpath != null && newpath != "")
+                        {
+                            evnt.EventPath = newpath + "\\" + filename;
+                            result = 1;
+                        }
+                    }
+                }
+                if (evnt.EventType == vmEventType.black)
+                {
+                    if (ColorFromString(filename).IsEmpty) evnt.EventPath = "Black";
+                }
+            }
+            Event = evnt;
+            return result;
+        }
+
+        private void libraryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            library.fixpath = fixpath;
+            library.ShowDialog();
+            settings.Save();
+        }
+
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            library.bn_update_Click(sender, e);
+        }
+
+        private void fixPathToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            vMixEvent evnt;
+            foreach (int i in EventList.SelectedIndices)
+            {
+                evnt = vMixEvents[i];
+                if (fixpath(out evnt, evnt) == 1)
+                {
+                    vMixEvents[i] = evnt;
+                    EventList.RedrawItems(i, i, false);
+                }
+            }
+        }
+
+        private void fixAllPathToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            vMixEvent evnt;
+            List<vMixEvent> v;
+            for (int j = 0; j < ListOfvMixEvents.Length; j++)
+            {
+                v = ListOfvMixEvents[j];
+                for (int i = 0; i < v.Count; i++)
+                {
+                    evnt = v[i];
+                    if (fixpath(out evnt, evnt) == 1)
+                    {
+                        v[i] = evnt;
+                        ListOfEventList[j].RedrawItems(i, i, false);
+                    }
+                }
+            }
+        }
+
+        private void autoFixOnLoadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fixonload = autoFixOnLoadToolStripMenuItem.Checked;
+            settings.SetValue("vManager", "fixonload", fixonload);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new vAbout().ShowDialog();
+        }
+
+        private void openfilelocationTollStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ActiveEvent != null)
+            {
+                string path = "";
+                try
+                {
+                    path = Path.GetDirectoryName(ActiveEvent.EventPath);
+                }
+                catch { }
+                if (Directory.Exists(path)) System.Diagnostics.Process.Start(path);
+            }
+        }
     }
 }

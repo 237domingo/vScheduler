@@ -27,7 +27,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <TargetCulture>en</TargetCulture>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>0.7.1.%2a</ApplicationVersion>
+    <ApplicationVersion>1.1.4.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>false</BootstrapperEnabled>
   </PropertyGroup>
@@ -45,7 +45,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\vScheduler\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -77,13 +77,18 @@
     <ApplicationIcon>pencil.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -98,6 +103,23 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="vAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vAbout.Designer.cs">
+      <DependentUpon>vAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="vLibrary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vLibrary.Designer.cs">
+      <DependentUpon>vLibrary.cs</DependentUpon>
+    </Compile>
     <Compile Include="vFind.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,11 +127,6 @@
       <DependentUpon>vFind.cs</DependentUpon>
     </Compile>
     <Compile Include="MediaInfoDLL.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="vMixEvent.cs" />
     <Compile Include="vManager.cs">
@@ -133,6 +150,12 @@
       <DependentUpon>vTextviewer.cs</DependentUpon>
     </Compile>
     <Compile Include="vXmlProfile.cs" />
+    <EmbeddedResource Include="vAbout.resx">
+      <DependentUpon>vAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="vLibrary.resx">
+      <DependentUpon>vLibrary.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="vFind.resx">
       <DependentUpon>vFind.cs</DependentUpon>
     </EmbeddedResource>
@@ -150,6 +173,7 @@
     <EmbeddedResource Include="vTextviewer.resx">
       <DependentUpon>vTextviewer.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -165,6 +189,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="pencil.ico" />
+    <None Include="Resources\LICENSE" />
+    <None Include="Resources\pencil_128x128.png" />
+    <None Include="Resources\Search_16x16.png" />
+    <None Include="Resources\Stop_16x16.png" />
+    <None Include="Resources\Download_16x16.png" />
     <None Include="Resources\Synchronize_24x24.png" />
     <None Include="Resources\Synchronize_32x32.png" />
     <None Include="Resources\Find.ico" />
@@ -341,6 +370,38 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="pencil.ico">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="vManager.exe.config">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="vManager.exe.manifest">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>False</IncludeHash>
+      <FileType>ManifestEntryPoint</FileType>
+    </PublishFile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

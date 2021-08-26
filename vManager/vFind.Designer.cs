@@ -106,7 +106,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tb_title);
             this.Controls.Add(this.dtp_time);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = global::vManager.Properties.Resources.Find;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FindBox";

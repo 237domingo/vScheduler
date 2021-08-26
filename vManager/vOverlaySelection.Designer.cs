@@ -134,10 +134,11 @@
             this.Controls.Add(this.bn_cancel);
             this.Controls.Add(this.bn_ok);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(265, 108);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(265, 108);
             this.Name = "vOverlaySelection";
-            this.ShowIcon = false;
+            this.Icon = global::vManager.Properties.Resources.pencil;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

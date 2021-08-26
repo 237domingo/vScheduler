@@ -1,4 +1,4 @@
-﻿namespace vManager
+﻿namespace vControler
 {
     partial class vMixTextviewer
     {
@@ -38,7 +38,7 @@
             this.rtb_viewer.Location = new System.Drawing.Point(0, 0);
             this.rtb_viewer.Name = "rtb_viewer";
             this.rtb_viewer.ReadOnly = true;
-            this.rtb_viewer.Size = new System.Drawing.Size(539, 345);
+            this.rtb_viewer.Size = new System.Drawing.Size(559, 345);
             this.rtb_viewer.TabIndex = 0;
             this.rtb_viewer.Text = "";
             this.rtb_viewer.WordWrap = false;
@@ -47,11 +47,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(539, 345);
+            this.ClientSize = new System.Drawing.Size(559, 345);
             this.Controls.Add(this.rtb_viewer);
-            this.Icon = global::vManager.Properties.Resources.pencil;
+            this.Icon = global::vControler.Properties.Resources.icon;
             this.Name = "vMixTextviewer";
-            this.Text = "vManager - Copy & Paste Window";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "VSCHEDULER - vController";
             this.ResumeLayout(false);
 
         }

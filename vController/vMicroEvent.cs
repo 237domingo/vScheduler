@@ -15,6 +15,7 @@ namespace vControler
         public DateTime whend;
         public vMixMicroEvent(DateTime time, vmMicroEventType type, vMixEvent vmevent)
         {
+            if (type == vmMicroEventType.remove) vmevent.EventEnd = time;
             when = time;
             what = type;
             with = vmevent;
