@@ -8,47 +8,35 @@ Use it to create the list of content each day. The schedule starts at a set time
 
 **vController**
 ![Branching](./assets/images/vController 1.1.4.png)
-is the brain of the whole operation. It's responsible for loading and unloading content from vMix and playing it back at the right times. Together, these two programs make up the vScheduler system.
-
+Here is the brain of the whole operation. It's responsible for loading and unloading content from vMix and playing it back at the right times. Together, these two programs make up the vScheduler system.
 
 # Features
+* * *
 # Downloads
+* * *
 ## latest
+
 ## v1.0.0.debug.3
+
+## v1.0.0.debug.2
+
+## v1.0
+
 # Gallery
-# Support and Contact
-You can use the [editor on GitHub](https://github.com/237domingo/vScheduler/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+* * *
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+# Support
+* * *
+#### Having trouble? Find a bug? Want to dig into dev?
+* Check out our [documentation](./documentation.html)
+* Join the [discussion on the project git](https://github.com/237domingo/vScheduler/discussions)
+* Check out the [vMix forum topic](https://forums.vmix.com/posts/t27113-vScheduler---vMixScheduler-Fork)
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/237domingo/vScheduler/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+# Contact & donations
+* * *
+* **CONTACT:** [nndvogt@gmail.com](mailto:nndvogt@gmail.com)
+* **PAYPAL:** [PAYPAL](https://www.paypal.com/donate?hosted_button_id=8KWHCKS3TX54S) and we’ll help you sort it out.
+* **PHONE MM:** [+237 692 89 87 48](phone:+237691898748)
+- **CRYPTO:**
+  - BITCOIN: [3MrWcCrMTV2jRMui7EMuC9uQGeNjvxYHh8]()
+  - ETHEREUM: [0x1154740bc56Aa63Cf578674290B49290cDb781ea]()
