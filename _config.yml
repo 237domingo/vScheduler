@@ -2,3 +2,5 @@ theme: jekyll-theme-leap-day
 title: vScheduler
 description: A flexible playlist builder for vMix
 show_downloads: true
+github:
+  repository_name: vScheduler
