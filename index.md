@@ -71,7 +71,7 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 > 1. **A lot more fixes**
 
 ## v1.0.0.debug.2
-* **Download:** [vController v1.0.0-debug.2+builddate130621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.2+builddate130621/vScheduler.zip)
+* **Download:** [vScheduler v1.0.0-debug.2+builddate130621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.2+builddate130621/vScheduler.zip)
 * **CHANGELOG:**
 > **FOR TESTING PURPOSE ongoing work**
 > **vController v1.0.0-debug.2+builddate130621**
@@ -92,7 +92,7 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 > 1. **STILL ONGOING TESTER NEEDED**
 
 ## v1.0.0.debug.1
-* **Download:** [vController v1.0.0-debug.1+builddate080621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.1+builddate080621/vScheduler.zip)
+* **Download:** [vScheduler v1.0.0-debug.1+builddate080621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.1+builddate080621/vScheduler.zip)
 * **CHANGELOG:**
 > **For testing purpose: Some drastics changes made to the code**
 > **vController v1.0.0-debug.1+builddate080621**
@@ -111,8 +111,10 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 > 1. STILL ONGOING NEED TESTERS
 
 ## v1.0
-* **Download:** [vController v1.0.0-debug.1+builddate080621](https://github.com/237domingo/vScheduler/releases/download/v1.0.0-debug.1+builddate080621/vScheduler.zip)
+* **Download:** [vMixScheduler v1.0](https://github.com/Tim-R/vScheduler/releases/download/v1/vMixScheduler.zip)
 * **CHANGELOG:**
+> 1. Storing initial source code from macjaeger on the git
+> 1. Changes to vWebClient
 
 # Gallery
 * * *
