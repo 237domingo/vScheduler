@@ -64,7 +64,8 @@
   }
     
     .menu {
-    float: left;
+    position:fixed;
+    left:50%;
     margin-left:-320px;
 
     span {
