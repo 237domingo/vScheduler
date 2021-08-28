@@ -64,6 +64,7 @@
   }
     
     .menu {
+    position:relative;
     left:50%;
     margin-left:-340px;
 
@@ -84,6 +85,6 @@
     right:7px;
     top:7px;
     display: block;
-    background: url(../images/icon_empty_50x50.png);
+    background: url(../images/icon_empty_36x36.png);
   }
 }
