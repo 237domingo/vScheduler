@@ -64,8 +64,9 @@
   }
     
     .menu {
+    position:fixed;
     float:left;
-    margin-left:340px;
+    margin-left:-340px;
 
     span {
       float:left;
@@ -78,7 +79,7 @@
   }
   
     #logo {
-    position:fixed;
+    position:absolute;
     height: 36px;
     width: 36px;
     right:7px;
