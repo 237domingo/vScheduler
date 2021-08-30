@@ -17,7 +17,7 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 # Downloads
 * * *
 ## Latest
-**Download:** [vScheduler.v1.1.4-alpha.3+builddate300821.zip](https://github.com/237domingo/vScheduler/releases/download/v1.1.4-alpha.3/vScheduler.v1.1.4-debug.3+builddate300821.zip)
+**Download:** [vScheduler for vMix v1.1.4-alpha.3+builddate300821.zip](https://github.com/237domingo/vScheduler/releases/download/v1.1.4-alpha.3/v1.1.4-alpha.3+builddate300821.zip)
 
 **CHANGELOG:**
 > **vManager 1.1.4-alpha.3+builddate30082021**
