@@ -1754,8 +1754,8 @@ namespace vManager
             int i = 0;
             foreach (int l in EventList.SelectedIndices) 
             {
-                copybuffer.Insert(i,vMixEvents[l]);
-
+                vMixEvent evnt = new vMixEvent(vMixEvents[l]);
+                copybuffer.Insert(i,evnt);
                 i++;
             }
             donotredraw = false;
@@ -1765,15 +1765,19 @@ namespace vManager
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (ActiveEvent == null) return;
+            if (copybuffer.Count == 0) return;
+            //if (ActiveEvent == null) return;
             int position, initial;
-            initial = EventList.SelectedIndices[EventList.SelectedIndices.Count -1];
+            if (EventList.SelectedIndices.Count == 0) initial = -1;
+            else initial = EventList.SelectedIndices[EventList.SelectedIndices.Count -1];
             position = initial + 1;
             donotredraw = true;
-            if (copybuffer.Count == 0) return;
             foreach (vMixEvent v in copybuffer)
             {
-                vMixEvents.Insert(position, v);
+                vMixEvent evnt = new vMixEvent(v);
+                evnt.EventStart = dtp_timetable.Value;
+                evnt.Overlay = ActiveOverlay;
+                vMixEvents.Insert(position, evnt);
                 position++;
             }
             EventList.VirtualListSize = vMixEvents.Count;
