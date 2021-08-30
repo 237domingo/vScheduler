@@ -22,6 +22,7 @@ namespace vControler
         public int MediaLinger;
 
         public bool Working { get { return Worker.IsAlive; } }
+        ThreadStart workstart;
 
         public vMixScheduler(int intervall, int mediapreload, int medialinger, BlockingCollection <vMixMicroEvent> workload)
         {
@@ -33,18 +34,32 @@ namespace vControler
             MediaPreload = mediapreload;
             MediaLinger = medialinger;
 
-            ThreadStart workstart = new ThreadStart(ClockWorker);
+            workstart = new ThreadStart(ClockWorker);
             Worker = new Thread(workstart);
-            Worker.Start();
+            //Worker.Start();
         }
 
         public void Abort()
         {
-            StopWorking = true;
-            Worker.Join();
+            if (Working)
+            {
+                StopWorking = true;
+                Worker.Join();
+                Worker.Abort();
+            }
         }
 
-        void ClearEventList()
+        public void Start()
+        {
+            if (!Working)
+            {
+                workstart = new ThreadStart(ClockWorker);
+                Worker = new Thread(workstart);
+                Worker.Start();
+            }
+        }
+
+        public void ClearEventList()
         {
             LocalListLock.WaitOne();
             LocalList.Clear();
@@ -58,7 +73,7 @@ namespace vControler
                 return false;     // too late to add!
             
             List<vMixMicroEvent> vmes = new List<vMixMicroEvent>();
-
+            if (evnt.EventType == vmEventType.audio) evnt.EventType = vmEventType.video;
             // prepare, transition, remove
             if (!evnt.HasDuration)
             {
@@ -83,7 +98,7 @@ namespace vControler
                 vmes.Add(new vMixMicroEvent(now + new TimeSpan(0, 0, 0, 2, 0), vmMicroEventType.transition, evnt));
             }
             
-            vmes.Add(new vMixMicroEvent(evnt.EventEnd + new TimeSpan (0, 0, MediaLinger), vmMicroEventType.remove, evnt));
+            if (evnt.HasMedia) vmes.Add(new vMixMicroEvent(evnt.EventEnd + new TimeSpan (0, 0, MediaLinger), vmMicroEventType.remove, evnt));
 
             LocalListLock.WaitOne();
             LocalList.AddRange(vmes);
@@ -107,7 +122,11 @@ namespace vControler
                 if (LocalList[n].with == evnt)
                     LocalList.RemoveAt(n);
 
-            LocalList.Add (new vMixMicroEvent(when + new TimeSpan(0,0,MediaLinger), vmMicroEventType.remove, evnt));
+            if (evnt.HasMedia)
+            {
+                evnt.EventEnd = when + new TimeSpan(0, 0, MediaLinger);
+                LocalList.Add(new vMixMicroEvent(evnt.EventEnd, vmMicroEventType.remove, evnt));
+            } 
             LocalList.Sort(delegate(vMixMicroEvent e1, vMixMicroEvent e2) { return e1.when.CompareTo(e2.when); });
             LocalListLock.Release();
         }
@@ -123,7 +142,7 @@ namespace vControler
                 {
                     List<vMixMicroEvent> toremove = new List<vMixMicroEvent>();
                     for (int n = 0; n < LocalList.Count; n++)
-                        if (LocalList[n].when < now)
+                        if (LocalList[n].when < now -  new TimeSpan(0,0,0,0,Intervall))
                         {
                             Workload.Add(LocalList[n]);
                             toremove.Add(LocalList[n]);
@@ -132,7 +151,7 @@ namespace vControler
                         LocalList.Remove(vme);
                 }
                 LocalListLock.Release();
-                Thread.Sleep(Intervall);
+                Thread.Sleep(Intervall/10);
             }
         }
     }

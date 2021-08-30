@@ -37,18 +37,20 @@
             this.rtb_viewer.Font = new System.Drawing.Font("Lucida Console", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtb_viewer.Location = new System.Drawing.Point(0, 0);
             this.rtb_viewer.Name = "rtb_viewer";
-            this.rtb_viewer.Size = new System.Drawing.Size(499, 345);
+            this.rtb_viewer.ReadOnly = true;
+            this.rtb_viewer.Size = new System.Drawing.Size(539, 345);
             this.rtb_viewer.TabIndex = 0;
             this.rtb_viewer.Text = "";
+            this.rtb_viewer.WordWrap = false;
             // 
             // vMixTextviewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(499, 345);
+            this.ClientSize = new System.Drawing.Size(539, 345);
             this.Controls.Add(this.rtb_viewer);
+            this.Icon = global::vManager.Properties.Resources.pencil;
             this.Name = "vMixTextviewer";
-            this.ShowIcon = false;
             this.Text = "vManager - Copy & Paste Window";
             this.ResumeLayout(false);
 

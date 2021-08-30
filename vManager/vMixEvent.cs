@@ -14,11 +14,11 @@ namespace vManager
         public string Title;
         public vmEventType EventType;
         public DateTime EventStart;
-        public bool EventLooping;
-        public bool EventMuted;
-        public vmTransitionType EventTransition;
-        public int EventTransitionTime;
-        public TimeSpan EventInPoint; 
+        public bool EventLooping = false;
+        public bool EventMuted = false;
+        public vmTransitionType EventTransition = vmTransitionType.fade;
+        public int EventTransitionTime = 500;
+        public TimeSpan EventInPoint = new TimeSpan(0);
         public TimeSpan MediaDuration;
         public TimeSpan EventDuration;
         public DateTime EventEnd {
@@ -33,11 +33,36 @@ namespace vManager
         }
         public bool KeepDuration;
         public bool HasDuration { get { return EventType == vmEventType.video || EventType == vmEventType.audio; } }
+        //
+        // returns 0 for no media, 1 for folder and 2 for file
+        public int MediaType 
+        { 
+            get
+            {
+                switch (EventType)
+                {
+                    case vmEventType.black:
+                        return 0;
+                    case vmEventType.video:
+                        return 3;
+                    case vmEventType.audio:
+                        return 3;
+                    case vmEventType.image:
+                        return 2;
+                    case vmEventType.photos:
+                        return 1;
+                    case vmEventType.input:
+                        return 0;
+                    default:
+                        return 0;
+                }
+            } 
+        }
         public string EventPath;
         public string EventInfoText;
-        public int SlideshowInterval;
-        public vmTransitionType SlideshowTransition;
-        public int SlideshowTransitionTime;
+        public int SlideshowInterval = 5;
+        public vmTransitionType SlideshowTransition = vmTransitionType.fade;
+        public int SlideshowTransitionTime = 500;
         public string Overlay = "0";
 
         public string EventTypeString()
@@ -45,7 +70,7 @@ namespace vManager
             switch (EventType)
             {
                 case vmEventType.black:
-                    return "black";
+                    return "colour";
                 case vmEventType.video:
                     return "video";
                 case vmEventType.audio:
@@ -65,6 +90,10 @@ namespace vManager
             switch (type.ToLower ())
             {
                 case "black":
+                    return vmEventType.black;
+                case "colour":
+                    return vmEventType.black;
+                case "color":
                     return vmEventType.black;
                 case "video":
                     return vmEventType.video;
@@ -145,7 +174,7 @@ namespace vManager
             Title = e.Title;
             EventPath = e.EventPath;
             EventType = e.EventType;
-            EventStart = e.EventEnd;
+            EventStart = e.EventStart;
             EventInPoint = e.EventInPoint;
             MediaDuration = e.MediaDuration;
             EventDuration = e.EventDuration;
@@ -174,22 +203,34 @@ namespace vManager
             EventTransition = transition;
             EventTransitionTime = transition_time;
             EventLooping = looping;
-            if (type == vmEventType.audio || type == vmEventType.video)
-                EventMuted = false; 
-            else 
-                EventMuted = true;
-            SlideshowInterval = 10; 
+            EventMuted = false; 
+            SlideshowInterval = 5; 
             SlideshowTransition = vmTransitionType.fade;
             SlideshowTransitionTime = 500;
         }
         public vMixEvent(vmEventType type, DateTime start, TimeSpan duration)
         {
+            EventPath = "";
+            EventStart = start;
+            EventInPoint = new TimeSpan(0);
+            MediaDuration = new TimeSpan(0);
+            EventDuration = duration;
+            KeepDuration = false;
+            EventTransition = vmTransitionType.fade;
+            EventTransitionTime = 500;
+            EventLooping = false;
+            EventMuted = true;
+            SlideshowInterval = 5;
+            SlideshowTransition = vmTransitionType.fade;
+            SlideshowTransitionTime = 500;
+
             switch (type)
             {
                 case vmEventType.black:
-                    Title = "Blackness";
+                    Title = "Colour";
                     EventType = vmEventType.black;
-                    EventInfoText = "vMix will switch to black";
+                    EventPath = "Black";
+                    EventInfoText = "vMix will switch to the color of your choice";
                     break;
                 case vmEventType.manual:
                     Title = "Operator Mode";
@@ -202,20 +243,6 @@ namespace vManager
                     EventInfoText = "vMix will switch to the input of the same name";
                     break;
             }
-
-            EventPath = "";
-            EventStart = start;
-            EventInPoint = new TimeSpan(0);
-            MediaDuration = new TimeSpan (0);
-            EventDuration = duration;
-            KeepDuration = false;
-            EventTransition = vmTransitionType.fade;
-            EventTransitionTime = 1000;
-            EventLooping = true;
-            EventMuted = true;
-            SlideshowInterval = 10; 
-            SlideshowTransition = vmTransitionType.fade;
-            SlideshowTransitionTime = 500;
         }
 
         public vMixEvent(XmlNode node)
@@ -225,19 +252,18 @@ namespace vManager
             EventType = EventTypeFromString (node.Attributes .GetNamedItem ("Type").Value);
             EventStart = DateTime.Parse(node.Attributes.GetNamedItem("Start").Value);
             EventDuration = TimeSpan.Parse(node.Attributes.GetNamedItem("EventDuration").Value);
+            EventMuted = bool.Parse(node.Attributes.GetNamedItem("EventMuted").Value);
             if (HasDuration)
             {
                 EventInPoint = TimeSpan.Parse(node.Attributes.GetNamedItem("InPoint").Value);
                 MediaDuration = TimeSpan.Parse(node.Attributes.GetNamedItem("MediaDuration").Value);
                 KeepDuration = bool.Parse(node.Attributes.GetNamedItem("KeepDuration").Value);
-                EventLooping = bool.Parse(node.Attributes.GetNamedItem("Looping").Value);
             }
             else
             {
                 EventInPoint = new TimeSpan(0);
                 MediaDuration = EventDuration;
                 KeepDuration = false;
-                EventLooping = false;
             }
             EventTransition = TransitionTypeFromString(node.Attributes.GetNamedItem("Transition").Value);
             if (EventTransition != vmTransitionType.cut)
@@ -249,6 +275,8 @@ namespace vManager
 
             if (EventType == vmEventType.photos)
             {
+                try { EventLooping = bool.Parse(node.Attributes.GetNamedItem("Looping").Value); }
+                catch { }
                 SlideshowInterval = int.Parse(node.Attributes.GetNamedItem("SlideInterval").Value);
                 SlideshowTransition = TransitionTypeFromString(node.Attributes.GetNamedItem("SlideTransition").Value);
                 if (SlideshowTransition != vmTransitionType.cut)
@@ -279,58 +307,46 @@ namespace vManager
             a = document.CreateAttribute("Transition");
             a.InnerText = TransitionTypeString(EventTransition);
             event_node.Attributes.Append(a);
-
-            if (EventTransition != vmTransitionType.cut)
-            {
-                a = document.CreateAttribute("TransitionTime");
-                a.InnerText = EventTransitionTime.ToString();
-                event_node.Attributes.Append(a);
-            }
+            
+            a = document.CreateAttribute("TransitionTime");
+            a.InnerText = EventTransitionTime.ToString();
+            event_node.Attributes.Append(a);
 
             a = document.CreateAttribute("EventDuration");
             a.InnerText = EventDuration.ToString();
             event_node.Attributes.Append(a);
 
-            if (HasDuration)
-            {
-                a = document.CreateAttribute("InPoint");
-                a.InnerText = EventInPoint.ToString();
-                event_node.Attributes.Append(a);
+            a = document.CreateAttribute("InPoint");
+            a.InnerText = EventInPoint.ToString();
+            event_node.Attributes.Append(a);
 
-                a = document.CreateAttribute("MediaDuration");
-                a.InnerText = MediaDuration.ToString();
-                event_node.Attributes.Append(a);
+            a = document.CreateAttribute("MediaDuration");
+            a.InnerText = MediaDuration.ToString();
+            event_node.Attributes.Append(a);
 
-                a = document.CreateAttribute("KeepDuration");
-                a.InnerText = KeepDuration.ToString();
-                event_node.Attributes.Append(a);
+            a = document.CreateAttribute("KeepDuration");
+            a.InnerText = KeepDuration.ToString();
+            event_node.Attributes.Append(a);
 
-                a = document.CreateAttribute("Looping");
-                a.InnerText = EventLooping.ToString();
-                event_node.Attributes.Append(a);
-            }
+            a = document.CreateAttribute("Looping");
+            a.InnerText = EventLooping.ToString();
+            event_node.Attributes.Append(a);
             
             a = document.CreateAttribute("Path");
             a.InnerText = EventPath;
             event_node.Attributes.Append(a);
 
-            if (EventType == vmEventType.photos)
-            {
-                a = document.CreateAttribute("SlideInterval");
-                a.InnerText = SlideshowInterval.ToString();
-                event_node.Attributes.Append(a);
+            a = document.CreateAttribute("SlideInterval");
+            a.InnerText = SlideshowInterval.ToString();
+            event_node.Attributes.Append(a);
 
-                a = document.CreateAttribute("SlideTransition");
-                a.InnerText = TransitionTypeString(SlideshowTransition);
-                event_node.Attributes.Append(a);
+            a = document.CreateAttribute("SlideTransition");
+            a.InnerText = TransitionTypeString(SlideshowTransition);
+            event_node.Attributes.Append(a);
 
-                if (SlideshowTransition != vmTransitionType.cut)
-                {
-                    a = document.CreateAttribute("SlideTransitionTime");
-                    a.InnerText = SlideshowTransitionTime.ToString();
-                    event_node.Attributes.Append(a);
-                }
-            }
+            a = document.CreateAttribute("SlideTransitionTime");
+            a.InnerText = SlideshowTransitionTime.ToString();
+            event_node.Attributes.Append(a);
 
             a = document.CreateAttribute("Overlay");
             a.InnerText = Overlay;

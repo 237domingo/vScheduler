@@ -12,17 +12,21 @@ namespace vControler
         public DateTime when;
         public vmMicroEventType what;
         public vMixEvent with;
+        public DateTime whend;
         public vMixMicroEvent(DateTime time, vmMicroEventType type, vMixEvent vmevent)
         {
+            if (type == vmMicroEventType.remove) vmevent.EventEnd = time;
             when = time;
             what = type;
             with = vmevent;
+            whend = vmevent.EventEnd;
         }
         public vMixMicroEvent(vmMicroEventType type)
         {
             when = new DateTime();
             what = type;
             with = null;
+            whend = new DateTime();
         }
     }
 }

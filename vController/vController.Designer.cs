@@ -28,65 +28,70 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(vMixControler));
             this.event_title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.event_start = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.event_duration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.event_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.event_path = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvEventList0 = new System.Windows.Forms.ListView();
             this.column_title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.column_start = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.column_duration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.column_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lbl_connected = new System.Windows.Forms.Label();
-            this.bn_connect_ = new System.Windows.Forms.Button();
-            this.bn_showpreferences_ = new System.Windows.Forms.Button();
-            this.bn_load_schedule_ = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.lbl_clock = new System.Windows.Forms.ToolStripLabel();
             this.bn_load_schedule = new System.Windows.Forms.ToolStripButton();
             this.bn_showpreferences = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.lb_vMixIP = new System.Windows.Forms.ToolStripLabel();
+            this.lb_address = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.lb_Preload = new System.Windows.Forms.ToolStripLabel();
+            this.lb_load = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.bn_Autoload = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.bn_Statuts = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.bn_vManager = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.bn_about = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Overlay0 = new System.Windows.Forms.TabPage();
             this.Overlay1 = new System.Windows.Forms.TabPage();
             this.lvEventList1 = new System.Windows.Forms.ListView();
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column1_title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column1_start = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column1_duration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column1_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Overlay2 = new System.Windows.Forms.TabPage();
             this.lvEventList2 = new System.Windows.Forms.ListView();
-            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column2_title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column2_start = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column2_duration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column2_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Overlay3 = new System.Windows.Forms.TabPage();
             this.lvEventList3 = new System.Windows.Forms.ListView();
-            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column3_title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column3_start = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column3_duration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column3_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Overlay4 = new System.Windows.Forms.TabPage();
             this.lvEventList4 = new System.Windows.Forms.ListView();
-            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column4_title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column4_start = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column4_duration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column4_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.bn_donate = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
+            this.TrayView = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -95,6 +100,7 @@
             this.Overlay2.SuspendLayout();
             this.Overlay3.SuspendLayout();
             this.Overlay4.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // event_title
@@ -122,59 +128,8 @@
             this.event_path.Text = "Path";
             this.event_path.Width = 300;
             // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Title";
-            this.columnHeader1.Width = 120;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Start";
-            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Duration";
-            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Type";
-            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Path";
-            this.columnHeader5.Width = 300;
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "Title";
-            this.columnHeader6.Width = 120;
-            // 
-            // columnHeader7
-            // 
-            this.columnHeader7.Text = "Start";
-            this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // columnHeader8
-            // 
-            this.columnHeader8.Text = "Duration";
-            this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // columnHeader9
-            // 
-            this.columnHeader9.Text = "Type";
-            this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // columnHeader10
-            // 
-            this.columnHeader10.Text = "Path";
-            this.columnHeader10.Width = 300;
-            // 
             // lvEventList0
             // 
-            this.lvEventList0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lvEventList0.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.column_title,
             this.column_start,
@@ -199,91 +154,48 @@
             // column_title
             // 
             this.column_title.Text = "Title";
-            this.column_title.Width = 223;
+            this.column_title.Width = 250;
             // 
             // column_start
             // 
             this.column_start.Text = "Start";
-            this.column_start.Width = 127;
+            this.column_start.Width = 150;
             // 
             // column_duration
             // 
             this.column_duration.Text = "Duration";
-            this.column_duration.Width = 125;
+            this.column_duration.Width = 120;
             // 
             // column_type
             // 
             this.column_type.Text = "Type";
-            this.column_type.Width = 138;
-            // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.lbl_connected);
-            this.panel1.Controls.Add(this.bn_connect_);
-            this.panel1.Controls.Add(this.bn_showpreferences_);
-            this.panel1.Controls.Add(this.bn_load_schedule_);
-            this.panel1.Location = new System.Drawing.Point(613, 18);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(109, 149);
-            this.panel1.TabIndex = 13;
-            // 
-            // lbl_connected
-            // 
-            this.lbl_connected.BackColor = System.Drawing.Color.Transparent;
-            this.lbl_connected.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_connected.ForeColor = System.Drawing.Color.Red;
-            this.lbl_connected.Location = new System.Drawing.Point(10, 273);
-            this.lbl_connected.Name = "lbl_connected";
-            this.lbl_connected.Size = new System.Drawing.Size(98, 29);
-            this.lbl_connected.TabIndex = 17;
-            this.lbl_connected.Text = "OFFLINE";
-            this.lbl_connected.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // bn_connect_
-            // 
-            this.bn_connect_.Dock = System.Windows.Forms.DockStyle.Top;
-            this.bn_connect_.Location = new System.Drawing.Point(0, 37);
-            this.bn_connect_.Name = "bn_connect_";
-            this.bn_connect_.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.bn_connect_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.bn_connect_.Size = new System.Drawing.Size(107, 37);
-            this.bn_connect_.TabIndex = 30;
-            this.bn_connect_.Text = "Connect to vMix";
-            this.bn_connect_.UseVisualStyleBackColor = true;
-            // 
-            // bn_showpreferences_
-            // 
-            this.bn_showpreferences_.Dock = System.Windows.Forms.DockStyle.Top;
-            this.bn_showpreferences_.Location = new System.Drawing.Point(0, 0);
-            this.bn_showpreferences_.Name = "bn_showpreferences_";
-            this.bn_showpreferences_.Size = new System.Drawing.Size(107, 37);
-            this.bn_showpreferences_.TabIndex = 14;
-            this.bn_showpreferences_.Text = "Settings";
-            this.bn_showpreferences_.UseVisualStyleBackColor = true;
-            this.bn_showpreferences_.Click += new System.EventHandler(this.bn_showpreferences_Click);
-            // 
-            // bn_load_schedule_
-            // 
-            this.bn_load_schedule_.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bn_load_schedule_.Location = new System.Drawing.Point(0, 110);
-            this.bn_load_schedule_.Name = "bn_load_schedule_";
-            this.bn_load_schedule_.Size = new System.Drawing.Size(107, 37);
-            this.bn_load_schedule_.TabIndex = 13;
-            this.bn_load_schedule_.Text = "Reload Schedule";
-            this.bn_load_schedule_.UseVisualStyleBackColor = true;
-            this.bn_load_schedule_.Click += new System.EventHandler(this.bn_load_schedule_Click);
+            this.column_type.Width = 120;
             // 
             // toolStrip1
             // 
+            this.toolStrip1.AutoSize = false;
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lbl_clock,
             this.bn_load_schedule,
-            this.bn_showpreferences});
+            this.bn_showpreferences,
+            this.toolStripSeparator1,
+            this.lb_vMixIP,
+            this.lb_address,
+            this.toolStripSeparator3,
+            this.lb_Preload,
+            this.lb_load,
+            this.toolStripSeparator5,
+            this.bn_Autoload,
+            this.toolStripSeparator6,
+            this.bn_Statuts,
+            this.toolStripSeparator2,
+            this.bn_vManager,
+            this.toolStripSeparator4,
+            this.bn_about});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolStrip1.Size = new System.Drawing.Size(667, 25);
             this.toolStrip1.TabIndex = 14;
             this.toolStrip1.Text = "toolStrip1";
@@ -315,10 +227,114 @@
             this.bn_showpreferences.Text = "Settings";
             this.bn_showpreferences.Click += new System.EventHandler(this.bn_showpreferences_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // lb_vMixIP
+            // 
+            this.lb_vMixIP.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lb_vMixIP.Name = "lb_vMixIP";
+            this.lb_vMixIP.Size = new System.Drawing.Size(20, 22);
+            this.lb_vMixIP.Text = "IP:";
+            // 
+            // lb_address
+            // 
+            this.lb_address.AutoToolTip = true;
+            this.lb_address.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lb_address.Name = "lb_address";
+            this.lb_address.Size = new System.Drawing.Size(89, 22);
+            this.lb_address.Text = "127.0.0.1:8088";
+            this.lb_address.ToolTipText = "vMix network location";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // lb_Preload
+            // 
+            this.lb_Preload.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lb_Preload.Name = "lb_Preload";
+            this.lb_Preload.Size = new System.Drawing.Size(61, 22);
+            this.lb_Preload.Text = "Transition:";
+            // 
+            // lb_load
+            // 
+            this.lb_load.AutoToolTip = true;
+            this.lb_load.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_load.Name = "lb_load";
+            this.lb_load.Size = new System.Drawing.Size(63, 22);
+            this.lb_load.Text = "10/10 Sec";
+            this.lb_load.ToolTipText = "Preload/unload time";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // bn_Autoload
+            // 
+            this.bn_Autoload.BackColor = System.Drawing.Color.Red;
+            this.bn_Autoload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.bn_Autoload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bn_Autoload.Name = "bn_Autoload";
+            this.bn_Autoload.Size = new System.Drawing.Size(65, 22);
+            this.bn_Autoload.Text = "AUTO OFF";
+            this.bn_Autoload.ToolTipText = "Start/Stop vscheduler";
+            this.bn_Autoload.Click += new System.EventHandler(this.bn_Autoload_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
+            // bn_Statuts
+            // 
+            this.bn_Statuts.BackColor = System.Drawing.Color.Red;
+            this.bn_Statuts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.bn_Statuts.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bn_Statuts.Name = "bn_Statuts";
+            this.bn_Statuts.Size = new System.Drawing.Size(56, 22);
+            this.bn_Statuts.Text = "OFFLINE";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // bn_vManager
+            // 
+            this.bn_vManager.Image = ((System.Drawing.Image)(resources.GetObject("bn_vManager.Image")));
+            this.bn_vManager.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bn_vManager.Name = "bn_vManager";
+            this.bn_vManager.Size = new System.Drawing.Size(107, 22);
+            this.bn_vManager.Text = "Start vManager";
+            this.bn_vManager.Click += new System.EventHandler(this.bn_vManager_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // bn_about
+            // 
+            this.bn_about.BackColor = System.Drawing.Color.LimeGreen;
+            this.bn_about.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.bn_about.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.bn_about.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.bn_about.Image = ((System.Drawing.Image)(resources.GetObject("bn_about.Image")));
+            this.bn_about.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bn_about.Name = "bn_about";
+            this.bn_about.Size = new System.Drawing.Size(23, 22);
+            this.bn_about.Text = "i";
+            this.bn_about.ToolTipText = "About";
+            this.bn_about.Click += new System.EventHandler(this.bn_about_Click);
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.tabControl1);
-            this.panel2.Controls.Add(this.panel1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 25);
             this.panel2.Name = "panel2";
@@ -366,12 +382,11 @@
             // 
             // lvEventList1
             // 
-            this.lvEventList1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lvEventList1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader11,
-            this.columnHeader12,
-            this.columnHeader13,
-            this.columnHeader14});
+            this.column1_title,
+            this.column1_start,
+            this.column1_duration,
+            this.column1_type});
             this.lvEventList1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvEventList1.FullRowSelect = true;
             this.lvEventList1.GridLines = true;
@@ -388,25 +403,25 @@
             this.lvEventList1.VirtualMode = true;
             this.lvEventList1.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvEventList_RetrieveVirtualItem);
             // 
-            // columnHeader11
+            // column1_title
             // 
-            this.columnHeader11.Text = "Title";
-            this.columnHeader11.Width = 223;
+            this.column1_title.Text = "Title";
+            this.column1_title.Width = 250;
             // 
-            // columnHeader12
+            // column1_start
             // 
-            this.columnHeader12.Text = "Start";
-            this.columnHeader12.Width = 158;
+            this.column1_start.Text = "Start";
+            this.column1_start.Width = 150;
             // 
-            // columnHeader13
+            // column1_duration
             // 
-            this.columnHeader13.Text = "Duration";
-            this.columnHeader13.Width = 125;
+            this.column1_duration.Text = "Duration";
+            this.column1_duration.Width = 120;
             // 
-            // columnHeader14
+            // column1_type
             // 
-            this.columnHeader14.Text = "Type";
-            this.columnHeader14.Width = 138;
+            this.column1_type.Text = "Type";
+            this.column1_type.Width = 120;
             // 
             // Overlay2
             // 
@@ -421,12 +436,11 @@
             // 
             // lvEventList2
             // 
-            this.lvEventList2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lvEventList2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader15,
-            this.columnHeader16,
-            this.columnHeader17,
-            this.columnHeader18});
+            this.column2_title,
+            this.column2_start,
+            this.column2_duration,
+            this.column2_type});
             this.lvEventList2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvEventList2.FullRowSelect = true;
             this.lvEventList2.GridLines = true;
@@ -443,25 +457,25 @@
             this.lvEventList2.VirtualMode = true;
             this.lvEventList2.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvEventList_RetrieveVirtualItem);
             // 
-            // columnHeader15
+            // column2_title
             // 
-            this.columnHeader15.Text = "Title";
-            this.columnHeader15.Width = 223;
+            this.column2_title.Text = "Title";
+            this.column2_title.Width = 250;
             // 
-            // columnHeader16
+            // column2_start
             // 
-            this.columnHeader16.Text = "Start";
-            this.columnHeader16.Width = 157;
+            this.column2_start.Text = "Start";
+            this.column2_start.Width = 150;
             // 
-            // columnHeader17
+            // column2_duration
             // 
-            this.columnHeader17.Text = "Duration";
-            this.columnHeader17.Width = 125;
+            this.column2_duration.Text = "Duration";
+            this.column2_duration.Width = 120;
             // 
-            // columnHeader18
+            // column2_type
             // 
-            this.columnHeader18.Text = "Type";
-            this.columnHeader18.Width = 138;
+            this.column2_type.Text = "Type";
+            this.column2_type.Width = 120;
             // 
             // Overlay3
             // 
@@ -476,12 +490,11 @@
             // 
             // lvEventList3
             // 
-            this.lvEventList3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lvEventList3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader19,
-            this.columnHeader20,
-            this.columnHeader21,
-            this.columnHeader22});
+            this.column3_title,
+            this.column3_start,
+            this.column3_duration,
+            this.column3_type});
             this.lvEventList3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvEventList3.FullRowSelect = true;
             this.lvEventList3.GridLines = true;
@@ -498,25 +511,25 @@
             this.lvEventList3.VirtualMode = true;
             this.lvEventList3.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvEventList_RetrieveVirtualItem);
             // 
-            // columnHeader19
+            // column3_title
             // 
-            this.columnHeader19.Text = "Title";
-            this.columnHeader19.Width = 223;
+            this.column3_title.Text = "Title";
+            this.column3_title.Width = 250;
             // 
-            // columnHeader20
+            // column3_start
             // 
-            this.columnHeader20.Text = "Start";
-            this.columnHeader20.Width = 142;
+            this.column3_start.Text = "Start";
+            this.column3_start.Width = 150;
             // 
-            // columnHeader21
+            // column3_duration
             // 
-            this.columnHeader21.Text = "Duration";
-            this.columnHeader21.Width = 125;
+            this.column3_duration.Text = "Duration";
+            this.column3_duration.Width = 120;
             // 
-            // columnHeader22
+            // column3_type
             // 
-            this.columnHeader22.Text = "Type";
-            this.columnHeader22.Width = 138;
+            this.column3_type.Text = "Type";
+            this.column3_type.Width = 120;
             // 
             // Overlay4
             // 
@@ -532,12 +545,11 @@
             // lvEventList4
             // 
             this.lvEventList4.BackColor = System.Drawing.SystemColors.Window;
-            this.lvEventList4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lvEventList4.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader23,
-            this.columnHeader24,
-            this.columnHeader25,
-            this.columnHeader26});
+            this.column4_title,
+            this.column4_start,
+            this.column4_duration,
+            this.column4_type});
             this.lvEventList4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvEventList4.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lvEventList4.FullRowSelect = true;
@@ -556,40 +568,110 @@
             this.lvEventList4.VirtualMode = true;
             this.lvEventList4.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvEventList_RetrieveVirtualItem);
             // 
-            // columnHeader23
+            // column4_title
             // 
-            this.columnHeader23.Text = "Title";
-            this.columnHeader23.Width = 223;
+            this.column4_title.Text = "Title";
+            this.column4_title.Width = 250;
             // 
-            // columnHeader24
+            // column4_start
             // 
-            this.columnHeader24.Text = "Start";
-            this.columnHeader24.Width = 135;
+            this.column4_start.Text = "Start";
+            this.column4_start.Width = 150;
             // 
-            // columnHeader25
+            // column4_duration
             // 
-            this.columnHeader25.Text = "Duration";
-            this.columnHeader25.Width = 125;
+            this.column4_duration.Text = "Duration";
+            this.column4_duration.Width = 120;
             // 
-            // columnHeader26
+            // column4_type
             // 
-            this.columnHeader26.Text = "Type";
-            this.columnHeader26.Width = 138;
+            this.column4_type.Text = "Type";
+            this.column4_type.Width = 120;
             // 
             // bn_donate
             // 
-            this.bn_donate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.bn_donate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bn_donate.BackColor = System.Drawing.Color.LimeGreen;
             this.bn_donate.FlatAppearance.BorderSize = 0;
             this.bn_donate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bn_donate.Font = new System.Drawing.Font("Microsoft YaHei UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bn_donate.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.bn_donate.Location = new System.Drawing.Point(576, 0);
+            this.bn_donate.Font = new System.Drawing.Font("Script MT Bold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bn_donate.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.bn_donate.Location = new System.Drawing.Point(594, 0);
             this.bn_donate.Name = "bn_donate";
-            this.bn_donate.Size = new System.Drawing.Size(91, 25);
+            this.bn_donate.Size = new System.Drawing.Size(73, 25);
             this.bn_donate.TabIndex = 16;
-            this.bn_donate.Text = "DONATE";
+            this.bn_donate.Text = "Donate";
             this.bn_donate.UseVisualStyleBackColor = false;
             this.bn_donate.Click += new System.EventHandler(this.bn_donate_Click);
+            // 
+            // TrayView
+            // 
+            this.TrayView.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TrayView.BalloonTipText = "vController";
+            this.TrayView.BalloonTipTitle = "vScheduler";
+            this.TrayView.ContextMenuStrip = this.contextMenuStrip1;
+            this.TrayView.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayView.Icon")));
+            this.TrayView.Text = "vScheduler (vController)";
+            this.TrayView.Visible = true;
+            this.TrayView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TrayView_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.AutoSize = false;
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(14, 14);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startToolStripMenuItem,
+            this.settingsStripMenuItem,
+            this.aboutToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.contextMenuStrip1.Size = new System.Drawing.Size(130, 100);
+            // 
+            // startToolStripMenuItem
+            // 
+            this.startToolStripMenuItem.AutoSize = false;
+            this.startToolStripMenuItem.BackColor = System.Drawing.Color.Red;
+            this.startToolStripMenuItem.CheckOnClick = true;
+            this.startToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.startToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+            this.startToolStripMenuItem.ShowShortcutKeys = false;
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.startToolStripMenuItem.Text = "Start ";
+            this.startToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
+            // 
+            // settingsStripMenuItem
+            // 
+            this.settingsStripMenuItem.AutoSize = false;
+            this.settingsStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("settingsStripMenuItem.Image")));
+            this.settingsStripMenuItem.Name = "settingsStripMenuItem";
+            this.settingsStripMenuItem.ShowShortcutKeys = false;
+            this.settingsStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsStripMenuItem.Text = "Settings";
+            this.settingsStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.settingsStripMenuItem.Click += new System.EventHandler(this.settingsStripMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.AutoSize = false;
+            this.aboutToolStripMenuItem.Image = global::vControler.Properties.Resources.Information_16x16;
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.AutoSize = false;
+            this.exitToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.exitToolStripMenuItem.Image = global::vControler.Properties.Resources.Log_Out_16x16;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.ShowShortcutKeys = false;
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // vMixControler
             // 
@@ -599,14 +681,16 @@
             this.Controls.Add(this.bn_donate);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.toolStrip1);
+            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(464, 262);
             this.Name = "vMixControler";
-            this.Text = "vController";
-            this.TopMost = true;
+            this.Text = "VSCHEDULER - vController";
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.vMixControler_FormClosing);
             this.Load += new System.EventHandler(this.vMaster_Load);
-            this.panel1.ResumeLayout(false);
+            this.Shown += new System.EventHandler(this.vMixControler_Shown);
+            this.Resize += new System.EventHandler(this.vMixControler_Resize);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -616,8 +700,8 @@
             this.Overlay2.ResumeLayout(false);
             this.Overlay3.ResumeLayout(false);
             this.Overlay4.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -628,26 +712,11 @@
         private System.Windows.Forms.ColumnHeader event_duration;
         private System.Windows.Forms.ColumnHeader event_type;
         private System.Windows.Forms.ColumnHeader event_path;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
-        private System.Windows.Forms.ColumnHeader columnHeader7;
-        private System.Windows.Forms.ColumnHeader columnHeader8;
-        private System.Windows.Forms.ColumnHeader columnHeader9;
-        private System.Windows.Forms.ColumnHeader columnHeader10;
         private System.Windows.Forms.ListView lvEventList0;
         private System.Windows.Forms.ColumnHeader column_title;
         private System.Windows.Forms.ColumnHeader column_start;
         private System.Windows.Forms.ColumnHeader column_duration;
         private System.Windows.Forms.ColumnHeader column_type;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button bn_load_schedule_;
-        private System.Windows.Forms.Button bn_showpreferences_;
-        private System.Windows.Forms.Button bn_connect_;
-        private System.Windows.Forms.Label lbl_connected;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel lbl_clock;
         private System.Windows.Forms.Panel panel2;
@@ -657,29 +726,49 @@
         private System.Windows.Forms.TabPage Overlay0;
         private System.Windows.Forms.TabPage Overlay1;
         private System.Windows.Forms.ListView lvEventList1;
-        private System.Windows.Forms.ColumnHeader columnHeader11;
-        private System.Windows.Forms.ColumnHeader columnHeader12;
-        private System.Windows.Forms.ColumnHeader columnHeader13;
-        private System.Windows.Forms.ColumnHeader columnHeader14;
+        private System.Windows.Forms.ColumnHeader column1_title;
+        private System.Windows.Forms.ColumnHeader column1_start;
+        private System.Windows.Forms.ColumnHeader column1_duration;
+        private System.Windows.Forms.ColumnHeader column1_type;
         private System.Windows.Forms.TabPage Overlay2;
         private System.Windows.Forms.ListView lvEventList2;
-        private System.Windows.Forms.ColumnHeader columnHeader15;
-        private System.Windows.Forms.ColumnHeader columnHeader16;
-        private System.Windows.Forms.ColumnHeader columnHeader17;
-        private System.Windows.Forms.ColumnHeader columnHeader18;
+        private System.Windows.Forms.ColumnHeader column2_title;
+        private System.Windows.Forms.ColumnHeader column2_start;
+        private System.Windows.Forms.ColumnHeader column2_duration;
+        private System.Windows.Forms.ColumnHeader column2_type;
         private System.Windows.Forms.TabPage Overlay3;
         private System.Windows.Forms.ListView lvEventList3;
-        private System.Windows.Forms.ColumnHeader columnHeader19;
-        private System.Windows.Forms.ColumnHeader columnHeader20;
-        private System.Windows.Forms.ColumnHeader columnHeader21;
-        private System.Windows.Forms.ColumnHeader columnHeader22;
+        private System.Windows.Forms.ColumnHeader column3_title;
+        private System.Windows.Forms.ColumnHeader column3_start;
+        private System.Windows.Forms.ColumnHeader column3_duration;
+        private System.Windows.Forms.ColumnHeader column3_type;
         private System.Windows.Forms.TabPage Overlay4;
         private System.Windows.Forms.ListView lvEventList4;
-        private System.Windows.Forms.ColumnHeader columnHeader23;
-        private System.Windows.Forms.ColumnHeader columnHeader24;
-        private System.Windows.Forms.ColumnHeader columnHeader25;
-        private System.Windows.Forms.ColumnHeader columnHeader26;
+        private System.Windows.Forms.ColumnHeader column4_title;
+        private System.Windows.Forms.ColumnHeader column4_start;
+        private System.Windows.Forms.ColumnHeader column4_duration;
+        private System.Windows.Forms.ColumnHeader column4_type;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripLabel lb_vMixIP;
+        private System.Windows.Forms.ToolStripButton bn_Statuts;
+        private System.Windows.Forms.ToolStripLabel lb_Preload;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton bn_Autoload;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.Button bn_donate;
+        private System.Windows.Forms.ToolStripLabel lb_load;
+        private System.Windows.Forms.ToolStripLabel lb_address;
+        private System.Windows.Forms.NotifyIcon TrayView;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsStripMenuItem;
+        private System.Windows.Forms.ToolStripButton bn_vManager;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton bn_about;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
 

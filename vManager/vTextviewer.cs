@@ -44,5 +44,11 @@ namespace vManager
             rtb_viewer.AppendText(nl + "[/list]");
             this.ShowDialog();
         }
+
+        public void View(string text)
+        {
+            rtb_viewer.Text = text;
+            this.ShowDialog();
+        }
     }
 }

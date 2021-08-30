@@ -12,7 +12,16 @@ namespace vControler
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new vMixControler());
+            if (SingleApplicationDetector.IsRunning())
+            {
+                MessageBox.Show("Already Running", "Warning!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                SingleApplicationDetector.Close();
+            }
+            else
+            {
+                Application.Run(new vMixControler());
+                SingleApplicationDetector.Close();
+            }
         }
     }
 }
