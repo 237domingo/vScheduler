@@ -21,7 +21,7 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 
 **CHANGELOG:**
 > **vManager 1.1.4-alpha.2+builddate26082021**
-> 1. **[KNOWN ISSUE]** When copy/cut and paste an event from one overlay to another overlay, the new event created keeps the copied overlay number internally. If you save and load the schedule those events will be in the wrong overlay. 
+> 1. **[KNOWN ISSUE]** When copy/cut and paste an event from one overlay to another overlay, the new event created keeps the copied overlay number internally. If you save and load the schedule those events will be in the wrong overlay. + All the events copied are linked: if you edit one the other will change at the same time. Be aware.
 > 1. **[KNOWN ISSUE]** when the start vManager couldn't find vManager.exe (this append when when vController start automatically on computer startup)
 > 1. **[KNOWN ISSUE]** Some command failed when vMix is on heavy load or when the computer is on heavy load 
 > 1. **[COMPATIBILITY]** Compatible with previous version of vManager 1.0.0 (can read/write schedule file)
