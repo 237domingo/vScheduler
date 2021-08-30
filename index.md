@@ -150,7 +150,7 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 # Contact & donations
 * * *
 - **CONTACT:** [nndvogt@gmail.com](mailto:nndvogt@gmail.com)
-- **PAYPAL:** [PAYPAL](https://www.paypal.com/donate?hosted_button_id=8KWHCKS3TX54S) and we’ll help you sort it out.
+- **PAYPAL:** [PAYPAL](https://www.paypal.com/donate?hosted_button_id=8KWHCKS3TX54S)
 - **PHONE MM:** [+237 692 89 87 48](http://00237692898748)
 - **CRYPTO:**
   - BITCOIN: [3MrWcCrMTV2jRMui7EMuC9uQGeNjvxYHh8](http://3MrWcCrMTV2jRMui7EMuC9uQGeNjvxYHh8)
