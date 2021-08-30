@@ -16,8 +16,19 @@ Here is the brain of the whole operation. It's responsible for loading and unloa
 * * *
 # Downloads
 * * *
-## latest
-**Download:** [vScheduler.v1.1.4-alpha.2+buiddate260821.zip](https://github.com/237domingo/vScheduler/releases/download/v1.1.4-alpha.2/vScheduler.v1.1.4-debug.2+buiddate260821.zip)
+## Latest
+**Download:** [vScheduler.v1.1.4-alpha.3+builddate300821.zip](https://github.com/237domingo/vScheduler/releases/download/v1.1.4-alpha.3/vScheduler.v1.1.4-debug.3+builddate300821.zip)
+
+**CHANGELOG:**
+> **vManager 1.1.4-alpha.3+builddate30082021**
+> 1. **[FIX]** Correcting the copy/paste bug
+> 
+> **vController 1.1.4-alpha.3+builddate30082021**
+> 1. **[FIX]** Correcting the "vManager couldn't be found" bug
+
+
+## v1.1.4-alpha.2
+**Download:** [vScheduler.v1.1.4-alpha.2+builddate260821.zip](https://github.com/237domingo/vScheduler/releases/download/v1.1.4-alpha.2/vScheduler.v1.1.4-debug.2+buiddate260821.zip)
 
 **CHANGELOG:**
 > **vManager 1.1.4-alpha.2+builddate26082021**
