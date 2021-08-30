@@ -7,7 +7,7 @@ using System.Resources;
 [assembly: AssemblyDescription("The main program of vScheduler for vMix")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("DNC")]
-[assembly: AssemblyProduct("vScheduler")]
+[assembly: AssemblyProduct("vScheduler for vMix")]
 [assembly: AssemblyCopyright("Copyright ©  2021 Dominique Ngatchou and contributors (GPLv3)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

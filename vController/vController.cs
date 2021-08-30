@@ -819,7 +819,7 @@ namespace vControler
 
         private void bn_vManager_Click(object sender, EventArgs e)
         {
-            string vManagerPath = Directory.GetCurrentDirectory() + "//vManager.exe";
+            string vManagerPath = Path.GetDirectoryName(Application.ExecutablePath) + "//vManager.exe";
             string processname = Path.GetFileNameWithoutExtension("vManager");
 
             if (System.Diagnostics.Process.GetProcessesByName(processname).Length == 0)

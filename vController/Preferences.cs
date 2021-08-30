@@ -73,7 +73,8 @@ namespace vControler
         private string _vMixScript = "";
         public string vMixScript { get { return _vMixScript; } }
 
-        string vControllerPath = Directory.GetCurrentDirectory();
+        private string _vControllerPath = "";
+        public string vControllerPath { get { return _vControllerPath; } }
 
         public string PreferencesPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\vScheduler\\Settings.xml";
 
@@ -101,7 +102,8 @@ namespace vControler
             cb_runScript.Checked = _vMixRunScript = settings.GetValue("vController", "RunScript", false);
             tb_script.Text = _vMixScript = settings.GetValue("vController", "StartScript", "");
             cb_autostart.Checked = _vMixAutoStart = settings.GetValue("vController", "AutoStartV", false);
-            RegWrite("Software\\Microsoft\\Windows\\CurrentVersion\\Run","vScheduler",vControllerPath + "\\vController.exe", !_vMixAutoStart);
+            _vControllerPath = settings.GetValue("vController", "vControllerPath", Path.GetDirectoryName(Application.ExecutablePath));
+            RegWrite("Software\\Microsoft\\Windows\\CurrentVersion\\Run", "vScheduler", _vControllerPath + "\\vController.exe", !_vMixAutoStart);
             cb_startmini.Checked = _vMixStartMini = settings.GetValue("vController", "StartMini", false);
             cb_closetray.Checked = _vMixCloseTray = settings.GetValue("vController", "CloseTray", false);
             cb_minitray.Checked = _vMixMiniTray = settings.GetValue("vController", "MiniTray", false);
@@ -125,6 +127,7 @@ namespace vControler
             settings.SetValue("vController", "RunScript", _vMixRunScript);
             settings.SetValue("vController", "StartScript", _vMixScript);
             settings.SetValue("vController", "AutoStartV", _vMixAutoStart);
+            settings.SetValue("vController", "vControllerPath", _vControllerPath);
             settings.SetValue("vController", "StartMini", _vMixStartMini);
             settings.SetValue("vController", "CloseTray", _vMixCloseTray);
             settings.SetValue("vController", "MiniTray", _vMixMiniTray);
@@ -184,8 +187,9 @@ namespace vControler
         {
             _vMixPath = tb_path.Text;
             _vMixScript = tb_script.Text;
+            _vControllerPath = Path.GetDirectoryName(Application.ExecutablePath);
             SaveSettings();
-            RegWrite("Software\\Microsoft\\Windows\\CurrentVersion\\Run", "vScheduler", vControllerPath + "\\vController.exe", !_vMixAutoStart);
+            RegWrite("Software\\Microsoft\\Windows\\CurrentVersion\\Run", "vScheduler", _vControllerPath + "\\vController.exe", !_vMixAutoStart);
         }
 
         private void cb_autoload_CheckedChanged(object sender, EventArgs e)
