@@ -4,4 +4,6 @@ show_downloads: true
 github:
   repository_name: vScheduler for vMix
   zip_url: https://github.com/237domingo/vScheduler/releases/download/v1.1.4-alpha.3/v1.1.4-alpha.3+builddate300821.zip
-theme: jekyll-theme-leap-day
+remote_theme: pages-themes/leap-day@v0.2.0
+plugins:
+- jekyll-remote-theme
