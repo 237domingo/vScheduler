@@ -5,6 +5,3 @@ github:
   repository_name: vScheduler for vMix
   zip_url: https://github.com/237domingo/vScheduler/releases/download/v1.1.4-alpha.3/v1.1.4-alpha.3+builddate300821.zip
 theme: jekyll-theme-leap-day
-plugins:
-- jekyll-remote-theme
-markdown: GFM
